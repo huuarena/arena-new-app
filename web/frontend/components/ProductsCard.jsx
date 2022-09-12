@@ -51,11 +51,11 @@ export function ProductsCard() {
       <Card
         title="Product Counter"
         sectioned
-        primaryFooterAction={{
-          content: 'Populate 5 products',
-          onAction: handlePopulate,
-          loading: isLoading,
-        }}
+        // primaryFooterAction={{
+        //   content: 'Populate 5 products',
+        //   onAction: handlePopulate,
+        //   loading: isLoading,
+        // }}
       >
         <TextContainer spacing="loose">
           <p>
