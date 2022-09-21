@@ -1,5 +1,4 @@
-import apiCaller from '../helpers/apiCaller.js'
-import graphqlCaller, { generateGraphqlInput } from '../helpers/graphqlCaller.js'
+import graphqlCaller from '../helpers/graphqlCaller.js'
 
 const FIELDS = `
   id
@@ -42,7 +41,8 @@ const getAll = async ({ shop, accessToken, count }) => {
             endCursor
           }
         }
-      }`
+      }
+      `
 
       res = await graphqlCaller({
         shop,
@@ -89,13 +89,11 @@ const find = async ({ shop, accessToken, first, pageInfo }) => {
       }
     }`
 
-    let res = await graphqlCaller({
+    return await graphqlCaller({
       shop,
       accessToken,
       query,
     })
-
-    return res.products
   } catch (error) {
     throw error
   }
@@ -109,49 +107,21 @@ const findById = async ({ shop, accessToken, id }) => {
       }
     }`
 
-    let res = await graphqlCaller({
+    return await graphqlCaller({
       shop,
       accessToken,
       query,
     })
-
-    return res.product
   } catch (error) {
     throw error
   }
 }
 
-const create = async ({ shop, accessToken, input }) => {
-  try {
-    let query = `mutation {
-      productCreate(input: ${generateGraphqlInput(input)}) {
-        product {
-          ${FIELDS}
-        }
-        userErrors {
-          field
-          message
-        }
-      }
-    }`
-
-    let res = await graphqlCaller({
-      shop,
-      accessToken,
-      query,
-    })
-
-    return res.productCreate.product
-  } catch (error) {
-    throw error
-  }
-}
-
-const update = async ({ shop, accessToken, input }) => {
+const create = async ({ shop, accessToken, variables }) => {
   try {
     let query = `
-    mutation {
-      productUpdate(input: ${generateGraphqlInput(input)}) {
+    mutation productCreate($input: ProductInput!) {
+      productCreate(input: $input) {
         product {
           ${FIELDS}
         }
@@ -160,41 +130,67 @@ const update = async ({ shop, accessToken, input }) => {
           message
         }
       }
-    }`
+    }
+    `
 
-    let res = await graphqlCaller({
+    return await graphqlCaller({
       shop,
       accessToken,
       query,
       variables,
     })
-
-    return res.productUpdate.product
   } catch (error) {
     throw error
   }
 }
 
-const _delete = async ({ shop, accessToken, input }) => {
+const update = async ({ shop, accessToken, variables }) => {
   try {
     let query = `
-    mutation {
-      productDelete(input: ${generateGraphqlInput(input)}) {
+    mutation productUpdate($input: ProductInput!) {
+      productUpdate(input: $input) {
+        product {
+          ${FIELDS}
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+    `
+
+    return await graphqlCaller({
+      shop,
+      accessToken,
+      query,
+      variables,
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
+const _delete = async ({ shop, accessToken, variables }) => {
+  try {
+    let query = `
+    mutation productDelete($input: ProductDeleteInput!) {
+      productDelete(input: $input) {
         deletedProductId
         userErrors {
           field
           message
         }
       }
-    }`
+    }
+    `
 
-    let res = await graphqlCaller({
+    return await graphqlCaller({
       shop,
       accessToken,
       query,
+      variables,
     })
-
-    return res.productDelete
   } catch (error) {
     throw error
   }

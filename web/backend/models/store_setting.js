@@ -65,17 +65,12 @@ const Model = PostgresSequelize.define('store_settings', {
     type: DataTypes.JSON,
     defaultValue: null,
   },
-  duplicators: {
-    type: DataTypes.JSON,
-    defaultValue: null,
-  },
 })
 
 Model.prototype.toJSON = function () {
   let values = Object.assign({}, this.get())
 
   values.billings = values.billings ? JSON.parse(values.billings) : []
-  values.duplicators = values.duplicators ? JSON.parse(values.duplicators) : []
 
   return values
 }

@@ -91,20 +91,16 @@ function ProductsPage(props) {
         data.variants = generateVariantsFromOptions(options)
       }
 
-      console.log('data :>> ', data)
-
       let res = null
 
       if (created.id) {
         // update
-        res = await ProductApi.update(created.id, data)
+        res = await ProductApi.update(created.id, { product: data })
       } else {
         // create
-        res = await ProductApi.create(data)
+        res = await ProductApi.create({ product: data })
       }
       if (!res.success) throw res.error
-
-      console.log('res.data :>> ', res.data)
 
       actions.showNotify({ message: created.id ? 'Saved' : 'Created' })
 
