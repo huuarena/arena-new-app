@@ -43,7 +43,8 @@ const getAll = async ({ shop, accessToken, count }) => {
             endCursor
           }
         }
-      }`
+      }
+      `
 
       res = await graphqlCaller({
         shop,
@@ -138,9 +139,10 @@ const create = async ({ shop, accessToken, variables }) => {
           message
         }
       }
-    }`
+    }
+    `
 
-    let res = await graphqlCaller({
+    return await graphqlCaller({
       shop,
       accessToken,
       query,
@@ -171,14 +173,17 @@ const update = async ({ shop, accessToken, variables }) => {
     }
     `
 
-    let res = await graphqlCaller({
+    return await graphqlCaller({
       shop,
       accessToken,
       query,
       variables,
     })
+<<<<<<< HEAD:web/backend/middlewares/product_graphql.js
 
     return res[Object.keys(res)[0]]
+=======
+>>>>>>> origin:web/backend/middlewares/graphql_product.js
   } catch (error) {
     throw error
   }
@@ -200,7 +205,7 @@ const _delete = async ({ shop, accessToken, variables }) => {
     }
     `
 
-    let res = await graphqlCaller({
+    return await graphqlCaller({
       shop,
       accessToken,
       query,
