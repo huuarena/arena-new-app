@@ -2,60 +2,58 @@ import apiCaller from '../helpers/apiCaller.js'
 import validateParams from '../helpers/validateParams.js'
 import ThemeMiddleware from './theme.js'
 
-const find = async ({ shop, accessToken, theme_id }) => {
+const find = async ({ shop, accessToken, themeId }) => {
   try {
     validateParams({ shop, accessToken })
 
-    let themeId = theme_id
-    if (!themeId) {
-      themeId = await ThemeMiddleware.getMain({ shop, accessToken })
-      themeId = themeId.id
+    let _themeId = themeId
+    if (!_themeId) {
+      _themeId = await ThemeMiddleware.getMain({ shop, accessToken }).then((res) => res.id)
     }
 
     return await apiCaller({
       shop,
       accessToken,
-      endpoint: `themes/${themeId}/assets.json`,
+      endpoint: `themes/${_themeId}/assets.json`,
+      pageInfo: true,
     })
   } catch (error) {
     throw error
   }
 }
 
-const findByKey = async ({ shop, accessToken, theme_id, key }) => {
+const findByKey = async ({ shop, accessToken, themeId, key }) => {
   try {
     validateParams({ shop, accessToken, key })
 
-    let themeId = theme_id
-    if (!themeId) {
-      themeId = await ThemeMiddleware.getMain({ shop, accessToken })
-      themeId = themeId.id
+    let _themeId = themeId
+    if (!_themeId) {
+      _themeId = await ThemeMiddleware.getMain({ shop, accessToken }).then((res) => res.id)
     }
 
     return await apiCaller({
       shop,
       accessToken,
-      endpoint: `themes/${themeId}/assets.json?asset[key]=${key}`,
+      endpoint: `themes/${_themeId}/assets.json?asset[key]=${key}`,
     })
   } catch (error) {
     throw error
   }
 }
 
-const save = async ({ shop, accessToken, theme_id, data }) => {
+const save = async ({ shop, accessToken, themeId, data }) => {
   try {
     validateParams({ shop, accessToken, data })
 
-    let themeId = theme_id
-    if (!themeId) {
-      themeId = await ThemeMiddleware.getMain({ shop, accessToken })
-      themeId = themeId.id
+    let _themeId = themeId
+    if (!_themeId) {
+      _themeId = await ThemeMiddleware.getMain({ shop, accessToken }).then((res) => res.id)
     }
 
     return await apiCaller({
       shop,
       accessToken,
-      endpoint: `themes/${themeId}/assets.json`,
+      endpoint: `themes/${_themeId}/assets.json`,
       method: 'PUT',
       data,
     })
@@ -64,20 +62,19 @@ const save = async ({ shop, accessToken, theme_id, data }) => {
   }
 }
 
-const _delete = async ({ shop, accessToken, theme_id, key }) => {
+const _delete = async ({ shop, accessToken, themeId, key }) => {
   try {
     validateParams({ shop, accessToken, key })
 
-    let themeId = theme_id
-    if (!themeId) {
-      themeId = await ThemeMiddleware.getMain({ shop, accessToken })
-      themeId = themeId.id
+    let _themeId = themeId
+    if (!_themeId) {
+      _themeId = await ThemeMiddleware.getMain({ shop, accessToken }).then((res) => res.id)
     }
 
     return await apiCaller({
       shop,
       accessToken,
-      endpoint: `themes/${themeId}/assets.json?asset[key]=${key}`,
+      endpoint: `themes/${_themeId}/assets.json?asset[key]=${key}`,
       method: 'DELETE',
     })
   } catch (error) {

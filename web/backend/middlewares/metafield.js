@@ -2,6 +2,8 @@ import apiCaller from '../helpers/apiCaller.js'
 
 const getAll = async ({ shop, accessToken, resource, count }) => {
   try {
+    validateParams({ shop, accessToken })
+
     let items = []
     let res = null
     let hasNextPage = true
@@ -36,6 +38,8 @@ const getAll = async ({ shop, accessToken, resource, count }) => {
 
 const count = async ({ shop, accessToken, resource }) => {
   try {
+    validateParams({ shop, accessToken })
+
     return await apiCaller({
       shop,
       accessToken,
@@ -48,6 +52,8 @@ const count = async ({ shop, accessToken, resource }) => {
 
 const find = async ({ shop, accessToken, resource }) => {
   try {
+    validateParams({ shop, accessToken })
+
     return await apiCaller({
       shop,
       accessToken,
@@ -60,6 +66,8 @@ const find = async ({ shop, accessToken, resource }) => {
 
 const findById = async ({ shop, accessToken, resource, id }) => {
   try {
+    validateParams({ shop, accessToken, id })
+
     return await apiCaller({
       shop,
       accessToken,
@@ -72,6 +80,8 @@ const findById = async ({ shop, accessToken, resource, id }) => {
 
 const create = async ({ shop, accessToken, resource, data }) => {
   try {
+    validateParams({ shop, accessToken, data })
+
     return await apiCaller({
       shop,
       accessToken,
@@ -86,6 +96,8 @@ const create = async ({ shop, accessToken, resource, data }) => {
 
 const update = async ({ shop, accessToken, resource, id, data }) => {
   try {
+    validateParams({ shop, accessToken, id, data })
+
     return await apiCaller({
       shop,
       accessToken,
@@ -100,6 +112,8 @@ const update = async ({ shop, accessToken, resource, id, data }) => {
 
 const _delete = async ({ shop, accessToken, resource, id }) => {
   try {
+    validateParams({ shop, accessToken, id })
+
     return await apiCaller({
       shop,
       accessToken,

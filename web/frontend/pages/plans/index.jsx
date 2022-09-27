@@ -6,7 +6,7 @@ import BillingApi from '../../apis/billing'
 import numberWithCommas from '../../helpers/numberWithCommas'
 import PlanCard from './PlanCard'
 
-function PlansPage(props) {
+function IndexPage(props) {
   const { actions, storeSetting, appBillings } = props
 
   useEffect(() => {
@@ -151,4 +151,4 @@ function PlansPage(props) {
   )
 }
 
-export default PlansPage
+export default IndexPage

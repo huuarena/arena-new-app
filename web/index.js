@@ -26,19 +26,6 @@ import productRoute from './backend/routes/admin/product.js'
 import billingRoute from './backend/routes/admin/billing.js'
 import submitionRoute from './backend/routes/admin/submition.js'
 
-// console.log('WEB ENV')
-// console.log('| NODE_ENV :>>', process.env.NODE_ENV)
-// console.log('| SHOPIFY_API_KEY :>>', process.env.SHOPIFY_API_KEY)
-// console.log('| SHOPIFY_API_SECRET :>>', process.env.SHOPIFY_API_SECRET)
-// console.log('| HOST :>>', process.env.HOST)
-// console.log('| SCOPES :>>', process.env.SCOPES)
-// console.log('| PORT :>>', process.env.PORT)
-// console.log('| SERVER_PORT :>>', process.env.SERVER_PORT)
-// console.log('| BACKEND_PORT :>>', process.env.BACKEND_PORT)
-// console.log('| SHOP :>>', process.env.SHOP)
-// console.log('| WEBHOOKS :>>', process.env.WEBHOOKS)
-// console.log('| API_VERSION :>>', process.env.API_VERSION)
-
 const USE_ONLINE_TOKENS = false
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10)
@@ -124,31 +111,8 @@ export async function createServer(
     webhookRoute(app)
     // -------------------------------------------
 
-    /**
-     * Do not call app.use(express.json()) before processing webhooks with
-     * Shopify.Webhooks.Registry.process().
-     * See https://github.com/Shopify/shopify-api-node/blob/main/docs/usage/webhooks.md#note-regarding-use-of-body-parsers
-     * for more details.
-     */
-    // app.post('/api/webhooks', async (req, res) => {
-    //   try {
-    //     await Shopify.Webhooks.Registry.process(req, res)
-    //     console.log(`Webhook processed, returned status code 200`)
-    //   } catch (e) {
-    //     console.log(`Failed to process webhook: ${e.message}`)
-    //     if (!res.headersSent) {
-    //       res.status(500).send(e.message)
-    //     }
-    //   }
-    // })
-
     // All endpoints after this point will require an active session
-    app.use(
-      '/api/*',
-      verifyRequest(app, {
-        billing: billingSettings,
-      })
-    )
+    app.use('/api/*', verifyRequest(app, { billing: billingSettings }))
 
     // -------------------------------------------
     /**
@@ -159,31 +123,6 @@ export async function createServer(
     billingRoute(app)
     submitionRoute(app)
     // -------------------------------------------
-
-    // app.get('/api/products/count', async (req, res) => {
-    //   const session = await Shopify.Utils.loadCurrentSession(req, res, app.get('use-online-tokens'))
-    //   const { Product } = await import(
-    //     `@shopify/shopify-api/dist/rest-resources/${Shopify.Context.API_VERSION}/index.js`
-    //   )
-
-    //   const countData = await Product.count({ session })
-    //   res.status(200).send(countData)
-    // })
-
-    // app.get('/api/products/create', async (req, res) => {
-    //   const session = await Shopify.Utils.loadCurrentSession(req, res, app.get('use-online-tokens'))
-    //   let status = 200
-    //   let error = null
-
-    //   try {
-    //     await productCreator(session)
-    //   } catch (e) {
-    //     console.log(`Failed to process products/create: ${e.message}`)
-    //     status = 500
-    //     error = e.message
-    //   }
-    //   res.status(status).send({ success: status === 200, error })
-    // })
 
     // All endpoints after this point will have access to a request.body
     // attribute, as a result of the express.json() middleware
@@ -255,6 +194,8 @@ createServer().then(({ app }) =>
     console.log(`+   Welcome to ArenaCommerce App   +`)
     console.log(`+                                  +`)
     console.log(`++++++++++++++++++++++++++++++++++++`)
-    console.log(`\n${process.env.HOST}/api/auth?shop=${process.env.SHOP}\n`)
+    console.log(``)
+    console.log(`${process.env.HOST}/api/auth?shop=${process.env.SHOP}`)
+    console.log(``)
   })
 )

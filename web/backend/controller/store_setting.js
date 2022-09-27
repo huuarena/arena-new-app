@@ -8,13 +8,13 @@ export default {
     try {
       const session = await verifyToken(req, res)
 
-      let data = await StoreSettingMiddleware.init(session)
+      let storeSetting = await StoreSettingMiddleware.init(session)
 
       /**
        * Check billings
        */
-      if (data.billings.length) {
-        let billings = data.billings
+      if (storeSetting.billings.length) {
+        let billings = storeSetting.billings
         let billing = null
         let updated = false
 
@@ -44,11 +44,11 @@ export default {
 
                   switch (billings[i].type) {
                     case 'application_charge':
-                      data.credits += appBilling.credits[data.appPlan]
+                      storeSetting.credits += appBilling.credits[storeSetting.appPlan]
                       break
 
                     case 'recurring_application_charge':
-                      data.appPlan = appBilling.plan
+                      storeSetting.appPlan = appBilling.plan
                       break
 
                     default:
@@ -66,15 +66,15 @@ export default {
             .filter((item) => item)
             .filter((item) => ['pending', 'active'].includes(item.status))
 
-          data = await StoreSettingMiddleware.update(data.id, {
+          storeSetting = await StoreSettingMiddleware.update(storeSetting.id, {
             billings: JSON.stringify(billings),
-            appPlan: data.appPlan,
-            credits: data.credits,
+            appPlan: storeSetting.appPlan,
+            credits: storeSetting.credits,
           })
         }
       }
 
-      return ResponseHandler.success(res, data)
+      return ResponseHandler.success(res, storeSetting)
     } catch (error) {
       return ResponseHandler.error(res, error)
     }
@@ -86,11 +86,11 @@ export default {
 
       const { acceptedAt } = req.body
 
-      let data = await StoreSettingMiddleware.init(session)
+      let storeSetting = await StoreSettingMiddleware.init(session)
 
-      data = await StoreSettingMiddleware.update(data.id, { acceptedAt })
+      storeSetting = await StoreSettingMiddleware.update(storeSetting.id, { acceptedAt })
 
-      return ResponseHandler.success(res, data)
+      return ResponseHandler.success(res, storeSetting)
     } catch (error) {
       return ResponseHandler.error(res, error)
     }

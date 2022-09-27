@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 const {
-  NODE_ENV,
   SHOPIFY_API_KEY,
   SHOPIFY_API_SECRET,
   HOST,

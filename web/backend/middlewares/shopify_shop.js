@@ -1,7 +1,10 @@
 import apiCaller from '../helpers/apiCaller.js'
+import validateParams from '../helpers/validateParams.js'
 
 const get = async ({ shop, accessToken }) => {
   try {
+    validateParams({ shop, accessToken })
+
     return await apiCaller({
       shop,
       accessToken,
@@ -12,8 +15,8 @@ const get = async ({ shop, accessToken }) => {
   }
 }
 
-const ShopMiddleware = {
+const ShopifyShopifyShopMiddleware = {
   get,
 }
 
-export default ShopMiddleware
+export default ShopifyShopifyShopMiddleware

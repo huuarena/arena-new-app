@@ -56,14 +56,16 @@ function AppContainer(props) {
         <AppBridgeProvider>
           <QueryProvider>
             <NavigationMenu
-              navigationLinks={
-                [
-                  // {
-                  //   label: 'Home',
-                  //   destination: '/',
-                  // },
-                ]
-              }
+              navigationLinks={[
+                {
+                  label: 'Home',
+                  destination: '/',
+                },
+                {
+                  label: 'Products',
+                  destination: '/products',
+                },
+              ]}
             />
 
             <AppFullscreen isFullscreen={isFullscreen}>
@@ -96,8 +98,8 @@ function AppContainer(props) {
               <ConfirmModal
                 title="Are you sure you want to exit fullscreen?"
                 content="Confirm to leave the fullscreen."
-                onClose={() => setOpenConfirmModal(false)}
-                actions={[
+                onDiscard={() => setOpenConfirmModal(false)}
+                secondaryActions={[
                   {
                     content: 'No, I want to stay',
                     onAction: () => setOpenConfirmModal(false),

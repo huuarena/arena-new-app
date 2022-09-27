@@ -107,9 +107,9 @@ const apiCaller = async ({ shop, accessToken, endpoint, method, data, extraHeade
       return await apiCaller({ shop, accessToken, endpoint, method, data, extraHeaders, pageInfo })
     }
 
-    console.log('apiCaller error:')
-    console.log('| endpoint :>>', endpoint)
-    console.log('| message :>> ', message)
+    // console.log('apiCaller error:')
+    // console.log('| endpoint :>>', endpoint)
+    // console.log('| message :>> ', message)
 
     throw { message }
   }

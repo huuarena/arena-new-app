@@ -4,6 +4,7 @@ import { MobileVerticalDotsMajor, ImagesMajor } from '@shopify/polaris-icons'
 import { useState } from 'react'
 
 Table.propTypes = {
+  // ...appProps,
   items: PropTypes.array,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
@@ -41,7 +42,7 @@ function Table(props) {
       <div style={{ maxWidth: 300, whiteSpace: 'normal' }}>
         <Stack vertical spacing="extraTight">
           <Stack.Item>Vendor: {item.vendor}</Stack.Item>
-          <Stack.Item>Product type: {item.type}</Stack.Item>
+          <Stack.Item>Product type: {item.product_type}</Stack.Item>
         </Stack>
       </div>,
       <Popover
@@ -58,12 +59,6 @@ function Table(props) {
         <ActionList
           actionRole="menuitem"
           items={[
-            {
-              content: 'Preview',
-              onAction: () => {
-                setSelected(null)
-              },
-            },
             {
               content: 'Edit',
               onAction: () => {

@@ -1,7 +1,10 @@
 import apiCaller from '../helpers/apiCaller.js'
+import validateParams from '../helpers/validateParams.js'
 
 const getAll = async ({ shop, accessToken, count }) => {
   try {
+    validateParams({ shop, accessToken })
+
     let items = []
     let res = null
     let hasNextPage = true
@@ -36,6 +39,8 @@ const getAll = async ({ shop, accessToken, count }) => {
 
 const count = async ({ shop, accessToken }) => {
   try {
+    validateParams({ shop, accessToken })
+
     return await apiCaller({ shop, accessToken, endpoint: `products/count.json` })
   } catch (error) {
     throw error
@@ -44,7 +49,9 @@ const count = async ({ shop, accessToken }) => {
 
 const find = async ({ shop, accessToken, limit, pageInfo, order }) => {
   try {
-    let _limit = limit ? parseInt(limit) : 20
+    validateParams({ shop, accessToken })
+
+    let _limit = parseInt(limit) > 0 ? parseInt(limit) : 20
 
     let endpoint = `products.json?limit=${_limit}`
     if (pageInfo) {
@@ -70,6 +77,8 @@ const find = async ({ shop, accessToken, limit, pageInfo, order }) => {
 
 const findById = async ({ shop, accessToken, id }) => {
   try {
+    validateParams({ shop, accessToken, id })
+
     return await apiCaller({ shop, accessToken, endpoint: `products/${id}.json` })
   } catch (error) {
     throw error
@@ -78,6 +87,8 @@ const findById = async ({ shop, accessToken, id }) => {
 
 const create = async ({ shop, accessToken, data }) => {
   try {
+    validateParams({ shop, accessToken, data })
+
     return await apiCaller({ shop, accessToken, endpoint: `products.json`, method: 'POST', data })
   } catch (error) {
     throw error
@@ -86,6 +97,8 @@ const create = async ({ shop, accessToken, data }) => {
 
 const update = async ({ shop, accessToken, id, data }) => {
   try {
+    validateParams({ shop, accessToken, id, data })
+
     return await apiCaller({
       shop,
       accessToken,
@@ -100,6 +113,8 @@ const update = async ({ shop, accessToken, id, data }) => {
 
 const _delete = async ({ shop, accessToken, id }) => {
   try {
+    validateParams({ shop, accessToken, id })
+
     return await apiCaller({
       shop,
       accessToken,

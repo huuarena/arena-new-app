@@ -1,17 +1,18 @@
 import apiCaller from '../helpers/apiCaller.js'
-import graphqlCaller, { generateGraphqlInput } from '../helpers/graphqlCaller.js'
+import graphqlCaller from '../helpers/graphqlCaller.js'
+import validateParams from '../helpers/validateParams.js'
 
 const FIELDS = `
   id
   title
-  handle
-  description
   descriptionHtml
   vendor
   productType
-  tags
-  templateSuffix
+  handle
   publishedAt
+  templateSuffix
+  status
+  tags
   createdAt
   updatedAt
 `
@@ -69,7 +70,9 @@ const getAll = async ({ shop, accessToken, count }) => {
 
 const find = async ({ shop, accessToken, first, pageInfo }) => {
   try {
-    let _first = parseInt(first) >= 1 ? parseInt(first) : 20
+    validateParams({ shop, accessToken })
+
+    let _first = parseInt(first) > 0 ? parseInt(first) : 20
     let _pageInfo = pageInfo ? `, after: "${pageInfo}"` : ``
 
     let query = `
@@ -89,13 +92,11 @@ const find = async ({ shop, accessToken, first, pageInfo }) => {
       }
     }`
 
-    let res = await graphqlCaller({
+    return await graphqlCaller({
       shop,
       accessToken,
       query,
     })
-
-    return res.products
   } catch (error) {
     throw error
   }
@@ -103,55 +104,32 @@ const find = async ({ shop, accessToken, first, pageInfo }) => {
 
 const findById = async ({ shop, accessToken, id }) => {
   try {
-    let query = `{
+    validateParams({ shop, accessToken, id })
+
+    let query = `
+    {
       product (id: "${id}") {
         ${FIELDS}
       }
     }`
 
-    let res = await graphqlCaller({
+    return await graphqlCaller({
       shop,
       accessToken,
       query,
     })
-
-    return res.product
   } catch (error) {
     throw error
   }
 }
 
-const create = async ({ shop, accessToken, input }) => {
+const create = async ({ shop, accessToken, variables }) => {
   try {
-    let query = `mutation {
-      productCreate(input: ${generateGraphqlInput(input)}) {
-        product {
-          ${FIELDS}
-        }
-        userErrors {
-          field
-          message
-        }
-      }
-    }`
+    validateParams({ shop, accessToken, variables })
 
-    let res = await graphqlCaller({
-      shop,
-      accessToken,
-      query,
-    })
-
-    return res.productCreate.product
-  } catch (error) {
-    throw error
-  }
-}
-
-const update = async ({ shop, accessToken, input }) => {
-  try {
     let query = `
-    mutation {
-      productUpdate(input: ${generateGraphqlInput(input)}) {
+    mutation productCreate($input: ProductInput!) {
+      productCreate(input: $input) {
         product {
           ${FIELDS}
         }
@@ -169,38 +147,73 @@ const update = async ({ shop, accessToken, input }) => {
       variables,
     })
 
-    return res.productUpdate.product
+    return res[Object.keys(res)[0]]
   } catch (error) {
     throw error
   }
 }
 
-const _delete = async ({ shop, accessToken, input }) => {
+const update = async ({ shop, accessToken, variables }) => {
   try {
+    validateParams({ shop, accessToken, variables })
+
     let query = `
-    mutation {
-      productDelete(input: ${generateGraphqlInput(input)}) {
+    mutation productUpdate($input: ProductInput!) {
+      productUpdate(input: $input) {
+        product {
+          ${FIELDS}
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+    `
+
+    let res = await graphqlCaller({
+      shop,
+      accessToken,
+      query,
+      variables,
+    })
+
+    return res[Object.keys(res)[0]]
+  } catch (error) {
+    throw error
+  }
+}
+
+const _delete = async ({ shop, accessToken, variables }) => {
+  try {
+    validateParams({ shop, accessToken, variables })
+
+    let query = `
+    mutation productDelete($input: ProductDeleteInput!) {
+      productDelete(input: $input) {
         deletedProductId
         userErrors {
           field
           message
         }
       }
-    }`
+    }
+    `
 
     let res = await graphqlCaller({
       shop,
       accessToken,
       query,
+      variables,
     })
 
-    return res.productDelete
+    return res[Object.keys(res)[0]]
   } catch (error) {
     throw error
   }
 }
 
-const GraphqlProductMiddleware = {
+const ProductGraphqlMiddleware = {
   getAll,
   find,
   findById,
@@ -209,4 +222,4 @@ const GraphqlProductMiddleware = {
   delete: _delete,
 }
 
-export default GraphqlProductMiddleware
+export default ProductGraphqlMiddleware

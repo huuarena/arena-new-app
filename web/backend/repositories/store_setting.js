@@ -1,7 +1,6 @@
 import Model from '../models/store_setting.js'
 import ErrorCodes from '../constants/errorCodes.js'
-import BillingMiddleware from '../middlewares/billing.js'
-import ShopMiddleware from '../middlewares/shop.js'
+import ShopifyShopMiddleware from '../middlewares/shopify_shop.js'
 
 export default {
   count: async (where) => {
@@ -105,7 +104,7 @@ export default {
         /**
          * Get shopify shop
          */
-        let shopifyShop = await ShopMiddleware.get({
+        let shopifyShop = await ShopifyShopMiddleware.get({
           shop: session.shop,
           accessToken: session.accessToken,
         })

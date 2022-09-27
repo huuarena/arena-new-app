@@ -1,24 +1,10 @@
-import {
-  Badge,
-  Button,
-  Card,
-  DataTable,
-  Pagination,
-  Stack,
-  Tabs,
-  Thumbnail,
-  Tooltip,
-} from '@shopify/polaris'
+import { Card, Pagination, Stack } from '@shopify/polaris'
 import { useEffect, useState } from 'react'
 import ProductApi from '../../apis/product'
 import AppHeader from '../../components/AppHeader'
-import { ImagesMajor, EditMinor, DeleteMinor, ViewMinor } from '@shopify/polaris-icons'
-import CreateForm from './CreateForm'
-import ConfirmDelete from './ConfirmDelete'
 import Table from './Table'
 import { useSearchParams } from 'react-router-dom'
-import MySkeletonPage from '../../components/MySkeletonPage'
-import { generateVariantsFromOptions } from './actions'
+import ConfirmModal from '../../components/ConfirmModal'
 
 function ProductsPage(props) {
   const { actions, location, navigate } = props
@@ -27,13 +13,10 @@ function ProductsPage(props) {
 
   const [products, setProducts] = useState(null)
   const [count, setCount] = useState(null)
-  const [created, setCreated] = useState(null)
   const [deleted, setDeleted] = useState(null)
 
   const getProducts = async (query) => {
     try {
-      actions.showAppLoading()
-
       let res = await ProductApi.find(query)
       if (!res.success) throw res.error
 
@@ -41,8 +24,6 @@ function ProductsPage(props) {
     } catch (error) {
       console.log(error)
       actions.showNotify({ message: error.message, error: true })
-    } finally {
-      actions.hideAppLoading()
     }
   }
 
@@ -52,8 +33,6 @@ function ProductsPage(props) {
 
   const getProductsCount = async () => {
     try {
-      actions.showAppLoading()
-
       let res = await ProductApi.count()
       if (!res.success) throw res.error
 
@@ -61,8 +40,6 @@ function ProductsPage(props) {
     } catch (error) {
       console.log(error)
       actions.showNotify({ message: error.message, error: true })
-    } finally {
-      actions.hideAppLoading()
     }
   }
 
@@ -70,60 +47,11 @@ function ProductsPage(props) {
     getProductsCount()
   }, [])
 
-  const handleSubmit = async (formData) => {
+  const handleDelete = async (selected) => {
     try {
       actions.showAppLoading()
 
-      let options = [...formData['options']]
-      options = options
-        .filter((item) => item.name.value && item.values.value)
-        .map((item) => ({
-          name: item.name.value,
-          values: item['values'].value.split(',').filter((item) => item),
-        }))
-
-      let data = {
-        title: formData.title.value,
-        body_html: formData.body_html.value,
-      }
-      if (options.length) {
-        data.options = options
-        data.variants = generateVariantsFromOptions(options)
-      }
-
-      console.log('data :>> ', data)
-
-      let res = null
-
-      if (created.id) {
-        // update
-        res = await ProductApi.update(created.id, data)
-      } else {
-        // create
-        res = await ProductApi.create(data)
-      }
-      if (!res.success) throw res.error
-
-      console.log('res.data :>> ', res.data)
-
-      actions.showNotify({ message: created.id ? 'Saved' : 'Created' })
-
-      setCreated(null)
-
-      getProducts(location.search)
-    } catch (error) {
-      console.log(error)
-      actions.showNotify({ message: error.message, error: true })
-    } finally {
-      actions.hideAppLoading()
-    }
-  }
-
-  const handleDelete = async (deleted) => {
-    try {
-      actions.showAppLoading()
-
-      let res = await ProductApi.delete(deleted.id)
+      let res = await ProductApi.delete(selected.id)
       if (!res.success) throw res.error
 
       actions.showNotify({ message: 'Deleted' })
@@ -137,17 +65,6 @@ function ProductsPage(props) {
     }
   }
 
-  if (created) {
-    return (
-      <CreateForm
-        {...props}
-        created={created}
-        onDiscard={() => setCreated(null)}
-        onSubmit={(formData) => handleSubmit(formData)}
-      />
-    )
-  }
-
   return (
     <Stack vertical alignment="fill">
       <AppHeader
@@ -157,20 +74,19 @@ function ProductsPage(props) {
           {
             label: 'Add product',
             primary: true,
-            onClick: () => setCreated({}),
+            onClick: () => props.navigate(`/products/new`),
           },
         ]}
-        onBack={() => navigate('/')}
+        onBack={() => props.navigate('/')}
       />
 
+      <div>Total products: {count || 'loading..'}</div>
+
       <Card>
-        <Card.Section>
-          <div>Total items: {count || 'loading..'}</div>
-        </Card.Section>
         <Table
           {...props}
           items={products?.products}
-          onEdit={(item) => setCreated(item)}
+          onEdit={(item) => navigate(`/products/${item.id}`)}
           onDelete={(item) => setDeleted(item)}
         />
         {products?.products?.length > 0 && (
@@ -192,12 +108,24 @@ function ProductsPage(props) {
       </Card>
 
       {deleted && (
-        <ConfirmDelete
+        <ConfirmModal
+          title="Delete confirmation"
+          content="Are you sure want to delete this product? This cannot be undone."
           onDiscard={() => setDeleted(null)}
-          onSubmit={() => {
-            handleDelete(deleted)
-            setDeleted(null)
-          }}
+          secondaryActions={[
+            {
+              content: 'Discard',
+              onAction: () => setDeleted(null),
+            },
+            {
+              content: 'Delete now',
+              onAction: () => {
+                handleDelete(deleted)
+                setDeleted(null)
+              },
+              destructive: true,
+            },
+          ]}
         />
       )}
     </Stack>

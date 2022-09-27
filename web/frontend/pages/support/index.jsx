@@ -1,7 +1,7 @@
 import { Stack } from '@shopify/polaris'
 import AppHeader from '../../components/AppHeader'
 
-function SupportPage(props) {
+function IndexPage(props) {
   return (
     <Stack vertical alignment="fill">
       <AppHeader {...props} title="Support" onBack={() => props.navigate('/')} />
@@ -9,4 +9,4 @@ function SupportPage(props) {
   )
 }
 
-export default SupportPage
+export default IndexPage

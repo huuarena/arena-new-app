@@ -1,7 +1,7 @@
 import { Stack } from '@shopify/polaris'
 import AppHeader from '../../components/AppHeader'
 
-function SettingsPage(props) {
+function IndexPage(props) {
   return (
     <Stack vertical alignment="fill">
       <AppHeader
@@ -19,4 +19,4 @@ function SettingsPage(props) {
   )
 }
 
-export default SettingsPage
+export default IndexPage

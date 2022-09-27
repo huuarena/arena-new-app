@@ -2,7 +2,7 @@ import apiCaller from '../helpers/apiCaller.js'
 
 const create = async ({ shop, accessToken, topic }) => {
   try {
-    return await apiCaller({
+    apiCaller({
       shop,
       accessToken,
       endpoint: `webhooks.json`,

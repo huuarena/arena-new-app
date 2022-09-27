@@ -1,4 +1,5 @@
 import apiCaller from '../helpers/apiCaller.js'
+import validateParams from '../helpers/validateParams.js'
 import StoreSettingRepository from './../repositories/store_setting.js'
 
 export const APP_BILLINGS = [
@@ -91,16 +92,12 @@ export const APP_BILLINGS = [
   },
 ]
 
-const getAppBillings = () => {
-  try {
-    return APP_BILLINGS
-  } catch (error) {
-    throw error
-  }
-}
+const getAppBillings = () => APP_BILLINGS
 
 const get = async ({ shop, accessToken, type, id }) => {
   try {
+    validateParams({ shop, accessToken, type, id })
+
     return await apiCaller({
       shop,
       accessToken,
@@ -113,6 +110,8 @@ const get = async ({ shop, accessToken, type, id }) => {
 
 const create = async ({ shop, accessToken, id }) => {
   try {
+    validateParams({ shop, accessToken, id })
+
     let appBilling = APP_BILLINGS.find((item) => item.id == id)
     if (!appBilling) {
       throw new Error('Invalid app billing')

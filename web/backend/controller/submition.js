@@ -11,6 +11,7 @@ export default {
 
       let data = null
 
+      console.log('/api/submition data :>> ', data)
       return ResponseHandler.success(res, data)
     } catch (error) {
       console.log('/api/submition error :>> ', error.message)

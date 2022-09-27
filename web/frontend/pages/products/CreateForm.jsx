@@ -1,61 +1,18 @@
 import PropTypes from 'prop-types'
-import { Button, Card, Checkbox, DisplayText, Stack, TextField } from '@shopify/polaris'
+import { Button, Card, Stack } from '@shopify/polaris'
 import { useEffect, useState } from 'react'
-import AppHeader from '../../components/AppHeader'
 import FormValidate from '../../helpers/formValidate'
 import FormControl from '../../components/FormControl'
-import OptionForm from './OptionForm'
+import ProductApi from '../../apis/product'
 
 CreateForm.propTypes = {
+  // ...appProps,
   created: PropTypes.object,
-  onDiscard: PropTypes.func,
-  onSubmit: PropTypes.func,
 }
 
 CreateForm.defaultProps = {
   created: {},
-  onDiscard: () => null,
-  onSubmit: () => null,
 }
-
-const optionFormData = {
-  name: {
-    type: 'text',
-    label: 'Option name',
-    value: '',
-    error: '',
-    required: true,
-    validate: {
-      trim: true,
-      required: [true, 'Required!'],
-      minlength: [2, 'Too short!'],
-      maxlength: [200, 'Too long!'],
-    },
-  },
-  values: {
-    type: 'text',
-    label: 'Option values',
-    value: '',
-    error: '',
-    required: true,
-    validate: {
-      trim: true,
-      required: [true, 'Required!'],
-      minlength: [1, 'Too short!'],
-      maxlength: [100, 'Too long!'],
-    },
-  },
-}
-
-let initOptionFormData = Array.from([
-  // { name: 'Size', values: 's,m,l' },
-  // { name: 'Color', values: 'red,black,yellow' },
-  // { name: 'Material', values: 'gold,sliver' },
-  { name: '', values: '' },
-]).map((item) => ({
-  name: { ...optionFormData.name, value: item.name },
-  values: { ...optionFormData.values, value: item.values },
-}))
 
 const initFormData = {
   title: {
@@ -86,29 +43,27 @@ const initFormData = {
     },
     multiline: 6,
   },
-  options: null,
 }
 
 function CreateForm(props) {
-  const { actions, created, onDiscard, onSubmit } = props
+  const { actions, created } = props
 
-  const [formData, setFormData] = useState(initFormData)
+  const [formData, setFormData] = useState(null)
 
   useEffect(() => console.log('formData :>> ', formData), [formData])
 
   useEffect(() => {
     let _formData = JSON.parse(JSON.stringify(initFormData))
 
-    /**
-     * test
-     */
-    _formData.title.value = `Sample product - ${new Date().toString()}`
-    _formData.body_html.value = `Sample product`
-
     if (created.id) {
-      Array.from(['title', 'body_html']).map(
-        (key) => (_formData[key] = { ..._formData[key], value: created[key] || '' })
-      )
+      _formData.title.value = created.title || ''
+      _formData.body_html.value = created.body_html || ''
+    } else {
+      /**
+       * test
+       */
+      _formData.title.value = `Sample product - ${new Date().toString()}`
+      _formData.body_html.value = `Sample product`
     }
 
     setFormData(_formData)
@@ -120,37 +75,51 @@ function CreateForm(props) {
     setFormData(_formData)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
-      let _formData = { ...formData }
+      actions.showAppLoading()
 
-      delete _formData.options
+      const { valid, data } = FormValidate.validateForm(formData)
 
-      const { valid, data } = FormValidate.validateForm(_formData)
-
-      _formData = { ...formData, ...data }
-
-      if (valid) {
-        onSubmit(_formData)
-      } else {
-        setFormData({ ...formData, ...data })
-
+      if (!valid) {
+        setFormData(data)
         throw new Error('Invalid form data')
       }
+
+      let _data = {
+        product: {
+          title: data.title.value,
+          body_html: data.body_html.value,
+        },
+      }
+
+      let res = null
+      if (created.id) {
+        // update
+        res = await ProductApi.update(created.id, _data)
+      } else {
+        // create
+        res = await ProductApi.create(_data)
+      }
+      if (!res.success) throw res.error
+
+      actions.showNotify({ message: created.id ? 'Updated' : 'Created' })
+
+      props.navigate('/products')
     } catch (error) {
       console.log(error)
       actions.showNotify({ error: true, message: error.message })
+    } finally {
+      actions.hideAppLoading()
     }
+  }
+
+  if (!formData) {
+    return null
   }
 
   return (
     <Stack vertical alignment="fill">
-      <AppHeader
-        {...props}
-        title={created.id ? 'Update product' : 'Add product'}
-        onBack={onDiscard}
-      />
-
       <Card sectioned>
         <Stack vertical alignment="fill">
           <FormControl {...formData['title']} onChange={(value) => handleChange('title', value)} />
@@ -161,48 +130,8 @@ function CreateForm(props) {
         </Stack>
       </Card>
 
-      <Card>
-        <Card.Section>
-          <Stack vertical>
-            <DisplayText size="small">Options</DisplayText>
-            <Checkbox
-              label="This product has options, like size or color"
-              checked={Boolean(formData['options'])}
-              onChange={() => {
-                let _formData = JSON.parse(JSON.stringify(formData))
-                if (formData['options']) {
-                  _formData['options'] = null
-                } else {
-                  _formData['options'] = initOptionFormData
-                }
-                setFormData(_formData)
-              }}
-            />
-          </Stack>
-        </Card.Section>
-        {formData['options'] &&
-          formData['options'].map((item, index) => (
-            <Card.Section key={index}>
-              <OptionForm
-                formData={item}
-                onChange={(value) => {
-                  let _formData = JSON.parse(JSON.stringify(formData))
-                  _formData['options'][index] = value
-
-                  // check has empty option
-                  if (!_formData['options'].filter((item) => item['name'].value === '').length) {
-                    _formData['options'].push({ ...optionFormData })
-                  }
-
-                  setFormData(_formData)
-                }}
-              />
-            </Card.Section>
-          ))}
-      </Card>
-
       <Stack distribution="trailing">
-        <Button onClick={onDiscard}>Discard</Button>
+        <Button onClick={() => props.navigate('/products')}>Discard</Button>
         <Button primary onClick={handleSubmit}>
           {created.id ? 'Save' : 'Add'}
         </Button>
