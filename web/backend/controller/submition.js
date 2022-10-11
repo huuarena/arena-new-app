@@ -9,7 +9,7 @@ export default {
       const session = await verifyToken(req, res)
       const { shop, accessToken } = session
 
-      let data = null
+      let data = {}
 
       console.log('/api/submition data :>> ', data)
       return ResponseHandler.success(res, data)
