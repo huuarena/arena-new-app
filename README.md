@@ -6,7 +6,7 @@ Rather than cloning this repo, you can use your preferred package manager and th
 
 ## Installation
 
-Step 1: Init `.env` file and edit environment
+Step 1: Init `.env` file from `.env.example`
 
 Step 2: Install dependencies
 
@@ -17,7 +17,7 @@ yarn install_depend
 Step 3: Run ngrok
 
 ```shell
-ngrok http --subdomain=your_domain --region=ap 5000
+ngrok http --subdomain=<domain> --region=<region> 5000
 ```
 
 Step 4: Run source
@@ -25,7 +25,7 @@ Step 4: Run source
 - Dev mode:
 
 ```shell
-yarn dev --tunnel-url=https://your_domain.ap.ngrok.io:5000
+yarn dev --tunnel-url=https://<domain>.<region>.ngrok.io:5000
 ```
 
 - Serve mode:
