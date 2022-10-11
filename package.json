@@ -25,8 +25,8 @@
     "pm2:reload": "pm2 reload ecosystem.config.js --env production"
   },
   "dependencies": {
-    "@shopify/app": "3.10.1",
-    "@shopify/cli": "3.10.1",
+    "@shopify/app": "3.16.3",
+    "@shopify/cli": "3.16.3",
     "dotenv": "^16.0.2",
     "gulp": "^4.0.2"
   },
