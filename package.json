@@ -18,10 +18,11 @@
     "format": "npm-run-all -p format:*",
     "ngrok": "ngrok http --subdomain=arena-new-app --region=ap 5000",
     "docker": "docker run --rm -p 127.0.0.1:6379:6379/tcp redis",
-    "dev_tunnel": "yarn dev --tunnel-url https://arena-new-app.ap.ngrok.io:5000",
+    "develop": "yarn dev --tunnel-url https://arena-new-app.ap.ngrok.io:5000",
     "serve": "cd web/ && yarn serve",
     "pm2:start": "pm2 kill && yarn build && pm2 start ecosystem.config.js --env production",
-    "pm2:restart": "pm2 stop 0 && yarn build && pm2 restart ecosystem.config.js --env production"
+    "pm2:restart": "pm2 stop 0 && yarn build && pm2 restart ecosystem.config.js --env production",
+    "pm2:reload": "pm2 reload ecosystem.config.js --env production"
   },
   "dependencies": {
     "@shopify/app": "3.10.1",

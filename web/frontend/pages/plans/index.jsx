@@ -44,7 +44,7 @@ function IndexPage(props) {
     applicationCharge = appBillings.find((item) => item.type === 'application_charge')
     currentPlan = appBillings.find((item) => item.plan === storeSetting.appPlan)
     currentPrice = currentPlan.price === 0 ? 'FREE' : `$${currentPlan.price}`
-    currentTime = currentPlan.plan === 'BASIC' ? 'Unlimited' : 'month'
+    currentTime = currentPlan.plan === 'BASIC' ? 'Unlimited' : 'Monthly'
   }
 
   return (

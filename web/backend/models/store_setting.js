@@ -8,10 +8,6 @@ const Model = PostgresSequelize.define('store_settings', {
     autoIncrement: true,
     primaryKey: true,
   },
-  uuid: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-  },
   shop: {
     type: DataTypes.STRING,
     allowNull: false,
