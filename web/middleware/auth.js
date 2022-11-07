@@ -1,5 +1,7 @@
 import { Shopify } from '@shopify/shopify-api'
 import { gdprTopics } from '@shopify/shopify-api/dist/webhooks/registry.js'
+import StoreSettingMiddleware from '../backend/middlewares/store_setting.js'
+import WebhookMiddleware from '../backend/middlewares/webhook.js'
 
 import ensureBilling from '../helpers/ensure-billing.js'
 import redirectToAuth from '../helpers/redirect-to-auth.js'
@@ -15,6 +17,28 @@ export default function applyAuthMiddleware(
   app.get('/api/auth/callback', async (req, res) => {
     try {
       const session = await Shopify.Auth.validateAuthCallback(req, res, req.query)
+      console.log('session :>> ', session)
+
+      if (session) {
+        /**
+         * Init store setting
+         */
+        let storeSetting = await StoreSettingMiddleware.init(session)
+        console.log('storeSetting :>> ', storeSetting)
+
+        /**
+         * Register webhooks
+         */
+        process.env.WEBHOOKS.replace(/ /gm, '')
+          .split(',')
+          .forEach((topic) =>
+            WebhookMiddleware.create({
+              shop: session.shop,
+              accessToken: session.accessToken,
+              topic,
+            })
+          )
+      }
 
       const responses = await Shopify.Webhooks.Registry.registerAll({
         shop: session.shop,
