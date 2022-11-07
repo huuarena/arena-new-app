@@ -10,17 +10,17 @@ const create = async ({ shop, accessToken, topic }) => {
       data: {
         webhook: {
           topic,
-          address: process.env.BACKHOSTEND_URL + '/api/webhooks',
+          address: process.env.HOST + '/api/webhooks',
           format: 'json',
           fields: ['id'],
         },
       },
     })
       .then((res) => {
-        // console.log(`Webhook ${topic} registered`)
+        // console.log(`${shop} webhook ${topic} registered`)
       })
       .catch((err) => {
-        // console.log(`Register webhook ${topic} failed: ${err.message}`)
+        // console.log(`${shop} register webhook ${topic} failed:`, err.message)
       })
   } catch (error) {
     throw error

@@ -8,6 +8,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import morgan from 'morgan'
+import bodyParser from 'body-parser'
 
 import { Shopify, LATEST_API_VERSION } from '@shopify/shopify-api'
 
@@ -18,6 +19,20 @@ import productCreator from './helpers/product-creator.js'
 import redirectToAuth from './helpers/redirect-to-auth.js'
 import { BillingInterval } from './helpers/ensure-billing.js'
 import { AppInstallations } from './app_installations.js'
+import storeSettingRoute from './backend/routes/store_setting.js'
+import productRoute from './backend/routes/product.js'
+import billingRoute from './backend/routes/billing.js'
+import submitionRoute from './backend/routes/submition.js'
+import themeRoute from './backend/routes/theme.js'
+import ticketRoute from './backend/routes/ticket.js'
+import appManagementRoute from './backend/routes/app_management.js'
+import backgroundJobRoute from './backend/routes/background_job.js'
+import clearStoreRoute from './backend/routes/clear_store.js'
+import uniqueCodeRoute from './backend/routes/unique_code.js'
+import duplicatorRoute from './backend/routes/duplicator.js'
+import duplicatorPackageRoute from './backend/routes/duplicator_package.js'
+import storefrontRoute from './backend/routes/storefront.js'
+import webhookRoute from './backend/routes/webhook.js'
 
 const USE_ONLINE_TOKENS = false
 
@@ -89,28 +104,59 @@ export async function createServer(
   app.set('use-online-tokens', USE_ONLINE_TOKENS)
   app.use(cookieParser(Shopify.Context.API_SECRET_KEY))
 
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: false }))
+
+  // -------------------------------------------
+  /**
+   * STOREFRONT ROUTES
+   */
+  storefrontRoute(app)
+  // -------------------------------------------
+
   applyAuthMiddleware(app, { billing: billingSettings })
 
   // Do not call app.use(express.json()) before processing webhooks with
   // Shopify.Webhooks.Registry.process().
   // See https://github.com/Shopify/shopify-api-node/blob/main/docs/usage/webhooks.md#note-regarding-use-of-body-parsers
   // for more details.
-  app.post('/api/webhooks', async (req, res) => {
-    try {
-      await Shopify.Webhooks.Registry.process(req, res)
-      console.log(`Webhook processed, returned status code 200`)
-    } catch (e) {
-      console.log(`Failed to process webhook: ${e.message}`)
-      // if (!res.headersSent) {
-      //   res.status(500).send(e.message)
-      // }
-    } finally {
-      return res.status(200).send({})
-    }
-  })
+  // app.post('/api/webhooks', async (req, res) => {
+  //   try {
+  //     console.log(`webhook`)
+  //     // await Shopify.Webhooks.Registry.process(req, res)
+  //     // console.log(`Webhook processed, returned status code 200`)
+  //   } catch (e) {
+  //     console.log(`Failed to process webhook: ${e.message}`)
+
+  //     // if (!res.headersSent) {
+  //     //   res.status(500).send(e.message)
+  //     // }
+  //   } finally {
+  //     return res.status(200).send()
+  //   }
+  // })
+  webhookRoute(app)
 
   // All endpoints after this point will require an active session
   app.use('/api/*', verifyRequest(app, { billing: billingSettings }))
+
+  // -------------------------------------------
+  /**
+   * ADMIN ROUTES
+   */
+  storeSettingRoute(app)
+  productRoute(app)
+  billingRoute(app)
+  duplicatorPackageRoute(app)
+  submitionRoute(app)
+  themeRoute(app)
+  ticketRoute(app)
+  appManagementRoute(app)
+  backgroundJobRoute(app)
+  clearStoreRoute(app)
+  uniqueCodeRoute(app)
+  duplicatorRoute(app)
+  // -------------------------------------------
 
   app.get('/api/products/count', async (req, res) => {
     try {
@@ -161,6 +207,8 @@ export async function createServer(
         res.setHeader('Content-Security-Policy', `frame-ancestors 'none';`)
       }
 
+      res.setHeader('X-Frame-Options', `DENY`)
+
       next()
     } catch (error) {
       return res.status(500).send(error.message)
@@ -176,6 +224,12 @@ export async function createServer(
 
   app.use('/*', async (req, res, next) => {
     try {
+      // redirect install page
+      if (req.baseUrl.includes('/install')) {
+        const filepath = join(process.cwd(), 'public', 'install.html')
+        return res.status(200).set('Content-Type', 'text/html').send(readFileSync(filepath))
+      }
+
       if (typeof req.query.shop !== 'string') {
         return res.status(500).send('No shop provided')
       }

@@ -1,6 +1,6 @@
 import Repository from '../repositories/store_setting.js'
 // import ShopMiddleware from './shop.js'
-// import UniqueCodeMiddleware from './unique_code.js'
+import UniqueCodeMiddleware from './unique_code.js'
 
 const Status = {
   RUNNING: 'RUNNING',
@@ -77,10 +77,10 @@ const StoreSettingMiddleware = {
         })
       }
 
-      // /**
-      //  * Create unique code
-      //  */
-      // UniqueCodeMiddleware.create({ shop })
+      /**
+       * Create unique code
+       */
+      UniqueCodeMiddleware.create({ shop })
 
       return storeSetting
     } catch (error) {
