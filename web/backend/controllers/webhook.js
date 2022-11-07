@@ -1,6 +1,8 @@
 import StoreSettingMiddleware from '../middlewares/store_setting.js'
 
 export default {
+  get: (req, res) => res.status(403).send('Forbidden'),
+
   process: (req, res) => {
     try {
       const hmac = req.headers['x-shopify-hmac-sha256']
@@ -11,7 +13,7 @@ export default {
         /**
          * Request not sent from Shopify
          */
-        return res.status(401).send()
+        return res.status(401).send('Not Found')
       }
 
       const { id } = req.body
@@ -42,7 +44,6 @@ export default {
 
       res.status(200).send()
     } catch (error) {
-      console.log(`Process webhook failed:`, error.message)
       res.status(200).send()
     }
   },
