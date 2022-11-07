@@ -1,15 +1,21 @@
 import StoreSettingMiddleware from '../middlewares/store_setting.js'
+import crypto from 'crypto'
 
 export default {
   get: (req, res) => res.status(401).send('Not Found'),
 
   process: (req, res) => {
-    try {
-      const hmac = req.headers['x-shopify-hmac-sha256']
-      const domain = req.headers['x-shopify-shop-domain']
-      const topic = req.headers['x-shopify-topic']
+    const hmac = req.headers['x-shopify-hmac-sha256']
+    const domain = req.headers['x-shopify-shop-domain']
+    const topic = req.headers['x-shopify-topic']
 
-      if (!hmac) {
+    try {
+      const hash = crypto
+        .createHmac('sha256', process.env.SHOPIFY_API_SECRET)
+        .update(JSON.stringify(req.body), 'utf8', 'hex')
+        .digest('base64')
+
+      if (!hmac || hash !== hmac) {
         /**
          * Request not sent from Shopify
          */
@@ -30,9 +36,7 @@ export default {
                 acceptedAt: null,
                 billings: null,
               })
-                .then((_res) => {
-                  console.log(`Process webhook ${topic} success`)
-                })
+                .then((_res) => {})
                 .catch((_err) => null)
             })
             .catch((err) => null)
