@@ -236,7 +236,8 @@ export async function createServer(
 
       return res.status(200).set('Content-Type', 'text/html').send(readFileSync(htmlFile))
     } catch (error) {
-      return res.status(400).send(error.message)
+      console.log(error)
+      return res.status(200).send()
     }
   })
 
