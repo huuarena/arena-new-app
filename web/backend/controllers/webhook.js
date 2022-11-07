@@ -1,5 +1,3 @@
-import { Shopify } from '@shopify/shopify-api'
-
 import StoreSettingMiddleware from '../middlewares/store_setting.js'
 
 export default {
@@ -30,7 +28,9 @@ export default {
                 acceptedAt: null,
                 billings: null,
               })
-                .then((_res) => {})
+                .then((_res) => {
+                  console.log(`Process webhook ${topic} success`)
+                })
                 .catch((_err) => null)
             })
             .catch((err) => null)
@@ -39,8 +39,6 @@ export default {
         default:
           break
       }
-
-      // Shopify.Webhooks.Registry.process(req, res)
 
       res.status(200).send()
     } catch (error) {
