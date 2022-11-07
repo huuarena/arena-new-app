@@ -120,21 +120,6 @@ export async function createServer(
   // Shopify.Webhooks.Registry.process().
   // See https://github.com/Shopify/shopify-api-node/blob/main/docs/usage/webhooks.md#note-regarding-use-of-body-parsers
   // for more details.
-  // app.post('/api/webhooks', async (req, res) => {
-  //   try {
-  //     console.log(`webhook`)
-  //     // await Shopify.Webhooks.Registry.process(req, res)
-  //     // console.log(`Webhook processed, returned status code 200`)
-  //   } catch (e) {
-  //     console.log(`Failed to process webhook: ${e.message}`)
-
-  //     // if (!res.headersSent) {
-  //     //   res.status(500).send(e.message)
-  //     // }
-  //   } finally {
-  //     return res.status(200).send()
-  //   }
-  // })
   webhookRoute(app)
 
   // All endpoints after this point will require an active session
