@@ -10,6 +10,15 @@ export default {
 
       let data = await UniqueCodeMiddleware.getAll({ shop })
 
+      if (!data.length) {
+        /**
+         * Create unique code
+         */
+        await UniqueCodeMiddleware.create({ shop })
+      }
+
+      data = await UniqueCodeMiddleware.getAll({ shop })
+
       return ResponseHandler.success(res, data)
     } catch (error) {
       return ResponseHandler.error(res, error)

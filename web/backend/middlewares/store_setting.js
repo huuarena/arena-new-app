@@ -80,11 +80,6 @@ const StoreSettingMiddleware = {
         })
       }
 
-      /**
-       * Create unique code
-       */
-      UniqueCodeMiddleware.create({ shop })
-
       return storeSetting
     } catch (error) {
       console.log('StoreSettingMiddleware.init error :>> ', error)
