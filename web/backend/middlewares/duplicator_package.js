@@ -1,6 +1,13 @@
 import Repository from '../repositories/duplicator_package.js'
 
+const Status = {
+  ACTIVE: 'ACTIVE',
+  ARCHIVED: 'ARCHIVED',
+}
+
 const DuplicatorPackageMiddleware = {
+  Status,
+
   updateVersions: async (id, version) => {
     return await Repository.updateVersions(id, version)
   },

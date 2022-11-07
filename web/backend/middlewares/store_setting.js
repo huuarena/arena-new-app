@@ -10,11 +10,6 @@ const AppPlan = {
   PRO: 'PRO',
   PLUS: 'PLUS',
 }
-const Role = {
-  GUEST: 'GUEST',
-  MEMBERSHIP: 'MEMBERSHIP',
-  ADMIN: 'ADMIN',
-}
 const Permission = {
   NAVIGATION: 'NAVIGATION',
 }
@@ -22,7 +17,6 @@ const Permission = {
 const StoreSettingMiddleware = {
   Status,
   AppPlan,
-  Role,
   Permission,
 
   init: async (session) => {
