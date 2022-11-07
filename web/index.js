@@ -209,14 +209,18 @@ export async function createServer(
 
   app.use('/*', async (req, res, next) => {
     try {
-      // redirect install page
-      if (req.baseUrl.includes('/install')) {
-        const filepath = join(process.cwd(), 'public', 'install.html')
-        return res.status(200).set('Content-Type', 'text/html').send(readFileSync(filepath))
-      }
+      // // redirect install page
+      // if (req.baseUrl.includes('/install')) {
+      //   const filepath = join(process.cwd(), 'public', 'install.html')
+      //   return res.status(200).set('Content-Type', 'text/html').send(readFileSync(filepath))
+      // }
 
       if (typeof req.query.shop !== 'string') {
-        return res.status(400).send('No shop provided')
+        // return res.status(400).send('No shop provided')
+
+        // redirect install page
+        const filepath = join(process.cwd(), 'public', 'install.html')
+        return res.status(200).set('Content-Type', 'text/html').send(readFileSync(filepath))
       }
 
       const shop = Shopify.Utils.sanitizeShop(req.query.shop)
