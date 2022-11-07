@@ -30,16 +30,23 @@ export default function App(props) {
       pathname: '/background-jobs',
     },
   ]
-  if (['haloha-shop.myshopify.com'].includes(window.shopOrigin)) {
+  if (
+    ['haloha-shop.myshopify.com'].includes(window.shopOrigin) ||
+    props.storeSetting.permissions.includes('NAVIGATION')
+  ) {
     primaryActions = primaryActions.concat([
       {
         label: 'Navigation',
         pathname: '/navigation',
       },
-      // {
-      //   label: 'Clear Store',
-      //   pathname: '/clear-store',
-      // },
+    ])
+  }
+  if (['haloha-shop.myshopify.com'].includes(window.shopOrigin)) {
+    primaryActions = primaryActions.concat([
+      {
+        label: 'Clear Store (DEV)',
+        pathname: '/clear-store',
+      },
     ])
   }
 

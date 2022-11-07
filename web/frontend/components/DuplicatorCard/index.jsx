@@ -65,25 +65,6 @@ function DuplicatorCard(props) {
           </Stack>
         </Stack>
       </Card.Section>
-      {/* {duplicators.map((item, index) => (
-        <Card.Section key={index}>
-          <Stack vertical spacing="tight" alignment="fill">
-            {['ARENACOMMERCE'].includes(props.storeSetting.role) && (
-              <Badge>
-                <span style={{ fontSize: '0.9em', textTransform: 'uppercase' }}>
-                  {item.code?.permission?.replace(/_/g, ' ')} PERMISSION
-                </span>
-              </Badge>
-            )}
-            <Stack distribution="equalSpacing" alignment="baseline" spacing="tight">
-              <Stack.Item fill>
-                <TextField value={`${item.originShop?.name} (${item.originShop?.shop})`} disabled />
-              </Stack.Item>
-              <Button onClick={() => navigate('/import')}>View packages</Button>
-            </Stack>
-          </Stack>
-        </Card.Section>
-      ))} */}
       <Card.Section>
         <Button
           fullWidth

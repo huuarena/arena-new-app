@@ -49,10 +49,6 @@ const Model = PostgresSequelize.define('store_settings', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  role: {
-    type: DataTypes.STRING, // GUEST, MEMBERSHIP, ADMIN
-    defaultValue: 'GUEST',
-  },
   credits: {
     type: DataTypes.INTEGER,
     defaultValue: 0,
@@ -61,16 +57,21 @@ const Model = PostgresSequelize.define('store_settings', {
     type: DataTypes.ARRAY(DataTypes.JSON),
     defaultValue: null,
   },
+  permissions: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    defaultValue: null,
+  },
 })
 
 Model.prototype.toJSON = function () {
   let values = Object.assign({}, this.get())
 
   values.billings = values.billings ? values.billings : []
+  values.permissions = values.permissions ? values.permissions : []
 
   return values
 }
 
-Model.sync()
+Model.sync({ alter: true })
 
 export default Model

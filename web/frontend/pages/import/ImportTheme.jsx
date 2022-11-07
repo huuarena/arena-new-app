@@ -27,7 +27,10 @@ function ImportTheme(props) {
 
       {formData['themeType'].value === 'create' && (
         <Card.Section title="Create new theme" subdued>
-          <TextField {...formData['themeName']} onChange={(value) => onChange('themeName', value)} />
+          <TextField
+            {...formData['themeName']}
+            onChange={(value) => onChange('themeName', value)}
+          />
         </Card.Section>
       )}
 

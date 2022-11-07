@@ -16,7 +16,7 @@ function UniqueCodeCard(props) {
         <Card.Section key={index}>
           <Stack vertical spacing="tight" alignment="fill">
             <p>Your store unique code</p>
-            {['ARENACOMMERCE'].includes(props.storeSetting.role) && (
+            {props.storeSetting.permissions.includes('THEME_DEMO') && (
               <Badge>
                 <span style={{ fontSize: '0.9em', textTransform: 'uppercase' }}>
                   {item.permission.replace(/_/g, ' ')} PERMISSION

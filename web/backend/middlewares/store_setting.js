@@ -17,11 +17,15 @@ const Role = {
   MEMBERSHIP: 'MEMBERSHIP',
   ADMIN: 'ADMIN',
 }
+const Permission = {
+  NAVIGATION: 'NAVIGATION',
+}
 
 const StoreSettingMiddleware = {
   Status,
   AppPlan,
   Role,
+  Permission,
 
   init: async (session) => {
     try {
@@ -40,7 +44,6 @@ const StoreSettingMiddleware = {
           accessToken,
           scope,
           testStore: process.env.SHOP === shop ? true : false,
-          role: process.env.SHOP === shop ? Role.ADMIN : Role.GUEST,
         })
       }
 
