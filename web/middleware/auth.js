@@ -92,7 +92,7 @@ export default function applyAuthMiddleware(
           return redirectToAuth(req, res, app)
           break
         default:
-          res.status(500)
+          res.status(400)
           res.send(e.message)
           break
       }

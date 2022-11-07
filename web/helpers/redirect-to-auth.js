@@ -3,7 +3,7 @@ import { Shopify } from '@shopify/shopify-api'
 export default async function redirectToAuth(req, res, app) {
   try {
     if (!req.query.shop) {
-      return res.status(500).send('No shop provided')
+      return res.status(400).send('No shop provided')
     }
 
     if (req.query.embedded === '1') {
@@ -12,7 +12,7 @@ export default async function redirectToAuth(req, res, app) {
 
     return await serverSideRedirect(req, res, app)
   } catch (error) {
-    return res.status(500).send(error.message)
+    return res.status(400).send(error.message)
   }
 }
 
@@ -31,7 +31,7 @@ function clientSideRedirect(req, res) {
 
     return res.redirect(`/exitiframe?${queryParams}`)
   } catch (error) {
-    return res.status(500).send(error.message)
+    return res.status(400).send(error.message)
   }
 }
 
@@ -47,6 +47,6 @@ async function serverSideRedirect(req, res, app) {
 
     return res.redirect(redirectUrl)
   } catch (error) {
-    return res.status(500).send(error.message)
+    return res.status(400).send(error.message)
   }
 }

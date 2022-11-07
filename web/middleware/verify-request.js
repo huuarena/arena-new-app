@@ -46,7 +46,7 @@ export default function verifyRequest(
             // Re-authenticate if we get a 401 response
           } else if (e instanceof ShopifyBillingError) {
             console.error(e.message, e.errorData[0])
-            res.status(500).end()
+            res.status(400).end()
             return
           } else {
             throw e
@@ -70,7 +70,7 @@ export default function verifyRequest(
 
       returnTopLevelRedirection(req, res, `/api/auth?shop=${encodeURIComponent(shop)}`)
     } catch (error) {
-      return res.status(500).send(error.message)
+      return res.status(400).send(error.message)
     }
   }
 }

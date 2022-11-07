@@ -153,7 +153,7 @@ export async function createServer(
       const countData = await Product.count({ session })
       res.status(200).send(countData)
     } catch (error) {
-      return res.status(500).send(error.message)
+      return res.status(400).send(error.message)
     }
   })
 
@@ -172,7 +172,7 @@ export async function createServer(
       }
       res.status(status).send({ success: status === 200, error })
     } catch (error) {
-      return res.status(500).send(error.message)
+      return res.status(400).send(error.message)
     }
   })
 
@@ -196,7 +196,7 @@ export async function createServer(
 
       next()
     } catch (error) {
-      return res.status(500).send(error.message)
+      return res.status(400).send(error.message)
     }
   })
 
@@ -216,7 +216,7 @@ export async function createServer(
       }
 
       if (typeof req.query.shop !== 'string') {
-        return res.status(500).send('No shop provided')
+        return res.status(400).send('No shop provided')
       }
 
       const shop = Shopify.Utils.sanitizeShop(req.query.shop)
@@ -236,7 +236,7 @@ export async function createServer(
 
       return res.status(200).set('Content-Type', 'text/html').send(readFileSync(htmlFile))
     } catch (error) {
-      return res.status(500).send(error.message)
+      return res.status(400).send(error.message)
     }
   })
 
