@@ -1,0 +1,22 @@
+{
+  "name": "arena-new-app",
+  "version": "1.0.0",
+  "main": "web/index.js",
+  "license": "UNLICENSED",
+  "scripts": {
+    "shopify": "shopify",
+    "build": "shopify app build",
+    "dev": "shopify app dev",
+    "info": "shopify app info",
+    "generate": "shopify app generate",
+    "deploy": "shopify app deploy",
+    "develop": "yarn dev --tunnel-url https://arena-new-app.au.ngrok.io:5000",
+    "ngrok": "ngrok http --subdomain=arena-new-app --region=au 5000",
+    "docker": "docker run --rm -p 127.0.0.1:6379:6379/tcp redis"
+  },
+  "dependencies": {
+    "@shopify/app": "3.21.0",
+    "@shopify/cli": "3.21.0"
+  },
+  "author": "mac"
+}
