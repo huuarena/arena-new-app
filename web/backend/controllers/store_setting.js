@@ -2,6 +2,7 @@ import verifyToken from '../auth/verifyToken.js'
 import ResponseHandler from '../helpers/responseHandler.js'
 import StoreSettingMiddleware from '../middlewares/store_setting.js'
 import BillingMiddleware, { APP_BILLINGS } from '../middlewares/billing.js'
+import ShopMiddleware from '../middlewares/shop.js'
 
 export default {
   auth: async (req, res) => {
@@ -9,6 +10,29 @@ export default {
       const session = await verifyToken(req, res)
 
       let storeSetting = await StoreSettingMiddleware.init(session)
+
+      /**
+       * Update shopify shop information
+       */
+      if (!storeSetting.name) {
+        let shopifyShop = await ShopMiddleware.get({
+          shop: session.shop,
+          accessToken: session.accessToken,
+        })
+          .then((_res) => _res.shop)
+          .catch((_err) => null)
+
+        /**
+         * Update store infomation
+         */
+        storeSetting = await StoreSettingMiddleware.update(storeSetting.id, {
+          name: shopifyShop.name,
+          email: shopifyShop.email,
+          phone: shopifyShop.phone,
+          plan: shopifyShop.plan_name,
+          owner: shopifyShop.shop_owner,
+        })
+      }
 
       /**
        * Check billings

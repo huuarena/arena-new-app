@@ -1,6 +1,4 @@
 import Repository from '../repositories/store_setting.js'
-// import ShopMiddleware from './shop.js'
-import UniqueCodeMiddleware from './unique_code.js'
 
 const Status = {
   RUNNING: 'RUNNING',
@@ -46,24 +44,6 @@ const StoreSettingMiddleware = {
           testStore: process.env.SHOP === shop ? true : false,
         })
       }
-
-      // if (!storeSetting.name) {
-      //   /**
-      //    * Get shopify shop
-      //    */
-      //   let shopifyShop = await ShopMiddleware.get({ shop, accessToken }).then((_res) => _res.shop)
-
-      //   /**
-      //    * Update store infomation
-      //    */
-      //   storeSetting = await Repository.update(storeSetting.id, {
-      //     name: shopifyShop.name,
-      //     email: shopifyShop.email,
-      //     phone: shopifyShop.phone,
-      //     plan: shopifyShop.plan_name,
-      //     owner: shopifyShop.shop_owner,
-      //   })
-      // }
 
       if (
         storeSetting.accessToken !== accessToken ||
