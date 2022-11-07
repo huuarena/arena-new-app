@@ -1,7 +1,7 @@
 import StoreSettingMiddleware from '../middlewares/store_setting.js'
 
 export default {
-  get: (req, res) => res.status(403).send('Forbidden'),
+  get: (req, res) => res.status(401).send('Not Found'),
 
   process: (req, res) => {
     try {
