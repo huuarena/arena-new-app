@@ -3,7 +3,7 @@ import { Shopify } from '@shopify/shopify-api'
 import StoreSettingMiddleware from '../middlewares/store_setting.js'
 
 export default {
-  process: async (req, res) => {
+  process: (req, res) => {
     try {
       const hmac = req.headers['x-shopify-hmac-sha256']
       const domain = req.headers['x-shopify-shop-domain']
@@ -40,7 +40,7 @@ export default {
           break
       }
 
-      Shopify.Webhooks.Registry.process(req, res)
+      // Shopify.Webhooks.Registry.process(req, res)
 
       res.status(200).send()
     } catch (error) {
