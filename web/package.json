@@ -5,7 +5,8 @@
   "scripts": {
     "debug": "node --inspect-brk index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js --ignore ./frontend",
-    "serve": "cross-env NODE_ENV=production node index.js"
+    "serve": "cross-env NODE_ENV=production node index.js",
+    "server": "cross-env NODE_ENV=production nodemon index.js"
   },
   "type": "module",
   "engines": {
@@ -15,8 +16,11 @@
     "@shopify/shopify-api": "^5.0.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
     "express": "^4.17.3",
+    "morgan": "^1.10.0",
     "serve-static": "^1.14.1"
   },
   "devDependencies": {

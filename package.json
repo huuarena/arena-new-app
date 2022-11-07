@@ -12,7 +12,8 @@
     "deploy": "shopify app deploy",
     "develop": "yarn dev --tunnel-url https://arena-new-app.au.ngrok.io:5000",
     "ngrok": "ngrok http --subdomain=arena-new-app --region=au 5000",
-    "docker": "docker run --rm -p 127.0.0.1:6379:6379/tcp redis"
+    "docker": "docker run --rm -p 127.0.0.1:6379:6379/tcp redis",
+    "server": "cd web/ && yarn server"
   },
   "dependencies": {
     "@shopify/app": "3.21.0",

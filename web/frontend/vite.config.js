@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+dotenv.config({ path: './../../.env' })
+
 import { defineConfig } from "vite";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
