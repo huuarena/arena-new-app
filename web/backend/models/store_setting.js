@@ -72,6 +72,6 @@ Model.prototype.toJSON = function () {
   return values
 }
 
-Model.sync({ alter: true })
+Model.sync()
 
 export default Model
