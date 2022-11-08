@@ -209,8 +209,10 @@ export async function createServer(
 
   app.use('/*', async (req, res, next) => {
     try {
+      console.log('req.url :>> ', req.url)
+
       // redirect install page
-      if (req.originalUrl === '/install' || (req.originalUrl === '/' && !req.query.shop)) {
+      if (['/', '/install'].includes(req.url)) {
         const filepath = join(process.cwd(), 'public', 'install.html')
         return res.status(200).set('Content-Type', 'text/html').send(readFileSync(filepath))
       }
@@ -230,6 +232,15 @@ export async function createServer(
         const embeddedUrl = Shopify.Utils.getEmbeddedAppUrl(req)
 
         return res.redirect(embeddedUrl + req.path)
+      }
+
+      if (Shopify.Context.IS_EMBEDDED_APP && shop) {
+        res.setHeader(
+          'Content-Security-Policy',
+          `frame-ancestors https://${encodeURIComponent(shop)} https://admin.shopify.com;`
+        )
+      } else {
+        res.setHeader('Content-Security-Policy', `frame-ancestors 'none';`)
       }
 
       const htmlFile = join(isProd ? PROD_INDEX_PATH : DEV_INDEX_PATH, 'index.html')
