@@ -39,20 +39,12 @@ const StoreSettingMiddleware = {
         })
       }
 
-      // if (
-      //   storeSetting.accessToken !== accessToken ||
-      //   storeSetting.scope !== scope ||
-      //   storeSetting.status !== Status.RUNNING
-      // ) {
-      //   /**
-      //    * Update store has changed
-      //    */
-      //   storeSetting = await Repository.update(storeSetting.id, {
-      //     accessToken,
-      //     scope,
-      //     status: Status.RUNNING,
-      //   })
-      // }
+      if (storeSetting.accessToken !== accessToken || storeSetting.scope !== scope) {
+        /**
+         * Update store has changed
+         */
+        storeSetting = await Repository.update(storeSetting.id, { accessToken, scope })
+      }
 
       return storeSetting
     } catch (error) {

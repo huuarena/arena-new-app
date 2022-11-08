@@ -36,6 +36,7 @@ export default {
                 appPlan: StoreSettingMiddleware.AppPlan.BASIC,
                 acceptedAt: null,
                 billings: null,
+                accessToken: null,
               })
                 .then((_res) => {
                   console.log(`${domain} app uninstalled`)

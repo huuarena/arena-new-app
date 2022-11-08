@@ -1,6 +1,13 @@
 import { Shopify } from '@shopify/shopify-api'
 import StoreSettingMiddleware from '../backend/middlewares/store_setting.js'
 
+const TEST_GRAPHQL_QUERY = `
+{
+  shop {
+    name
+  }
+}`
+
 export default async function redirectToAuth(req, res, app) {
   console.log('redirectToAuth')
   try {
@@ -16,9 +23,19 @@ export default async function redirectToAuth(req, res, app) {
       .catch((_err) => null)
     console.log('storeSetting :>> ', storeSetting)
 
-    if (storeSetting?.status === StoreSettingMiddleware.Status.RUNNING) {
-      throw new Error('')
+    if (storeSetting) {
+      try {
+        // Make a request to ensure the access token is still valid. Otherwise, re-authenticate the user.
+        const client = new Shopify.Clients.Graphql(storeSetting.shop, storeSetting.accessToken)
+        await client.query({ data: TEST_GRAPHQL_QUERY })
+
+        return res.status(401).send('Unauthorized')
+      } catch (error) {
+        // continue
+      }
     }
+
+    console.log('--------------continue')
 
     if (req.query.embedded === '1') {
       return clientSideRedirect(req, res)
