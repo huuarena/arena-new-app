@@ -64,14 +64,12 @@ Shopify.Context.initialize({
 // required for the app_installations.js component in this template to
 // work properly.
 
-Shopify.Webhooks.Registry.addHandler('APP_UNINSTALLED', {
-  path: '/api/webhooks',
-  webhookHandler: async (_topic, shop, _body) => {
-    console.log(`AppInstallations.delete`)
-    await AppInstallations.delete(shop)
-    console.log(`AppInstallations.delete success`)
-  },
-})
+// Shopify.Webhooks.Registry.addHandler('APP_UNINSTALLED', {
+//   path: '/api/webhooks',
+//   webhookHandler: async (_topic, shop, _body) => {
+//     await AppInstallations.delete(shop)
+//   },
+// })
 
 // The transactions with Shopify will always be marked as test transactions, unless NODE_ENV is production.
 // See the ensureBilling helper to learn more about billing in this template.
