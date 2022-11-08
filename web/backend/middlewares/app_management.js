@@ -5,7 +5,7 @@ const { APP_MANAGEMENT_UID, APP_MANAGEMENT_BASE_URL } = process.env
 const apiCaller = async ({ endpoint, method, data, extraHeaders }) => {
   try {
     const config = {
-      url: `${APP_MANAGEMENT_BASE_URL}/api/${endpoint}`,
+      url: APP_MANAGEMENT_BASE_URL + `/api/${endpoint}`,
       method: method || 'GET',
       headers: {
         ...(extraHeaders || {}),
@@ -13,15 +13,13 @@ const apiCaller = async ({ endpoint, method, data, extraHeaders }) => {
       data,
     }
 
-    const res = await axios(config)
-
-    return res.data
+    return await axios(config).then((res) => res.data)
   } catch (error) {
     throw error
   }
 }
 
-const AppManagementService = {
+const AppManagementMiddleware = {
   getPrivacy: async () => {
     return await apiCaller({
       endpoint: `privacies?filters[app][uid]=${APP_MANAGEMENT_UID}`,
@@ -35,4 +33,4 @@ const AppManagementService = {
   },
 }
 
-export default AppManagementService
+export default AppManagementMiddleware
