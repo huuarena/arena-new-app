@@ -23,8 +23,8 @@ export default async function redirectToAuth(req, res, app) {
       .catch((_err) => null)
     console.log('storeSetting :>> ', storeSetting)
 
-    if (storeSetting.status !== StoreSettingMiddleware.Status.UNINSTALLED) {
-      console.log('StoreSettingMiddleware.Status.UNINSTALLED')
+    if (storeSetting.status !== StoreSettingMiddleware.Status.INSTALLED) {
+      console.log('StoreSettingMiddleware.Status.INSTALLED')
       return res.status(401).send('Unauthorized')
     }
 
@@ -37,9 +37,11 @@ export default async function redirectToAuth(req, res, app) {
         return res.status(401).send('Unauthorized')
       } catch (error) {
         // continue
-        console.log('check access token error :>> ', error)
+        console.log('check access token error :>> ', error.message)
       }
     }
+
+    console.log(`---------------------continue`)
 
     if (req.query.embedded === '1') {
       return clientSideRedirect(req, res)

@@ -35,8 +35,8 @@ const Model = PostgresSequelize.define('store_settings', {
     type: DataTypes.STRING,
   },
   status: {
-    type: DataTypes.STRING, // RUNNING, UNINSTALLED, LOCKED
-    defaultValue: 'RUNNING',
+    type: DataTypes.STRING, // INSTALLED, RUNNING, UNINSTALLED, LOCKED
+    defaultValue: 'INSTALLED',
   },
   acceptedAt: {
     type: DataTypes.DATE,
@@ -72,6 +72,6 @@ Model.prototype.toJSON = function () {
   return values
 }
 
-Model.sync()
+Model.sync({ alter: true })
 
 export default Model

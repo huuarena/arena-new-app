@@ -1,6 +1,7 @@
 import Repository from '../repositories/store_setting.js'
 
 const Status = {
+  INSTALLED: 'INSTALLED',
   RUNNING: 'RUNNING',
   UNINSTALLED: 'UNINSTALLED',
   LOCKED: 'LOCKED',
