@@ -45,6 +45,8 @@ export default async function redirectToAuth(req, res, app) {
 
     console.log(`------------------ continue`)
 
+    await new Promise((resolve, reject) => setTimeout(() => resolve()), 1000)
+
     if (req.query.embedded === '1') {
       return clientSideRedirect(req, res)
     }
