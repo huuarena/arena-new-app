@@ -82,9 +82,6 @@ export default function applyAuthMiddleware(
         ? Shopify.Utils.getEmbeddedAppUrl(req)
         : `/?shop=${session.shop}&host=${encodeURIComponent(host)}`
 
-      // delay 1s
-      await new Promise((resolve, reject) => setTimeout(() => resolve(), 1000))
-
       res.redirect(redirectUrl)
     } catch (e) {
       console.warn(e)
