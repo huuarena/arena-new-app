@@ -875,7 +875,15 @@ export const checkHasMetafieldFilter = (filter) => {
 }
 
 export const generateSampleConditions = () => {
-  let resources = ['product', 'custom_collection', 'smart_collection', 'page', 'blog', 'metafield', 'customer']
+  let resources = [
+    'product',
+    'custom_collection',
+    'smart_collection',
+    'page',
+    'blog',
+    'metafield',
+    'customer',
+  ]
   let obj = {}
 
   resources.forEach((resource) => (obj[resource] = generateConditions(resource)))

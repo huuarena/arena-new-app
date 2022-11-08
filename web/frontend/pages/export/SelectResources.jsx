@@ -1,5 +1,14 @@
 import PropTypes from 'prop-types'
-import { Badge, Button, Card, Checkbox, DisplayText, Icon, OptionList, Stack } from '@shopify/polaris'
+import {
+  Badge,
+  Button,
+  Card,
+  Checkbox,
+  DisplayText,
+  Icon,
+  OptionList,
+  Stack,
+} from '@shopify/polaris'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { InfoMinor } from '@shopify/polaris-icons'
@@ -142,7 +151,9 @@ function SelectResources(props) {
               <Stack spacing="extraTight" alignment="center">
                 <Icon source={InfoMinor} />
                 <div>
-                  {Boolean(error) ? error : 'Select resources then click "Continue" button to customize resources'}
+                  {Boolean(error)
+                    ? error
+                    : 'Select resources then click "Continue" button to customize resources'}
                 </div>
               </Stack>
             </div>
@@ -150,7 +161,9 @@ function SelectResources(props) {
           <Button
             onClick={handleSubmit}
             primary={value.length > 0 && JSON.stringify(value) !== JSON.stringify(props.value)}
-            disabled={!Boolean(value.length > 0 && JSON.stringify(value) !== JSON.stringify(props.value))}
+            disabled={
+              !Boolean(value.length > 0 && JSON.stringify(value) !== JSON.stringify(props.value))
+            }
           >
             Continue
           </Button>

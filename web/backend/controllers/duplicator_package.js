@@ -174,7 +174,9 @@ export default {
         item.result?.Key
           ? AwsMiddleware.deleteFile(item.result.Key)
               .then((_res) => console.log(`delete file ${item.result.Key} from s3 success`))
-              .catch((_err) => console.log(`delete file ${item.result.Key} from s3 failed:`, _err.message))
+              .catch((_err) =>
+                console.log(`delete file ${item.result.Key} from s3 failed:`, _err.message)
+              )
           : null
       )
 

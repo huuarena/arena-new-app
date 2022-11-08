@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Card, Modal, Pagination, ResourceItem, ResourceList, Stack, TextStyle } from '@shopify/polaris'
+import {
+  Card,
+  Modal,
+  Pagination,
+  ResourceItem,
+  ResourceList,
+  Stack,
+  TextStyle,
+} from '@shopify/polaris'
 
 Faqs.propTypes = {
   items: PropTypes.array,
@@ -29,7 +37,11 @@ function Faqs(props) {
           resourceName={{ singular: 'faq', plural: 'faqs' }}
           items={items}
           renderItem={(item) => (
-            <ResourceItem id={item.id} accessibilityLabel={item.attributes.title} onClick={() => setSelected(item)}>
+            <ResourceItem
+              id={item.id}
+              accessibilityLabel={item.attributes.title}
+              onClick={() => setSelected(item)}
+            >
               <h3>
                 <TextStyle variation="strong">{item.attributes.title}</TextStyle>
               </h3>

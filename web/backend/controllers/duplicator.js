@@ -39,7 +39,10 @@ export default {
           throw new Error('Invalid unique code')
         }
 
-        uniqueCode = await UniqueCodeMiddleware.findOne({ shop: themeStore.shop, permission: 'ALL' })
+        uniqueCode = await UniqueCodeMiddleware.findOne({
+          shop: themeStore.shop,
+          permission: 'ALL',
+        })
           .then((_res) => _res)
           .catch((_err) => null)
       }
@@ -49,7 +52,11 @@ export default {
       }
 
       // create duplicator
-      let duplicator = await DuplicatorMiddleware.create({ shop, originShop: uniqueCode.shop, code: uniqueCode.code })
+      let duplicator = await DuplicatorMiddleware.create({
+        shop,
+        originShop: uniqueCode.shop,
+        code: uniqueCode.code,
+      })
 
       return ResponseHandler.success(res, duplicator)
     } catch (error) {

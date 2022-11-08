@@ -83,7 +83,9 @@ function ResourceItem(props) {
 
       default:
         return (
-          <Card.Section title={`Filter resources${formData.filter?.value === null ? ' (all resources)' : ''}`}>
+          <Card.Section
+            title={`Filter resources${formData.filter?.value === null ? ' (all resources)' : ''}`}
+          >
             <Stack distribution="fillEvenly">
               <Stack.Item fill>
                 <Stack vertical>
@@ -136,7 +138,10 @@ function ResourceItem(props) {
   return (
     <Card>
       <Card.Section>
-        <div style={{ padding: '1em', margin: '-1em', cursor: 'pointer' }} onClick={() => setOpen(!open)}>
+        <div
+          style={{ padding: '1em', margin: '-1em', cursor: 'pointer' }}
+          onClick={() => setOpen(!open)}
+        >
           <Stack distribution="equalSpacing" alignment="center">
             <div style={{ textTransform: 'uppercase', fontWeight: 600 }}>
               {formData.type.value.replace(/_/g, ' ').toUpperCase() + 'S' === 'BLOGS'
@@ -164,7 +169,11 @@ function ResourceItem(props) {
             <Card.Section title="Select export count">
               <Stack distribution="fillEvenly">
                 <Stack.Item fill>
-                  <FormControl {...formData['count']} label="" onChange={(value) => handleChange('count', value)} />
+                  <FormControl
+                    {...formData['count']}
+                    label=""
+                    onChange={(value) => handleChange('count', value)}
+                  />
                 </Stack.Item>
                 <Stack.Item fill></Stack.Item>
               </Stack>

@@ -35,7 +35,9 @@ function MyDropZoneMultiple(props) {
             <Thumbnail
               size="small"
               alt={file.name}
-              source={validImageTypes.includes(file.type) ? window.URL.createObjectURL(file) : NoteMinor}
+              source={
+                validImageTypes.includes(file.type) ? window.URL.createObjectURL(file) : NoteMinor
+              }
             />
             <div>
               {file.name} <Caption>{file.size} bytes</Caption>

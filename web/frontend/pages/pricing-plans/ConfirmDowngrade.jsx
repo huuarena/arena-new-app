@@ -31,7 +31,9 @@ function ConfirmDowngrade(props) {
         {
           content: 'Downgrade',
           onAction: () =>
-            shop.value !== window.shopOrigin ? setShop({ ...shop, error: 'Invalid shop!' }) : onSubmit(),
+            shop.value !== window.shopOrigin
+              ? setShop({ ...shop, error: 'Invalid shop!' })
+              : onSubmit(),
           destructive: Boolean(shop.value && shopOrigin === window.shopOrigin),
           disabled: !Boolean(shop.value && shopOrigin === window.shopOrigin),
         },

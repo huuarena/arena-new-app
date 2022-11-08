@@ -148,7 +148,7 @@ function CreateForm(props) {
           count: {
             ...CommonResourceFormData.count,
             value: CommonResourceFormData.count.options.find(
-              (_item) => _item.value == '' + item.count,
+              (_item) => _item.value == '' + item.count
             )
               ? item.count
               : CommonResourceFormData.count.options[0].value,
@@ -219,7 +219,7 @@ function CreateForm(props) {
         resources: _formData.resources.map((item) => {
           let obj = {}
           Object.keys(item).forEach((key) =>
-            item[key]?.value ? (obj[key] = item[key]?.value) : null,
+            item[key]?.value ? (obj[key] = item[key]?.value) : null
           )
           return obj
         }),

@@ -29,7 +29,16 @@ export const ProductFields = [
   'options',
 ]
 
-export const MetafieldFields = ['id', 'namespace', 'key', 'value', 'description', 'owner_id', 'owner_resource', 'type']
+export const MetafieldFields = [
+  'id',
+  'namespace',
+  'key',
+  'value',
+  'description',
+  'owner_id',
+  'owner_resource',
+  'type',
+]
 
 export const VariantFields = [
   'id',
@@ -86,7 +95,15 @@ export const SmartCollectionFields = [
 
 export const SmartCollectionRuleFields = ['column', 'relation', 'condition']
 
-export const PageFields = ['id', 'title', 'handle', 'body_html', 'author', 'published_at', 'template_suffix']
+export const PageFields = [
+  'id',
+  'title',
+  'handle',
+  'body_html',
+  'author',
+  'published_at',
+  'template_suffix',
+]
 
 export const BlogFields = [
   'id',

@@ -34,7 +34,9 @@ function CreateForm(props) {
           ..._formData['themeName'],
           value:
             value === 'create'
-              ? `${version.result.resources?.[0]?.theme?.name} duplicate - ${new Date().toUTCString()}`
+              ? `${
+                  version.result.resources?.[0]?.theme?.name
+                } duplicate - ${new Date().toUTCString()}`
               : '',
           error: '',
         }
@@ -146,7 +148,10 @@ function CreateForm(props) {
               </thead>
               <tbody>
                 {version.resources.map((item, index) => (
-                  <tr key={index} className={formData['resources'].value.includes(item.type) ? '' : 'color__note'}>
+                  <tr
+                    key={index}
+                    className={formData['resources'].value.includes(item.type) ? '' : 'color__note'}
+                  >
                     <td className="center-align">
                       <Checkbox
                         checked={formData['resources'].value.includes(item.type)}
@@ -173,8 +178,12 @@ function CreateForm(props) {
                     <td>{item.columns?.length > 0 ? item.columns?.length : 'all'} columns</td>
                     <td>{item.filter ? 'filtered' : 'all resources'}</td>
                     <td className="center-align">{item.count || 'all'}</td>
-                    <td className="center-align">{version.result?.resources?.[index]?.total || ''}</td>
-                    <td className="center-align">{version.result?.resources?.[index]?.exported || ''}</td>
+                    <td className="center-align">
+                      {version.result?.resources?.[index]?.total || ''}
+                    </td>
+                    <td className="center-align">
+                      {version.result?.resources?.[index]?.exported || ''}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -183,7 +192,9 @@ function CreateForm(props) {
         </Card.Section>
       </Card>
 
-      {importType === 'theme' && <ImportTheme {...props} formData={formData} onChange={handleChange} />}
+      {importType === 'theme' && (
+        <ImportTheme {...props} formData={formData} onChange={handleChange} />
+      )}
 
       <Stack distribution="trailing">
         <Button onClick={onDiscard}>Discard</Button>

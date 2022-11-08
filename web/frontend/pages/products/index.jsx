@@ -1,4 +1,14 @@
-import { Badge, Button, Card, DataTable, Pagination, Stack, Tabs, Thumbnail, Tooltip } from '@shopify/polaris'
+import {
+  Badge,
+  Button,
+  Card,
+  DataTable,
+  Pagination,
+  Stack,
+  Tabs,
+  Thumbnail,
+  Tooltip,
+} from '@shopify/polaris'
 import { useEffect, useState } from 'react'
 import ProductApi from '../../apis/product'
 import AppHeader from '../../components/AppHeader'
@@ -165,7 +175,9 @@ function ProductsPage(props) {
               <Stack.Item>
                 <Pagination
                   hasPrevious={products.pageInfo.hasPrevious}
-                  onPrevious={() => setSearchParams({ pageInfo: products.pageInfo.previousPageInfo })}
+                  onPrevious={() =>
+                    setSearchParams({ pageInfo: products.pageInfo.previousPageInfo })
+                  }
                   hasNext={products.pageInfo.hasNext}
                   onNext={() => setSearchParams({ pageInfo: products.pageInfo.nextPageInfo })}
                 />

@@ -23,7 +23,13 @@ const INITIAL_STATE = {
 }
 
 function AppNavigation(props) {
-  const { primaryActions, secondaryActions, secondaryMoreActions, isFullscreen, onToggleFullscreen } = props
+  const {
+    primaryActions,
+    secondaryActions,
+    secondaryMoreActions,
+    isFullscreen,
+    onToggleFullscreen,
+  } = props
 
   const [openSecondaryMoreActions, setOpenSecondaryMoreActions] = useState(false)
 
@@ -102,7 +108,9 @@ function AppNavigation(props) {
                           primary={item.primary}
                           destructive={item.destructive}
                           icon={item.icon ? item.icon : undefined}
-                          onClick={() => (item.onAction ? item.onAction() : navigate(item.pathname))}
+                          onClick={() =>
+                            item.onAction ? item.onAction() : navigate(item.pathname)
+                          }
                           disabled={location.pathname === item.pathname}
                         >
                           {item.label}

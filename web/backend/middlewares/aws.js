@@ -193,7 +193,9 @@ const getFiles = async (keyword) => {
       s3.listObjects(params, function (err, data) {
         if (err) reject(err)
 
-        resolve(keyword ? data.Contents.filter((item) => item.Key.includes(keyword)) : data.Contents)
+        resolve(
+          keyword ? data.Contents.filter((item) => item.Key.includes(keyword)) : data.Contents
+        )
       })
     })
   } catch (error) {

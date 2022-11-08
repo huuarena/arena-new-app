@@ -37,10 +37,16 @@ function ConditionControl(props) {
       {props.__index !== 0 && (
         <Stack distribution="center">
           <ButtonGroup segmented>
-            <Button disabled={globalFormData.type !== 'all'} primary={globalFormData.type === 'all'}>
+            <Button
+              disabled={globalFormData.type !== 'all'}
+              primary={globalFormData.type === 'all'}
+            >
               <div style={{ minWidth: 40 }}>ALL</div>
             </Button>
-            <Button disabled={globalFormData.type !== 'any'} primary={globalFormData.type === 'any'}>
+            <Button
+              disabled={globalFormData.type !== 'any'}
+              primary={globalFormData.type === 'any'}
+            >
               <div style={{ minWidth: 40 }}>ANY</div>
             </Button>
           </ButtonGroup>
@@ -80,7 +86,9 @@ function ConditionControl(props) {
                 deletable={Boolean(formData.conditions.length > 1)}
                 onDelete={() => {
                   let _formData = JSON.parse(JSON.stringify(formData))
-                  _formData.conditions = _formData.conditions.filter((_item, _index) => _index !== index)
+                  _formData.conditions = _formData.conditions.filter(
+                    (_item, _index) => _index !== index
+                  )
                   onChange(_formData)
                 }}
                 resourceType={resourceType}

@@ -53,7 +53,9 @@ const initFormData = {
 function ConfirmImportTheme(props) {
   const { actions, themes, selected, onSubmit, onDiscard, permission } = props
 
-  const versions = selected.versions.filter((item) => item.status === 'COMPLETED' && item.result?.Location)
+  const versions = selected.versions.filter(
+    (item) => item.status === 'COMPLETED' && item.result?.Location
+  )
 
   const [version, setVersion] = useState(versions[0])
   const [type, setType] = useState(Types[0].value)
@@ -202,12 +204,18 @@ function ConfirmImportTheme(props) {
             </Stack>
             {type === 'create' && (
               <Stack.Item fill>
-                <FormControl {...formData['themeName']} onChange={(value) => handleChange('themeName', value)} />
+                <FormControl
+                  {...formData['themeName']}
+                  onChange={(value) => handleChange('themeName', value)}
+                />
               </Stack.Item>
             )}
             {type === 'update' && (
               <Stack.Item fill>
-                <FormControl {...formData['themeId']} onChange={(value) => handleChange('themeId', value)} />
+                <FormControl
+                  {...formData['themeId']}
+                  onChange={(value) => handleChange('themeId', value)}
+                />
               </Stack.Item>
             )}
           </Stack>

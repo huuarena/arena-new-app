@@ -60,14 +60,20 @@ function SelectColumns(props) {
     ),
     metafield: columns.filter((item) => item.startsWith('metafield_')),
     variant_metafield: columns.filter((item) => item.startsWith('variant_metafield_')),
-    variant: columns.filter((item) => item.startsWith('variant_') && !item.startsWith('variant_metafield_')),
+    variant: columns.filter(
+      (item) => item.startsWith('variant_') && !item.startsWith('variant_metafield_')
+    ),
     image_metafield: columns.filter((item) => item.startsWith('image_metafield_')),
-    image: columns.filter((item) => item.startsWith('image_') && !item.startsWith('image_metafield_')),
+    image: columns.filter(
+      (item) => item.startsWith('image_') && !item.startsWith('image_metafield_')
+    ),
     article_metafield: columns.filter((item) => item.startsWith('article_metafield_')),
     article_image: columns.filter((item) => item.startsWith('article_image_')),
     article: columns.filter(
       (item) =>
-        item.startsWith('article_') && !item.startsWith('article_metafield_') && !item.startsWith('article_image')
+        item.startsWith('article_') &&
+        !item.startsWith('article_metafield_') &&
+        !item.startsWith('article_image')
     ),
     address: columns.filter((item) => item.startsWith('address_')),
   }
@@ -80,7 +86,9 @@ function SelectColumns(props) {
         break
 
       case 'variant_metafield':
-        sampleColumns = ExportColumns[resourceType].filter((item) => item.startsWith('variant_metafield_'))
+        sampleColumns = ExportColumns[resourceType].filter((item) =>
+          item.startsWith('variant_metafield_')
+        )
         break
 
       case 'variant':
@@ -90,7 +98,9 @@ function SelectColumns(props) {
         break
 
       case 'image_metafield':
-        sampleColumns = ExportColumns[resourceType].filter((item) => item.startsWith('image_metafield_'))
+        sampleColumns = ExportColumns[resourceType].filter((item) =>
+          item.startsWith('image_metafield_')
+        )
         break
 
       case 'image':
@@ -100,17 +110,23 @@ function SelectColumns(props) {
         break
 
       case 'article_image':
-        sampleColumns = ExportColumns[resourceType].filter((item) => item.startsWith('article_image_'))
+        sampleColumns = ExportColumns[resourceType].filter((item) =>
+          item.startsWith('article_image_')
+        )
         break
 
       case 'article_metafield':
-        sampleColumns = ExportColumns[resourceType].filter((item) => item.startsWith('article_metafield_'))
+        sampleColumns = ExportColumns[resourceType].filter((item) =>
+          item.startsWith('article_metafield_')
+        )
         break
 
       case 'article':
         sampleColumns = ExportColumns[resourceType].filter(
           (item) =>
-            item.startsWith('article_') && !item.startsWith('article_metafield_') && !item.startsWith('article_image_')
+            item.startsWith('article_') &&
+            !item.startsWith('article_metafield_') &&
+            !item.startsWith('article_image_')
         )
         break
 
@@ -155,7 +171,9 @@ function SelectColumns(props) {
             {sampleColumns.map((item, index) => (
               <div style={{ width: '50%' }}>
                 <Checkbox
-                  label={item.replace(/_/g, ' ')[0].toUpperCase() + item.replace(/_/g, ' ').slice(1)}
+                  label={
+                    item.replace(/_/g, ' ')[0].toUpperCase() + item.replace(/_/g, ' ').slice(1)
+                  }
                   checked={ResouceColumns[type].includes(item)}
                   onChange={() => {
                     let _columns = columns.includes(item)
@@ -191,18 +209,24 @@ function SelectColumns(props) {
       <Modal.Section>
         <Card>
           {renderSection('default')}
-          {Boolean(ExportColumns[resourceType].find((item) => item.includes('address_'))) && renderSection('address')}
+          {Boolean(ExportColumns[resourceType].find((item) => item.includes('address_'))) &&
+            renderSection('address')}
           {Boolean(ExportColumns[resourceType].find((item) => item.includes('metafield_'))) &&
             renderSection('metafield')}
-          {Boolean(ExportColumns[resourceType].find((item) => item.includes('variant_'))) && renderSection('variant')}
-          {Boolean(ExportColumns[resourceType].find((item) => item.includes('variant_metafield_'))) &&
-            renderSection('variant_metafield')}
-          {Boolean(ExportColumns[resourceType].find((item) => item.includes('image_'))) && renderSection('image')}
+          {Boolean(ExportColumns[resourceType].find((item) => item.includes('variant_'))) &&
+            renderSection('variant')}
+          {Boolean(
+            ExportColumns[resourceType].find((item) => item.includes('variant_metafield_'))
+          ) && renderSection('variant_metafield')}
+          {Boolean(ExportColumns[resourceType].find((item) => item.includes('image_'))) &&
+            renderSection('image')}
           {Boolean(ExportColumns[resourceType].find((item) => item.includes('image_metafield_'))) &&
             renderSection('image_metafield')}
-          {Boolean(ExportColumns[resourceType].find((item) => item.includes('article_'))) && renderSection('article')}
-          {Boolean(ExportColumns[resourceType].find((item) => item.includes('article_metafield_'))) &&
-            renderSection('article_metafield')}
+          {Boolean(ExportColumns[resourceType].find((item) => item.includes('article_'))) &&
+            renderSection('article')}
+          {Boolean(
+            ExportColumns[resourceType].find((item) => item.includes('article_metafield_'))
+          ) && renderSection('article_metafield')}
           {Boolean(ExportColumns[resourceType].find((item) => item.includes('article_image_'))) &&
             renderSection('article_image')}
         </Card>

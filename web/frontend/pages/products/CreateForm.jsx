@@ -145,12 +145,19 @@ function CreateForm(props) {
 
   return (
     <Stack vertical alignment="fill">
-      <AppHeader {...props} title={created.id ? 'Update product' : 'Add product'} onBack={onDiscard} />
+      <AppHeader
+        {...props}
+        title={created.id ? 'Update product' : 'Add product'}
+        onBack={onDiscard}
+      />
 
       <Card sectioned>
         <Stack vertical alignment="fill">
           <FormControl {...formData['title']} onChange={(value) => handleChange('title', value)} />
-          <FormControl {...formData['body_html']} onChange={(value) => handleChange('body_html', value)} />
+          <FormControl
+            {...formData['body_html']}
+            onChange={(value) => handleChange('body_html', value)}
+          />
         </Stack>
       </Card>
 

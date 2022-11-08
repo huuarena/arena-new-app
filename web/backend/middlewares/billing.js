@@ -214,7 +214,7 @@ const create = async ({ shop, accessToken, id }) => {
         // unsubscribe recurring_application_charge
         billings
           .filter(
-            (item) => item.type === 'recurring_application_charge' && item.status === 'active',
+            (item) => item.type === 'recurring_application_charge' && item.status === 'active'
           )
           .forEach((item) =>
             apiCaller({
@@ -224,7 +224,7 @@ const create = async ({ shop, accessToken, id }) => {
               method: 'DELETE',
             })
               .then((res) => null)
-              .catch((err) => null),
+              .catch((err) => null)
           )
 
         billings = billings.filter((item) => item.type !== 'recurring_application_charge')

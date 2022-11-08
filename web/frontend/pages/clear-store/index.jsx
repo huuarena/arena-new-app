@@ -19,7 +19,10 @@ function IndexPage(props) {
         />
 
         <Banner status="warning">
-          <p>Clearing all store data cannot be undone. Please backup data and check carefully before clearing!</p>
+          <p>
+            Clearing all store data cannot be undone. Please backup data and check carefully before
+            clearing!
+          </p>
         </Banner>
 
         <CreateForm {...props} onDiscard={() => props.navigate('/support')} onSubmit={() => null} />

@@ -23,7 +23,11 @@ const validateField = (fieldData) => {
           break
 
         case 'required':
-          if (value === undefined || value === null || (typeof value === 'string' && value.trim() === '')) {
+          if (
+            value === undefined ||
+            value === null ||
+            (typeof value === 'string' && value.trim() === '')
+          ) {
             throw new Error(validate[key][1])
           }
           break

@@ -5,12 +5,16 @@ function MyAutocomplete(props) {
     <Autocomplete
       options={
         props.options
-          ? props.options.filter((item) => item.label.includes(props.value) || item.value.includes(props.value))
+          ? props.options.filter(
+              (item) => item.label.includes(props.value) || item.value.includes(props.value)
+            )
           : []
       }
       selected={[]}
       onSelect={(values) => props.onChange(values[0])}
-      textField={<Autocomplete.TextField {...props} onClearButtonClick={() => props.onChange('')} />}
+      textField={
+        <Autocomplete.TextField {...props} onClearButtonClick={() => props.onChange('')} />
+      }
     />
   )
 }

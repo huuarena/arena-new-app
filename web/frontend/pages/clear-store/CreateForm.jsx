@@ -77,13 +77,17 @@ function CreateForm(props) {
                 <Checkbox
                   key={index}
                   label={
-                    item.replace(/_/g, ' ')[0].toUpperCase() + item.replace(/_/g, ' ').slice(1).toLowerCase() + 's'
+                    item.replace(/_/g, ' ')[0].toUpperCase() +
+                    item.replace(/_/g, ' ').slice(1).toLowerCase() +
+                    's'
                   }
                   checked={formData['resources'].value.includes(item)}
                   onChange={() => {
                     let _formData = JSON.parse(JSON.stringify(formData))
                     if (_formData['resources'].value.includes(item)) {
-                      _formData['resources'].value = _formData['resources'].value.filter((_item) => _item !== item)
+                      _formData['resources'].value = _formData['resources'].value.filter(
+                        (_item) => _item !== item
+                      )
                     } else {
                       _formData['resources'].value.push(item)
                     }
@@ -98,7 +102,11 @@ function CreateForm(props) {
 
       <Stack distribution="trailing">
         <Button onClick={onDiscard}>Discard</Button>
-        <Button primary onClick={() => setOpenConfirm(true)} disabled={formData['resources'].value.length === 0}>
+        <Button
+          primary
+          onClick={() => setOpenConfirm(true)}
+          disabled={formData['resources'].value.length === 0}
+        >
           Submit
         </Button>
       </Stack>

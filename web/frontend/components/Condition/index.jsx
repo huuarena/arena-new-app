@@ -89,7 +89,9 @@ function Condition(props) {
                   deletable={Boolean(formData.conditions.length > 1)}
                   onDelete={() => {
                     let _formData = JSON.parse(JSON.stringify(formData))
-                    _formData.conditions = _formData.conditions.filter((_item, _index) => _index !== index)
+                    _formData.conditions = _formData.conditions.filter(
+                      (_item, _index) => _index !== index
+                    )
                     setFormData(_formData)
                   }}
                   resourceType={resourceType}

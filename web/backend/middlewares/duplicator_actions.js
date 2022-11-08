@@ -187,7 +187,9 @@ const getProductsWithOriginMetafields = async ({ shop, accessToken }) => {
       })
       console.log(`\t [${i + 1}/${leng}] total metafields ${metafields.length}`)
 
-      let originMetafield = metafields.find((item) => item.key === 'origin' && item.namespace === 'arena_duplicator')
+      let originMetafield = metafields.find(
+        (item) => item.key === 'origin' && item.namespace === 'arena_duplicator'
+      )
 
       if (originMetafield) {
         let origin = JSON.parse(originMetafield.value)

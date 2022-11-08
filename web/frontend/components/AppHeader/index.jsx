@@ -38,7 +38,9 @@ function AppHeader(props) {
             <DisplayText size="small">
               <b>{title}</b>
             </DisplayText>
-            <Badge status={AppPlanStatuses[storeSetting.appPlan]}>{storeSetting.appPlan} PLAN</Badge>
+            <Badge status={AppPlanStatuses[storeSetting.appPlan]}>
+              {storeSetting.appPlan} PLAN
+            </Badge>
             {/* {Boolean(storeSetting.testStore) && <Badge>TEST STORE</Badge>} */}
           </Stack>
           <div>{/* Credits point: <b>{numberWithCommas(storeSetting.credits)}</b> */}</div>

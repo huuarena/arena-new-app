@@ -71,17 +71,29 @@ const clearData = async ({ shop, accessToken, resources }) => {
                 input: [items[j].id],
               },
             })
-              .then((_res) => console.log(`\t [${j + 1}/${jleng}] ${resources[i]} ${items[j].id} deleted`))
+              .then((_res) =>
+                console.log(`\t [${j + 1}/${jleng}] ${resources[i]} ${items[j].id} deleted`)
+              )
               .catch((_err) =>
-                console.log(`\t [${j + 1}/${jleng}] delete ${resources[i]} ${items[j].id} failed: ${_err.message}`)
+                console.log(
+                  `\t [${j + 1}/${jleng}] delete ${resources[i]} ${items[j].id} failed: ${
+                    _err.message
+                  }`
+                )
               )
             break
 
           default:
             await Middleware.delete({ shop, accessToken, id: items[j].id })
-              .then((_res) => console.log(`\t [${j + 1}/${jleng}] ${resources[i]} ${items[j].id} deleted`))
+              .then((_res) =>
+                console.log(`\t [${j + 1}/${jleng}] ${resources[i]} ${items[j].id} deleted`)
+              )
               .catch((_err) =>
-                console.log(`\t [${j + 1}/${jleng}] delete ${resources[i]} ${items[j].id} failed: ${_err.message}`)
+                console.log(
+                  `\t [${j + 1}/${jleng}] delete ${resources[i]} ${items[j].id} failed: ${
+                    _err.message
+                  }`
+                )
               )
             break
         }

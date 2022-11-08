@@ -55,7 +55,9 @@ function FormControl(props) {
 
     default:
       // text
-      return <TextField {...props} label={label || ''} onClearButtonClick={() => props.onChange('')} />
+      return (
+        <TextField {...props} label={label || ''} onClearButtonClick={() => props.onChange('')} />
+      )
   }
 }
 

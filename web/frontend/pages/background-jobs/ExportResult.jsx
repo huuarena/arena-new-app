@@ -52,17 +52,27 @@ function ExportResult(props) {
           <tbody>
             {result.resources.map((item, index) => (
               <tr key={index}>
-                <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}>{index + 1}</td>
+                <td
+                  style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}
+                >
+                  {index + 1}
+                </td>
                 <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em' }}>
                   {item.type.replace(/_/g, ' ').toUpperCase()}S
                 </td>
-                <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}>
+                <td
+                  style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}
+                >
                   {numberWithCommas(item.total)}
                 </td>
-                <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}>
+                <td
+                  style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}
+                >
                   {numberWithCommas(item.exported)}
                 </td>
-                <th style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}>
+                <th
+                  style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}
+                >
                   <Badge status="success">success</Badge>
                 </th>
               </tr>

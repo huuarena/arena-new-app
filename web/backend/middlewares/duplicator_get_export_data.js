@@ -267,7 +267,9 @@ const getBlog = async ({ shop, accessToken, id }) => {
     /**
      * get articles images
      */
-    let articlesImages = articles.filter((item) => item.image).map((item) => ({ ...item.image, owner_id: item.id }))
+    let articlesImages = articles
+      .filter((item) => item.image)
+      .map((item) => ({ ...item.image, owner_id: item.id }))
     console.log(`\t\t\t\t total articles images ${articlesImages.length}`)
 
     articles = articles.map((item) => {

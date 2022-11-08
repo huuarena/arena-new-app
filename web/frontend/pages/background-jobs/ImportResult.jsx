@@ -32,14 +32,40 @@ function ImportResult(props) {
               </thead>
               <tbody>
                 <tr>
-                  <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}>1</td>
-                  <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em' }}>{result[selected].theme.id}</td>
-                  <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em' }}>{result[selected].theme.name}</td>
-                  <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em' }}>{result[selected].theme.role}</td>
-                  <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}>
+                  <td
+                    style={{
+                      border: '1px solid #dcdcdc',
+                      padding: '0.5em 1em',
+                      textAlign: 'center',
+                    }}
+                  >
+                    1
+                  </td>
+                  <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em' }}>
+                    {result[selected].theme.id}
+                  </td>
+                  <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em' }}>
+                    {result[selected].theme.name}
+                  </td>
+                  <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em' }}>
+                    {result[selected].theme.role}
+                  </td>
+                  <td
+                    style={{
+                      border: '1px solid #dcdcdc',
+                      padding: '0.5em 1em',
+                      textAlign: 'center',
+                    }}
+                  >
                     <Badge status="success">success</Badge>
                   </td>
-                  <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}></td>
+                  <td
+                    style={{
+                      border: '1px solid #dcdcdc',
+                      padding: '0.5em 1em',
+                      textAlign: 'center',
+                    }}
+                  ></td>
                 </tr>
               </tbody>
             </table>
@@ -53,10 +79,12 @@ function ImportResult(props) {
             <Stack spacing="extraLoose">
               <div>Total: {numberWithCommas(result[selected].result.length)}</div>
               <div className="color__success">
-                Success: {numberWithCommas(result[selected].result.filter((item) => item.success).length)}
+                Success:{' '}
+                {numberWithCommas(result[selected].result.filter((item) => item.success).length)}
               </div>
               <div className="color__error">
-                Failed: {numberWithCommas(result[selected].result.filter((item) => !item.success).length)}
+                Failed:{' '}
+                {numberWithCommas(result[selected].result.filter((item) => !item.success).length)}
               </div>
             </Stack>
 
@@ -73,17 +101,37 @@ function ImportResult(props) {
               <tbody>
                 {result[selected].result.map((item, index) => (
                   <tr key={index}>
-                    <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}>
+                    <td
+                      style={{
+                        border: '1px solid #dcdcdc',
+                        padding: '0.5em 1em',
+                        textAlign: 'center',
+                      }}
+                    >
                       {index + 1}
                     </td>
                     <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em' }}>{item.id}</td>
-                    <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em' }}>{item.handle}</td>
-                    <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}>
+                    <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em' }}>
+                      {item.handle}
+                    </td>
+                    <td
+                      style={{
+                        border: '1px solid #dcdcdc',
+                        padding: '0.5em 1em',
+                        textAlign: 'center',
+                      }}
+                    >
                       <Badge status={item.success ? 'success' : 'critical'}>
                         {item.success ? 'success' : 'failed'}
                       </Badge>
                     </td>
-                    <td style={{ border: '1px solid #dcdcdc', padding: '0.5em 1em', textAlign: 'center' }}>
+                    <td
+                      style={{
+                        border: '1px solid #dcdcdc',
+                        padding: '0.5em 1em',
+                        textAlign: 'center',
+                      }}
+                    >
                       {item.message}
                     </td>
                   </tr>

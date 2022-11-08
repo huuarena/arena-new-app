@@ -138,7 +138,10 @@ const importTheme = async ({
         retried: false,
       })
     } else {
-      throw new Error(error.message || 'Has an error occurred while importing theme. Check theme setting and try again')
+      throw new Error(
+        error.message ||
+          'Has an error occurred while importing theme. Check theme setting and try again'
+      )
     }
   }
 }
@@ -223,7 +226,14 @@ const importFiles = async ({ shop, accessToken, backgroundJob, duplicatorPackage
   }
 }
 
-const importCommon = async ({ shop, accessToken, backgroundJob, duplicatorStore, duplicatorPackage, version }) => {
+const importCommon = async ({
+  shop,
+  accessToken,
+  backgroundJob,
+  duplicatorStore,
+  duplicatorPackage,
+  version,
+}) => {
   try {
     // download and unzip files
     console.log(`downloading and unziping...`)
@@ -271,7 +281,10 @@ const importCommon = async ({ shop, accessToken, backgroundJob, duplicatorStore,
 
       let productsWithOriginMetafields = []
       if (type === 'custom_collection') {
-        productsWithOriginMetafields = await DuplicatorActions.getProductsWithOriginMetafields({ shop, accessToken })
+        productsWithOriginMetafields = await DuplicatorActions.getProductsWithOriginMetafields({
+          shop,
+          accessToken,
+        })
       }
 
       for (let i = 0, leng = Math.ceil(resources.length / LIMIT_FOR_PROGRESS); i < leng; i++) {
@@ -321,7 +334,9 @@ const create = async (job) => {
     }
 
     // update backgroundJob status PENDING -> RUNNING
-    backgroundJob = await BackgroundJobMiddleware.update(job.data.backgroundJobId, { status: 'RUNNING' })
+    backgroundJob = await BackgroundJobMiddleware.update(job.data.backgroundJobId, {
+      status: 'RUNNING',
+    })
     const { code, duplicatorPackageId, versionId } = backgroundJob.data
 
     // get storeSetting
@@ -373,7 +388,14 @@ const create = async (job) => {
 
       default:
         // common
-        result = await importCommon({ shop, accessToken, backgroundJob, duplicatorStore, duplicatorPackage, version })
+        result = await importCommon({
+          shop,
+          accessToken,
+          backgroundJob,
+          duplicatorStore,
+          duplicatorPackage,
+          version,
+        })
         break
     }
 

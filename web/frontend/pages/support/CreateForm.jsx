@@ -115,8 +115,14 @@ function CreateForm(props) {
     <Stack vertical alignment="fill">
       <Card sectioned>
         <Stack vertical alignment="fill">
-          <FormControl {...formData['subject']} onChange={(value) => handleChange('subject', value)} />
-          <FormControl {...formData['description']} onChange={(value) => handleChange('description', value)} />
+          <FormControl
+            {...formData['subject']}
+            onChange={(value) => handleChange('subject', value)}
+          />
+          <FormControl
+            {...formData['description']}
+            onChange={(value) => handleChange('description', value)}
+          />
           <FormControl {...formData['email']} onChange={(value) => handleChange('email', value)} />
           <Stack distribution="trailing">
             <Button

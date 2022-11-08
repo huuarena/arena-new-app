@@ -113,7 +113,9 @@ function ConditionItem(props) {
               <Select
                 value={field}
                 options={fields.map((item) => ({
-                  label: item.replace(/_/g, ' ')[0].toUpperCase() + item.replace(/_/g, ' ').slice(1).toLowerCase(),
+                  label:
+                    item.replace(/_/g, ' ')[0].toUpperCase() +
+                    item.replace(/_/g, ' ').slice(1).toLowerCase(),
                   value: item,
                 }))}
                 onChange={(value) => handleChange('field', value)}

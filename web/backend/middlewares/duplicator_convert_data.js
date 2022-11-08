@@ -34,7 +34,8 @@ const convertProduct = (dataList) => {
     let rows = []
 
     for (let ii = 0, leng = dataList.length; ii < leng; ii++) {
-      const { product, metafields, variants, variantsMetafields, images, imagesMetafields } = dataList[ii]
+      const { product, metafields, variants, variantsMetafields, images, imagesMetafields } =
+        dataList[ii]
 
       const length = Math.max(
         metafields.length,
@@ -72,7 +73,9 @@ const convertProduct = (dataList) => {
               break
           }
         })
-        MetafieldFields.forEach((key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key])))
+        MetafieldFields.forEach(
+          (key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key]))
+        )
 
         VariantFields.forEach((key) => (row['variant_' + key] = getFieldValue(variants[i]?.[key])))
         MetafieldFields.forEach(
@@ -90,7 +93,9 @@ const convertProduct = (dataList) => {
               break
           }
         })
-        MetafieldFields.forEach((key) => (row['image_metafield_' + key] = getFieldValue(imagesMetafields[i]?.[key])))
+        MetafieldFields.forEach(
+          (key) => (row['image_metafield_' + key] = getFieldValue(imagesMetafields[i]?.[key]))
+        )
 
         rows.push(row)
       }
@@ -126,11 +131,15 @@ const convertCustomCollection = (dataList) => {
           }
         })
 
-        CollectionImageFields.forEach((key) => (row['image_' + key] = i === 0 ? getFieldValue(image?.[key]) : ''))
+        CollectionImageFields.forEach(
+          (key) => (row['image_' + key] = i === 0 ? getFieldValue(image?.[key]) : '')
+        )
 
         row['product_ids'] = JSON.stringify(products)
 
-        MetafieldFields.forEach((key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key])))
+        MetafieldFields.forEach(
+          (key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key]))
+        )
 
         rows.push(row)
       }
@@ -166,11 +175,17 @@ const convertSmartCollection = (dataList) => {
           }
         })
 
-        CollectionImageFields.forEach((key) => (row['image_' + key] = i === 0 ? getFieldValue(image?.[key]) : ''))
+        CollectionImageFields.forEach(
+          (key) => (row['image_' + key] = i === 0 ? getFieldValue(image?.[key]) : '')
+        )
 
-        SmartCollectionRuleFields.forEach((key) => (row['rule_' + key] = getFieldValue(rules[i]?.[key])))
+        SmartCollectionRuleFields.forEach(
+          (key) => (row['rule_' + key] = getFieldValue(rules[i]?.[key]))
+        )
 
-        MetafieldFields.forEach((key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key])))
+        MetafieldFields.forEach(
+          (key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key]))
+        )
 
         rows.push(row)
       }
@@ -205,7 +220,9 @@ const convertPage = (dataList) => {
               break
           }
         })
-        MetafieldFields.forEach((key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key])))
+        MetafieldFields.forEach(
+          (key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key]))
+        )
 
         rows.push(row)
       }
@@ -225,7 +242,11 @@ const convertBlog = (dataList) => {
       const { blog, metafields, articles, articlesImages, articlesMetafields } = dataList[ii]
 
       const length = Math.max(
-        metafields.length || articles.length || articlesImages.length || articlesMetafields.length || 1
+        metafields.length ||
+          articles.length ||
+          articlesImages.length ||
+          articlesMetafields.length ||
+          1
       )
 
       for (let i = 0; i < length; i++) {
@@ -242,10 +263,14 @@ const convertBlog = (dataList) => {
               break
           }
         })
-        MetafieldFields.forEach((key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key])))
+        MetafieldFields.forEach(
+          (key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key]))
+        )
 
         ArticleFields.forEach((key) => (row['article_' + key] = getFieldValue(articles[i]?.[key])))
-        ArticleImageFields.forEach((key) => (row['article_image_' + key] = getFieldValue(articlesImages[i]?.[key])))
+        ArticleImageFields.forEach(
+          (key) => (row['article_image_' + key] = getFieldValue(articlesImages[i]?.[key]))
+        )
         MetafieldFields.forEach(
           (key) => (row['article_metafield_' + key] = getFieldValue(articlesMetafields[i]?.[key]))
         )
@@ -348,17 +373,19 @@ const convertMetafield = (dataList) => {
       for (let i = 0; i < length; i++) {
         let row = {}
 
-        MetafieldFields.filter((item) => !['owner_id', 'owner_resource'].includes(item)).forEach((key) => {
-          switch (key) {
-            case 'id':
-              row[key] = getFieldValue(metafield[key])
-              break
+        MetafieldFields.filter((item) => !['owner_id', 'owner_resource'].includes(item)).forEach(
+          (key) => {
+            switch (key) {
+              case 'id':
+                row[key] = getFieldValue(metafield[key])
+                break
 
-            default:
-              row[key] = i === 0 ? getFieldValue(metafield[key]) : ''
-              break
+              default:
+                row[key] = i === 0 ? getFieldValue(metafield[key]) : ''
+                break
+            }
           }
-        })
+        )
 
         rows.push(row)
       }
@@ -393,8 +420,12 @@ const convertCustomer = (dataList) => {
               break
           }
         })
-        CustomerAddressFields.forEach((key) => (row['address_' + key] = getFieldValue(addresses[i]?.[key])))
-        MetafieldFields.forEach((key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key])))
+        CustomerAddressFields.forEach(
+          (key) => (row['address_' + key] = getFieldValue(addresses[i]?.[key]))
+        )
+        MetafieldFields.forEach(
+          (key) => (row['metafield_' + key] = getFieldValue(metafields[i]?.[key]))
+        )
 
         rows.push(row)
       }

@@ -13,14 +13,20 @@ export default {
       const session = await verifyToken(req, res)
       const { shop, accessToken } = session
 
-      req.body = { duplicatorPackageId: 70, versionId: 1665646676480, uuid: '23f20438-02f2-4887-9741-d9b957a13e50' }
+      req.body = {
+        duplicatorPackageId: 70,
+        versionId: 1665646676480,
+        uuid: '23f20438-02f2-4887-9741-d9b957a13e50',
+      }
 
       let data = {}
 
       let duplicatorStore = await UniqueCodeMiddleware.verifyUniqueCode(req.body.uuid)
       console.log('duplicatorStore :>> ', duplicatorStore)
 
-      let duplicatorPackage = await DuplicatorPackageMiddleware.findById(req.body.duplicatorPackageId)
+      let duplicatorPackage = await DuplicatorPackageMiddleware.findById(
+        req.body.duplicatorPackageId
+      )
       console.log('duplicatorPackage :>> ', duplicatorPackage)
 
       let version = duplicatorPackage.versions.find((item) => item.id == req.body.versionId)

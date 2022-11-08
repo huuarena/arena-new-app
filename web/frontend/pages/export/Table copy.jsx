@@ -225,7 +225,11 @@ function Table(props) {
         columnContentTypes={['text', 'text', 'text', 'text', 'text', 'text', 'text']}
         rows={rows}
         footerContent={
-          backupPackages?.items ? (backupPackages?.items?.length > 0 ? undefined : 'Have no data') : 'loading..'
+          backupPackages?.items
+            ? backupPackages?.items?.length > 0
+              ? undefined
+              : 'Have no data'
+            : 'loading..'
         }
       />
 

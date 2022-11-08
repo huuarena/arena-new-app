@@ -80,7 +80,10 @@ export default {
         result: { Key, Location },
         updatedAt: new Date().toISOString(),
       }
-      duplicatorPackage = await DuplicatorPackageMiddleware.updateVersions(duplicatorPackage.id, version)
+      duplicatorPackage = await DuplicatorPackageMiddleware.updateVersions(
+        duplicatorPackage.id,
+        version
+      )
 
       return ResponseHandler.success(res, { url: Location })
     } catch (error) {
@@ -118,7 +121,9 @@ export default {
         })
 
       if (!duplicatorPackage) {
-        throw new Error('Navigation package not found or not exported yet. Please export navigation first.')
+        throw new Error(
+          'Navigation package not found or not exported yet. Please export navigation first.'
+        )
       }
 
       let version = duplicatorPackage.versions[0]

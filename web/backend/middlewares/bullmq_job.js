@@ -103,7 +103,10 @@ const create = async (__type, __data) => {
         let hasOverCount = false
         for (let i = 0; i < version.resources.length; i++) {
           if ('count' in version.resources[i]) {
-            if (version.resources[i].count === 'all' || parseInt(version.resources[i].count) > 500) {
+            if (
+              version.resources[i].count === 'all' ||
+              parseInt(version.resources[i].count) > 500
+            ) {
               hasOverCount = true
               break
             }
@@ -201,7 +204,10 @@ const create = async (__type, __data) => {
         let _hasOverCount = false
         for (let i = 0; i < version.resources.length; i++) {
           if ('count' in version.resources[i]) {
-            if (version.resources[i].count === 'all' || parseInt(version.resources[i].count) > 500) {
+            if (
+              version.resources[i].count === 'all' ||
+              parseInt(version.resources[i].count) > 500
+            ) {
               _hasOverCount = true
               break
             }

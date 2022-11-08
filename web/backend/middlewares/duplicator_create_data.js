@@ -210,7 +210,12 @@ const createCustomCollection = async ({ shop, accessToken, data }) => {
 
     return { success: true, id: collectionCreated.id, handle: collectionCreated.handle }
   } catch (error) {
-    return { success: false, id: custom_collection.id, handle: custom_collection.handle, message: error.message }
+    return {
+      success: false,
+      id: custom_collection.id,
+      handle: custom_collection.handle,
+      message: error.message,
+    }
   }
 }
 
@@ -265,7 +270,12 @@ const createSmartCollection = async ({ shop, accessToken, data }) => {
 
     return { success: true, id: collectionCreated.id, handle: collectionCreated.handle }
   } catch (error) {
-    return { success: false, id: smart_collection.id, handle: smart_collection.handle, message: error.message }
+    return {
+      success: false,
+      id: smart_collection.id,
+      handle: smart_collection.handle,
+      message: error.message,
+    }
   }
 }
 

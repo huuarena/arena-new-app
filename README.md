@@ -158,25 +158,23 @@ We fixed this issue with v3.4.0 of the CLI, so after updating it, you can make t
 1. Change the definition `hmrConfig` object to be:
 
    ```js
-   const host = process.env.HOST
-     ? process.env.HOST.replace(/https?:\/\//, "")
-     : "localhost";
+   const host = process.env.HOST ? process.env.HOST.replace(/https?:\/\//, '') : 'localhost'
 
-   let hmrConfig;
-   if (host === "localhost") {
+   let hmrConfig
+   if (host === 'localhost') {
      hmrConfig = {
-       protocol: "ws",
-       host: "localhost",
+       protocol: 'ws',
+       host: 'localhost',
        port: 64999,
        clientPort: 64999,
-     };
+     }
    } else {
      hmrConfig = {
-       protocol: "wss",
+       protocol: 'wss',
        host: host,
        port: process.env.FRONTEND_PORT,
        clientPort: 443,
-     };
+     }
    }
    ```
 

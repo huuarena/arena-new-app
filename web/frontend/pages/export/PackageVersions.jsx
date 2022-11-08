@@ -81,7 +81,14 @@ function PackageVersions(props) {
                   className={item.status === 'FAILED' ? 'color__error' : ''}
                   style={{ border: '1px solid #dcdcdc', padding: '0.5em' }}
                 >
-                  <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: '0.9em', whiteSpace: 'nowrap' }}>
+                  <table
+                    style={{
+                      borderCollapse: 'collapse',
+                      width: '100%',
+                      fontSize: '0.9em',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
                     <thead>
                       <tr style={{ backgroundColor: '#f1f1f1' }}>
                         <th style={{ border: '1px solid #dcdcdc', padding: '0.5em' }}>Type</th>
@@ -89,10 +96,14 @@ function PackageVersions(props) {
                         <th style={{ border: '1px solid #dcdcdc', padding: '0.5em' }}>Filter</th>
                         <th style={{ border: '1px solid #dcdcdc', padding: '0.5em' }}>Count</th>
                         <th style={{ border: '1px solid #dcdcdc', padding: '0.5em' }}>
-                          {selected.versions[0].resources[0].type === 'theme' ? 'Total files' : 'Total'}
+                          {selected.versions[0].resources[0].type === 'theme'
+                            ? 'Total files'
+                            : 'Total'}
                         </th>
                         <th style={{ border: '1px solid #dcdcdc', padding: '0.5em' }}>
-                          {selected.versions[0].resources[0].type === 'theme' ? 'Exported files' : 'Exported'}
+                          {selected.versions[0].resources[0].type === 'theme'
+                            ? 'Exported files'
+                            : 'Exported'}
                         </th>
                       </tr>
                     </thead>
@@ -108,13 +119,31 @@ function PackageVersions(props) {
                           <td style={{ border: '1px solid #dcdcdc', padding: '0.5em' }}>
                             {_item.filter ? 'filtered' : 'all resources'}
                           </td>
-                          <td style={{ border: '1px solid #dcdcdc', padding: '0.5em', textAlign: 'center' }}>
+                          <td
+                            style={{
+                              border: '1px solid #dcdcdc',
+                              padding: '0.5em',
+                              textAlign: 'center',
+                            }}
+                          >
                             {_item.count || 'all'}
                           </td>
-                          <td style={{ border: '1px solid #dcdcdc', padding: '0.5em', textAlign: 'center' }}>
+                          <td
+                            style={{
+                              border: '1px solid #dcdcdc',
+                              padding: '0.5em',
+                              textAlign: 'center',
+                            }}
+                          >
                             {selected.versions[index].result?.resources?.[_index]?.total || ''}
                           </td>
-                          <td style={{ border: '1px solid #dcdcdc', padding: '0.5em', textAlign: 'center' }}>
+                          <td
+                            style={{
+                              border: '1px solid #dcdcdc',
+                              padding: '0.5em',
+                              textAlign: 'center',
+                            }}
+                          >
                             {selected.versions[index].result?.resources?.[_index]?.exported || ''}
                           </td>
                         </tr>
@@ -126,14 +155,19 @@ function PackageVersions(props) {
                   <Stack distribution="center" spacing="extraTight">
                     <Stack spacing="extraTight">
                       {editable && (
-                        <Button size="slim" onClick={() => props.navigate(`/export/${selected.id}?v=${item.id}`)}>
+                        <Button
+                          size="slim"
+                          onClick={() => props.navigate(`/export/${selected.id}?v=${item.id}`)}
+                        >
                           Edit
                         </Button>
                       )}
                       {importable && (
                         <Button
                           size="slim"
-                          onClick={() => props.navigate(`/import/${selected.id}?v=${item.id}&c=${code}`)}
+                          onClick={() =>
+                            props.navigate(`/import/${selected.id}?v=${item.id}&c=${code}`)
+                          }
                           disabled={item.status !== 'COMPLETED'}
                         >
                           Import

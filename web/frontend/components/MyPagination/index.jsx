@@ -45,7 +45,10 @@ function MyPagination(props) {
         <Popover
           active={limitExpanded}
           activator={
-            <Button disclosure={limitExpanded ? 'up' : 'down'} onClick={() => setLimitExpanded(!limitExpanded)}>
+            <Button
+              disclosure={limitExpanded ? 'up' : 'down'}
+              onClick={() => setLimitExpanded(!limitExpanded)}
+            >
               {limit}
             </Button>
           }

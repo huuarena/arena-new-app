@@ -51,7 +51,9 @@ function Table(props) {
       <b>{Types[item.type]}</b>,
       <Badge status={BadgeStatuses[item.status]}>
         {item.status}
-        {item.status === 'RUNNING' && item.progress !== 0 && item.progress !== 100 ? ` ${item.progress}%` : ``}
+        {item.status === 'RUNNING' && item.progress !== 0 && item.progress !== 100
+          ? ` ${item.progress}%`
+          : ``}
       </Badge>,
       <Stack vertical spacing="extraTight">
         {Boolean(item.data?.name) && (
