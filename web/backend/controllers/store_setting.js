@@ -110,7 +110,10 @@ export default {
 
       let storeSetting = await StoreSettingMiddleware.findOne({ shop: session.shop })
 
-      storeSetting = await StoreSettingMiddleware.update(storeSetting.id, { acceptedAt })
+      storeSetting = await StoreSettingMiddleware.update(storeSetting.id, {
+        acceptedAt,
+        status: StoreSettingMiddleware.Status.RUNNING,
+      })
 
       return ResponseHandler.success(res, storeSetting)
     } catch (error) {

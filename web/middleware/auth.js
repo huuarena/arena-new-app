@@ -26,21 +26,25 @@ export default function applyAuthMiddleware(
          * Init store setting
          */
         let storeSetting = await StoreSettingMiddleware.init(session)
-        // console.log('storeSetting :>> ', storeSetting)
+          .then((_res) => _res)
+          .catch((_err) => null)
+        console.log('storeSetting :>> ', storeSetting)
 
-        /**
-         * Register webhooks
-         */
-        if (!storeSetting.acceptedAt) {
-          process.env.WEBHOOKS.replace(/ /gm, '')
-            .split(',')
-            .forEach((topic) =>
-              WebhookMiddleware.create({
-                shop: session.shop,
-                accessToken: session.accessToken,
-                topic,
-              })
-            )
+        if (storeSetting) {
+          /**
+           * Register webhooks
+           */
+          if (!storeSetting.acceptedAt) {
+            process.env.WEBHOOKS.replace(/ /gm, '')
+              .split(',')
+              .forEach((topic) =>
+                WebhookMiddleware.create({
+                  shop: session.shop,
+                  accessToken: session.accessToken,
+                  topic,
+                })
+              )
+          }
         }
       }
 
