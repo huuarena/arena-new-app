@@ -11,10 +11,12 @@ export default function applyAuthMiddleware(
   { billing = { required: false } } = { billing: { required: false } }
 ) {
   app.get('/api/auth', async (req, res) => {
+    console.log('applyAuthMiddleware /api/auth')
     return redirectToAuth(req, res, app)
   })
 
   app.get('/api/auth/callback', async (req, res) => {
+    console.log('applyAuthMiddleware /api/auth/callback')
     try {
       const session = await Shopify.Auth.validateAuthCallback(req, res, req.query)
       console.log('session :>> ', session)
@@ -24,20 +26,22 @@ export default function applyAuthMiddleware(
          * Init store setting
          */
         let storeSetting = await StoreSettingMiddleware.init(session)
-        console.log('storeSetting :>> ', storeSetting)
+        // console.log('storeSetting :>> ', storeSetting)
 
         /**
          * Register webhooks
          */
-        process.env.WEBHOOKS.replace(/ /gm, '')
-          .split(',')
-          .forEach((topic) =>
-            WebhookMiddleware.create({
-              shop: session.shop,
-              accessToken: session.accessToken,
-              topic,
-            })
-          )
+        if (!storeSetting.acceptedAt) {
+          process.env.WEBHOOKS.replace(/ /gm, '')
+            .split(',')
+            .forEach((topic) =>
+              WebhookMiddleware.create({
+                shop: session.shop,
+                accessToken: session.accessToken,
+                topic,
+              })
+            )
+        }
       }
 
       const responses = await Shopify.Webhooks.Registry.registerAll({
@@ -78,9 +82,13 @@ export default function applyAuthMiddleware(
         ? Shopify.Utils.getEmbeddedAppUrl(req)
         : `/?shop=${session.shop}&host=${encodeURIComponent(host)}`
 
+      // delay 1s
+      await new Promise((resolve, reject) => setTimeout(() => resolve(), 1000))
+
       res.redirect(redirectUrl)
     } catch (e) {
       console.warn(e)
+
       switch (true) {
         case e instanceof Shopify.Errors.InvalidOAuthError:
           res.status(400)

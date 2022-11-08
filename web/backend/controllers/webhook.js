@@ -1,5 +1,6 @@
 import StoreSettingMiddleware from '../middlewares/store_setting.js'
 import crypto from 'crypto'
+import { AppInstallations } from '../../app_installations.js'
 
 export default {
   get: (req, res) => res.status(401).send('Not Found'),
@@ -36,10 +37,16 @@ export default {
                 acceptedAt: null,
                 billings: null,
               })
-                .then((_res) => {})
-                .catch((_err) => null)
+                .then((_res) => {
+                  console.log(`${domain} app uninstalled`)
+                })
+                .catch((_err) => {
+                  console.log(`${domain} app uninstall failed:`, _err.message)
+                })
             })
             .catch((err) => null)
+
+          AppInstallations.delete(domain)
           break
 
         default:

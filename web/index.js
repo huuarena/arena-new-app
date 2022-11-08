@@ -99,7 +99,7 @@ export async function createServer(
   const app = express()
 
   app.use(cors())
-  app.use(morgan('tiny'))
+  // app.use(morgan('tiny'))
 
   app.set('use-online-tokens', USE_ONLINE_TOKENS)
   app.use(cookieParser(Shopify.Context.API_SECRET_KEY))
@@ -236,7 +236,6 @@ export async function createServer(
 
       return res.status(200).set('Content-Type', 'text/html').send(readFileSync(htmlFile))
     } catch (error) {
-      console.log(error)
       return res.status(400).send(error.message)
     }
   })
