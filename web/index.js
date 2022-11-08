@@ -67,7 +67,9 @@ Shopify.Context.initialize({
 Shopify.Webhooks.Registry.addHandler('APP_UNINSTALLED', {
   path: '/api/webhooks',
   webhookHandler: async (_topic, shop, _body) => {
+    console.log(`AppInstallations.delete`)
     await AppInstallations.delete(shop)
+    console.log(`AppInstallations.delete success`)
   },
 })
 
