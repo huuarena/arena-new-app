@@ -29,13 +29,15 @@ export default async function redirectToAuth(req, res, app) {
         const client = new Shopify.Clients.Graphql(storeSetting.shop, storeSetting.accessToken)
         await client.query({ data: TEST_GRAPHQL_QUERY })
 
+        if (storeSetting.status !== StoreSettingMiddleware.Status.UNINSTALLED) {
+          return res.status(401).send('Unauthorized')
+        }
+
         return res.status(401).send('Unauthorized')
       } catch (error) {
         // continue
       }
     }
-
-    console.log('--------------continue')
 
     if (req.query.embedded === '1') {
       return clientSideRedirect(req, res)
@@ -44,7 +46,7 @@ export default async function redirectToAuth(req, res, app) {
     return await serverSideRedirect(req, res, app)
   } catch (error) {
     console.log('redirectToAuth error :>> ', error.message)
-    return res.status(401).send(error.message)
+    return res.status(401).send('Unauthorized')
   }
 }
 
@@ -61,7 +63,6 @@ function clientSideRedirect(req, res) {
       shop,
       redirectUri: `https://${Shopify.Context.HOST_NAME}/api/auth?${redirectUriParams}`,
     }).toString()
-    console.log('\t redirectUrl :>> ', `/exitiframe?${queryParams}`)
 
     return res.redirect(`/exitiframe?${queryParams}`)
   } catch (error) {
@@ -80,7 +81,6 @@ async function serverSideRedirect(req, res, app) {
       '/api/auth/callback',
       app.get('use-online-tokens')
     )
-    console.log('\t redirectUrl :>> ', redirectUrl)
 
     return res.redirect(redirectUrl)
   } catch (error) {
