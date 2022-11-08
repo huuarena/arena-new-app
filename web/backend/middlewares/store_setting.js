@@ -44,7 +44,11 @@ const StoreSettingMiddleware = {
         /**
          * Update store has changed
          */
-        storeSetting = await Repository.update(storeSetting.id, { accessToken, scope })
+        storeSetting = await Repository.update(storeSetting.id, {
+          accessToken,
+          scope,
+          status: Status.INSTALLED,
+        })
       }
 
       return storeSetting

@@ -3,7 +3,7 @@ import crypto from 'crypto'
 import { AppInstallations } from '../../app_installations.js'
 
 export default {
-  get: (req, res) => res.status(401).send('Not Found'),
+  get: (req, res) => res.status(401).send('Unauthorized'),
 
   process: (req, res) => {
     const hmac = req.headers['x-shopify-hmac-sha256']
@@ -20,7 +20,7 @@ export default {
         /**
          * Request not sent from Shopify
          */
-        return res.status(401).send('Not Found')
+        return res.status(401).send('Unauthorized')
       }
 
       const { id } = req.body
@@ -39,7 +39,7 @@ export default {
                 accessToken: null,
               })
                 .then((_res) => {
-                  console.log(`${domain} app uninstalled`)
+                  // console.log('storeSetting :>> ', _res)
                 })
                 .catch((_err) => {
                   console.log(`${domain} app uninstall failed:`, _err.message)
