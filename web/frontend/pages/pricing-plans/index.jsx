@@ -30,7 +30,9 @@ function IndexPage(props) {
         window.top.location.replace(res.data?.confirmation_url)
       } else {
         // downgrade plan
-        window.top.location.replace(`${window.BACKEND_URL}/api/auth?shop=${window.shopOrigin}`)
+        window.top.location.replace(
+          `https://${window.shopOrigin}/admin/apps/${window.SHOPIFY_API_KEY}/`
+        )
       }
     } catch (error) {
       actions.showNotify({ message: error.message, error: true })

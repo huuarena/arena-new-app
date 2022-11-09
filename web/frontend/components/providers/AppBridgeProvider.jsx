@@ -39,6 +39,7 @@ export function AppBridgeProvider({ children }) {
     window.shopOrigin = shopOrigin
 
     window.BACKEND_URL = process.env.HOST
+    window.SHOPIFY_API_KEY = process.env.SHOPIFY_API_KEY
 
     window.SHOPIFY_APP = {
       host,

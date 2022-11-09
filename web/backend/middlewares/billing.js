@@ -189,7 +189,7 @@ const create = async ({ shop, accessToken, id }) => {
             [appBilling.type]: {
               name: appBilling.name,
               price: appBilling.price[storeSetting.appPlan],
-              return_url: `${process.env.HOST}/api/auth?shop=${shop}`,
+              return_url: `https://${shop}/admin/apps/${process.env.SHOPIFY_API_KEY}/`,
               test: storeSetting.testStore,
             },
           },
@@ -249,7 +249,7 @@ const create = async ({ shop, accessToken, id }) => {
             [appBilling.type]: {
               name: appBilling.name,
               price: appBilling.price,
-              return_url: `${process.env.HOST}/api/auth?shop=${shop}`,
+              return_url: `https://${shop}/admin/apps/${process.env.SHOPIFY_API_KEY}/`,
               test: storeSetting.testStore,
             },
           },
