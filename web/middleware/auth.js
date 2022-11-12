@@ -11,15 +11,12 @@ export default function applyAuthMiddleware(
   { billing = { required: false } } = { billing: { required: false } }
 ) {
   app.get('/api/auth', async (req, res) => {
-    console.log('applyAuthMiddleware /api/auth')
     return redirectToAuth(req, res, app)
   })
 
   app.get('/api/auth/callback', async (req, res) => {
-    console.log('applyAuthMiddleware /api/auth/callback')
     try {
       const session = await Shopify.Auth.validateAuthCallback(req, res, req.query)
-      console.log('session :>> ', session)
 
       if (session) {
         /**
@@ -28,9 +25,22 @@ export default function applyAuthMiddleware(
         let storeSetting = await StoreSettingMiddleware.init(session)
           .then((_res) => _res)
           .catch((_err) => null)
-        console.log('storeSetting :>> ', storeSetting)
 
         if (storeSetting) {
+          if (storeSetting.status !== StoreSettingMiddleware.Status.UNINSTALLED) {
+            return res.status(401).send('Unauthorized')
+          }
+
+          try {
+            // Make a request to ensure the access token is still valid. Otherwise, re-authenticate the user.
+            const client = new Shopify.Clients.Graphql(storeSetting.shop, storeSetting.accessToken)
+            await client.query({ data: TEST_GRAPHQL_QUERY })
+
+            return res.status(401).send('Unauthorized')
+          } catch (error) {
+            // continue
+          }
+
           /**
            * Register webhooks
            */

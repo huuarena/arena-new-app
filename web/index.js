@@ -209,8 +209,6 @@ export async function createServer(
 
   app.use('/*', async (req, res, next) => {
     try {
-      console.log('req.url :>> ', req.url)
-
       // redirect install page
       if (['/', '/install'].includes(req.url)) {
         const filepath = join(process.cwd(), 'public', 'install.html')
