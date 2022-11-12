@@ -2,11 +2,11 @@ import { Spinner } from '@shopify/polaris'
 import './styles.css'
 
 function LoadingPage(props) {
+  const { loading, action } = props
+
   return (
     <div className="arc-loading">
-      <div>
-        <Spinner size="large" color="teal" />
-      </div>
+      <div>{!Boolean(action) && <Spinner size="large" color="teal" />}</div>
     </div>
   )
 }

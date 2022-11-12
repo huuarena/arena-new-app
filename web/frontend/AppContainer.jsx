@@ -107,7 +107,7 @@ function AppContainer(props) {
               </Page>
             </AppFullscreen>
 
-            {appLoading?.loading && <LoadingPage />}
+            {appLoading?.loading && <LoadingPage {...appLoading} />}
 
             {toastMarkup}
 
