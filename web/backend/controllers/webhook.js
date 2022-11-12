@@ -1,9 +1,10 @@
 import StoreSettingMiddleware from '../middlewares/store_setting.js'
 import crypto from 'crypto'
 import { AppInstallations } from '../../app_installations.js'
+import ErrorCodes from '../constants/errorCodes.js'
 
 export default {
-  get: (req, res) => res.status(401).send('Unauthorized'),
+  get: (req, res) => res.status(401).send(ErrorCodes.UNAUTHORIZED),
 
   process: (req, res) => {
     const hmac = req.headers['x-shopify-hmac-sha256']
@@ -20,7 +21,7 @@ export default {
         /**
          * Request not sent from Shopify
          */
-        return res.status(401).send('Unauthorized')
+        return res.status(401).send(ErrorCodes.UNAUTHORIZED)
       }
 
       const { id } = req.body
@@ -37,12 +38,6 @@ export default {
                 acceptedAt: null,
                 billings: null,
               })
-                .then((_res) => {
-                  // console.log('storeSetting :>> ', _res)
-                })
-                .catch((_err) => {
-                  console.log(`${domain} app uninstall failed:`, _err.message)
-                })
             })
             .catch((err) => null)
 

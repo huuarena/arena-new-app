@@ -20,7 +20,7 @@ const create = async ({ shop, accessToken, topic }) => {
         // console.log(`${shop} webhook ${topic} registed`)
       })
       .catch((err) => {
-        console.log(`${shop} register webhook ${topic} failed:`, err.message)
+        // console.log(`${shop} register webhook ${topic} failed:`, err.message)
       })
   } catch (error) {
     throw error
