@@ -65,9 +65,11 @@ function PlanCard(props) {
         <Stack distribution="trailing">
           <Button
             fullWidth
-            primary={item.plan !== 'BASIC' && !props.appLoading.loading}
-            disabled={storeSetting.appPlan === item.plan || props.appLoading.loading}
             onClick={onSubmit}
+            primary={item.plan !== 'BASIC'}
+            disabled={
+              storeSetting.appPlan === item.plan || props.appLoading.action === 'submit_billing'
+            }
           >
             <span style={{ textTransform: 'uppercase' }}>
               {storeSetting.appPlan === item.plan

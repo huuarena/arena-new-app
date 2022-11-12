@@ -1,8 +1,9 @@
 import verifyToken from '../auth/verifyToken.js'
 import ResponseHandler from '../helpers/responseHandler.js'
 import StoreSettingMiddleware from '../middlewares/store_setting.js'
-import BillingMiddleware, { APP_BILLINGS } from '../middlewares/billing.js'
+import BillingMiddleware from '../middlewares/billing.js'
 import ShopMiddleware from '../middlewares/shop.js'
+import AppBillings from '../constants/app_billings.js'
 
 export default {
   auth: async (req, res) => {
@@ -49,7 +50,8 @@ export default {
               type: billings[i].type,
               id: billings[i].id,
             })
-            billing = billing[billings[i].type]
+              .then((_res) => _res[billings[i].type])
+              .catch((_err) => null)
 
             if (!billing) {
               updated = true
@@ -57,10 +59,10 @@ export default {
             } else {
               if (billing.status !== billings[i].status) {
                 updated = true
-                billings[i] = { ...billings[i], status: billing.status }
+                billings[i] = { ...billings[i], ...billing }
 
                 if (billing.status === 'active') {
-                  let appBilling = APP_BILLINGS.find(
+                  let appBilling = AppBillings.find(
                     (item) => item.id === billings[i].app_billing_id
                   )
 

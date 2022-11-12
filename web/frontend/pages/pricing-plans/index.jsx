@@ -10,6 +10,7 @@ import ConfirmDowngrade from './ConfirmDowngrade'
 function IndexPage(props) {
   const { actions, storeSetting, appBillings } = props
 
+  const [isLoading, setIsLoading] = useState(false)
   const [openConfirmDowngrade, setOpenConfirmDowngrade] = useState(false)
 
   useEffect(() => {
@@ -20,7 +21,9 @@ function IndexPage(props) {
 
   const handleSubmit = async (id) => {
     try {
-      actions.showAppLoading()
+      actions.showAppLoading({
+        action: id === 2001 ? 'downgrade_app_plan' : 'submit_billing',
+      })
 
       let res = await BillingApi.create(id)
       if (!res.success) throw res.error
@@ -37,19 +40,25 @@ function IndexPage(props) {
     } catch (error) {
       actions.showNotify({ message: error.message, error: true })
     } finally {
-      actions.hideAppLoading()
+      setTimeout(() => actions.hideAppLoading(), 1000)
+
+      if (openConfirmDowngrade) {
+        setOpenConfirmDowngrade(false)
+      }
     }
   }
 
   let applicationCharge = null
-  let currentPlan = null
-  let currentPrice = 'FREE'
-  let currentTime = ''
+  let currentBillingPlan = null
+  let currentBillingPrice = 'FREE'
+  let currentBillingTime = ''
   if (appBillings) {
     applicationCharge = appBillings.find((item) => item.type === 'application_charge')
-    currentPlan = appBillings.find((item) => item.plan === storeSetting.appPlan)
-    currentPrice = currentPlan.price === 0 ? 'FREE' : `$${currentPlan.price}`
-    currentTime = currentPlan.plan === 'BASIC' ? '' : ' / monthly'
+    currentBillingPlan = appBillings.find(
+      (item) => item.type === 'recurring_application_charge' && item.plan === storeSetting.appPlan
+    )
+    currentBillingPrice = currentBillingPlan.price === 0 ? 'FREE' : `$${currentBillingPlan.price}`
+    currentBillingTime = currentBillingPlan.plan === 'BASIC' ? '' : ' / monthly'
   }
 
   return (
@@ -98,12 +107,16 @@ function IndexPage(props) {
                       <DisplayText size="small">:</DisplayText>
                       <DisplayText size="small">
                         <span className="color__link">
-                          <b>$ {numberWithCommas(applicationCharge.price[storeSetting.appPlan])}</b>
+                          <b>$ {applicationCharge.price[storeSetting.appPlan]}</b>
                         </span>
                       </DisplayText>
                     </Stack>
                   </Stack>
-                  <Button primary onClick={() => handleSubmit(applicationCharge.id)}>
+                  <Button
+                    onClick={() => handleSubmit(applicationCharge.id)}
+                    primary
+                    disabled={props.appLoading.action === 'submit_billing'}
+                  >
                     Get more credits
                   </Button>
                 </Stack>
@@ -134,8 +147,8 @@ function IndexPage(props) {
             <Card.Section>
               <Stack distribution="equalSpacing" alignment="baseline">
                 <DisplayText size="small">
-                  {currentPrice}
-                  {currentTime}
+                  {currentBillingPrice}
+                  {currentBillingTime}
                 </DisplayText>
                 <Button onClick={() => props.navigate('/support')}>Contact us</Button>
               </Stack>
@@ -166,7 +179,7 @@ function IndexPage(props) {
         <ConfirmDowngrade
           {...props}
           onDiscard={() => setOpenConfirmDowngrade(false)}
-          onSubmit={() => handleSubmit(2001) & setOpenConfirmDowngrade(false)}
+          onSubmit={() => handleSubmit(2001)}
         />
       )}
     </Stack>

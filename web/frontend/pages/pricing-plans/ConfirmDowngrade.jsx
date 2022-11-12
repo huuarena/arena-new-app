@@ -30,25 +30,24 @@ function ConfirmDowngrade(props) {
         },
         {
           content: 'Downgrade',
-          onAction: () =>
-            shop.value !== window.shopOrigin
-              ? setShop({ ...shop, error: 'Invalid shop!' })
-              : onSubmit(),
-          destructive: Boolean(shop.value && shopOrigin === window.shopOrigin),
-          disabled: !Boolean(shop.value && shopOrigin === window.shopOrigin),
+          onAction: onSubmit,
+          destructive: true,
+          disabled:
+            shop.value !== window.shopOrigin || props.appLoading.action === 'downgrade_app_plan',
+          loading: props.appLoading.action === 'downgrade_app_plan',
         },
       ]}
     >
       <Modal.Section>
+        <div style={{ padding: '1em', background: '#fcf1ef' }}>
+          <p>Are you sure want to downgrade app plan to BASIC plan?</p>
+          <p>You will not be able to use advanced features.</p>
+        </div>
+      </Modal.Section>
+      <Modal.Section>
         <Stack vertical>
-          <div style={{ padding: '1em', background: '#fcf1ef' }}>
-            <Stack vertical spacing="extraTight">
-              <p>Are you sure want to downgrade app plan to BASIC plan?</p>
-              <p>You will not be able to use advanced features.</p>
-            </Stack>
-          </div>
-          <Stack alignment="baseline" spacing="tight">
-            <p>Confirm your store:</p>
+          <Stack alignment="baseline" spacing="extraTight">
+            <p>Enter your store</p>
             <p
               style={{
                 padding: '2px 6px',
@@ -60,6 +59,7 @@ function ConfirmDowngrade(props) {
             >
               {window.shopOrigin}
             </p>
+            <p>to confirm.</p>
           </Stack>
           <TextField
             placeholder={window.shopOrigin}
