@@ -5,9 +5,7 @@
  */
 const numberWithCommas = (value) => {
   try {
-    if (!value) {
-      return '0'
-    }
+    if (!value) return ''
 
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   } catch (error) {
