@@ -1,4 +1,4 @@
-import AppBillings from '../constants/app_billings.js'
+import AppBillings from '../constants/appBillings.js'
 import ErrorCodes from '../constants/errorCodes.js'
 import apiCaller from '../helpers/apiCaller.js'
 import StoreSettingMiddleware from './store_setting.js'

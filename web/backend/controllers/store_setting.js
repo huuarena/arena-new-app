@@ -3,7 +3,7 @@ import ResponseHandler from '../helpers/responseHandler.js'
 import StoreSettingMiddleware from '../middlewares/store_setting.js'
 import BillingMiddleware from '../middlewares/billing.js'
 import ShopMiddleware from '../middlewares/shop.js'
-import AppBillings from '../constants/app_billings.js'
+import AppBillings from '../constants/appBillings.js'
 
 export default {
   auth: async (req, res) => {
