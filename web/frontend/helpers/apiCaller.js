@@ -32,10 +32,15 @@ const apiCaller = async (endpoint, method = 'GET', data = undefined, extraHeader
       window.location.replace(`${window.BACKEND_URL}/api/auth?shop=${window.shopOrigin}`)
     }
 
+    let message = error.response?.data
+      ? error.response?.data?.message
+        ? error.response?.data?.message
+        : JSON.stringify(error.response?.data)
+      : error.message
+
     return {
       success: false,
-      error: error.response?.data?.message ? error.response.data : error.message,
-      status: error.response?.status,
+      error: { message },
     }
   }
 }
