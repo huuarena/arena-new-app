@@ -1,3 +1,4 @@
+import ErrorCodes from '../constants/errorCodes.js'
 import ResponseHandler from '../helpers/responseHandler.js'
 import StoreSettingMiddleware from '../middlewares/store_setting.js'
 
@@ -15,13 +16,13 @@ const verifyRequest = (req) => {
     const token = req.headers['authorization']
 
     if (!VERIFY_IPS.includes(ip)) {
-      throw new Error('Access denied.')
+      throw new Error(ErrorCodes.ACCESS_DENIED)
     }
     if (!VERIFY_TOKENS.includes(token.replace(/Bearer /g, ''))) {
-      throw new Error('Access denied.')
+      throw new Error(ErrorCodes.ACCESS_DENIED)
     }
   } catch (error) {
-    throw new Error('Access denied.')
+    throw new Error(ErrorCodes.ACCESS_DENIED)
   }
 }
 
