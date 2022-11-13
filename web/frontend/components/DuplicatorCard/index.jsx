@@ -69,7 +69,7 @@ function DuplicatorCard(props) {
         <Button
           fullWidth
           primary
-          onClick={() => props.navigate('/import')}
+          onClick={() => props.navigate('import')}
           disabled={!Boolean(duplicators.length >= 1)}
         >
           New import data

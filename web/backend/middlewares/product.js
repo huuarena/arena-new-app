@@ -1,4 +1,63 @@
 import apiCaller from '../helpers/apiCaller.js'
+import graphqlCaller from '../helpers/graphqlCaller.js'
+
+const getProductTypes = async ({ shop, accessToken }) => {
+  try {
+    let query = `
+    query productTypes {
+      shop {
+        productTypes(first: 250) {
+          edges {
+            node
+          }
+        }
+      }
+    }
+    `
+
+    let res = await graphqlCaller({
+      shop,
+      accessToken,
+      query,
+    })
+
+    return res.shop['productTypes'].edges.map((item) => item.node)
+  } catch (error) {
+    throw error
+  }
+}
+
+const getProductVendors = async ({ shop, accessToken }) => {
+  try {
+    let query = `
+    query productVendors {
+      shop {
+        productVendors(first: 250) {
+          edges {
+            node
+          }
+          pageInfo {
+            hasNextPage
+            hasNextPage
+            startCursor
+            endCursor
+          }
+        }
+      }
+    }
+    `
+
+    let res = await graphqlCaller({
+      shop,
+      accessToken,
+      query,
+    })
+
+    return res.shop['productVendors'].edges.map((item) => item.node)
+  } catch (error) {
+    throw error
+  }
+}
 
 const getAll = async ({ shop, accessToken, count }) => {
   try {
@@ -112,6 +171,8 @@ const _delete = async ({ shop, accessToken, id }) => {
 }
 
 const ProductMiddleware = {
+  getProductTypes,
+  getProductVendors,
   getAll,
   count,
   find,

@@ -5,7 +5,7 @@
  */
 const validateField = (fieldData) => {
   let _fieldData = fieldData ? JSON.parse(JSON.stringify(fieldData)) : {}
-  let valid = true
+  let fieldValid = true
 
   try {
     const keys = _fieldData?.validate ? Object.keys(_fieldData.validate) : []
@@ -68,10 +68,10 @@ const validateField = (fieldData) => {
       }
     }
   } catch (error) {
-    valid = false
+    fieldValid = false
     _fieldData.error = error.message
   } finally {
-    return { valid, data: _fieldData }
+    return { fieldValid, validFieldData: _fieldData }
   }
 }
 
@@ -82,7 +82,7 @@ const validateField = (fieldData) => {
  */
 const validateForm = (formData) => {
   let _formData = formData ? JSON.parse(JSON.stringify(formData)) : {}
-  let valid = true
+  let formValid = true
 
   try {
     const keys = Object.keys(_formData)
@@ -91,21 +91,21 @@ const validateForm = (formData) => {
       let key = keys[i]
 
       const fieldValidate = validateField(_formData[key])
-      _formData[key] = fieldValidate.data
-      if (valid && !fieldValidate.valid) {
-        valid = false
+      _formData[key] = fieldValidate.validFieldData
+      if (formValid && !fieldValidate.fieldValid) {
+        formValid = false
       }
     }
   } catch (error) {
-    valid = false
+    formValid = false
   } finally {
-    return { valid, data: _formData }
+    return { formValid, validFormData: _formData }
   }
 }
 
-const FormValidate = {
+const ValidateForm = {
   validateField,
   validateForm,
 }
 
-export default FormValidate
+export default ValidateForm

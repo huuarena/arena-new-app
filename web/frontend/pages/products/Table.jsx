@@ -4,6 +4,7 @@ import { MobileVerticalDotsMajor, ImagesMajor } from '@shopify/polaris-icons'
 import { useState } from 'react'
 
 Table.propTypes = {
+  // ...appProps,
   items: PropTypes.array,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
@@ -37,57 +38,61 @@ function Table(props) {
           </Stack.Item>
         </Stack>
       </div>,
-      <Badge status={item.status === 'active' ? 'success' : ''}>{item.status.toUpperCase()}</Badge>,
+      <Badge status={item.status === 'active' ? 'success' : ''}>{item.status}</Badge>,
       <div style={{ maxWidth: 300, whiteSpace: 'normal' }}>
         <Stack vertical spacing="extraTight">
           <Stack.Item>Vendor: {item.vendor}</Stack.Item>
-          <Stack.Item>Product type: {item.type}</Stack.Item>
+          <Stack.Item>Product type: {item.product_type}</Stack.Item>
         </Stack>
       </div>,
-      <Popover
-        active={item.id === selected?.id}
-        activator={
-          <Button
-            onClick={() => setSelected(selected?.id === item.id ? null : item)}
-            icon={MobileVerticalDotsMajor}
-            outline
+      <Stack distribution="trailing">
+        <Popover
+          active={item.id === selected?.id}
+          activator={
+            <Button
+              onClick={() => setSelected(selected?.id === item.id ? null : item)}
+              icon={MobileVerticalDotsMajor}
+              outline
+            />
+          }
+          onClose={() => setSelected(null)}
+        >
+          <ActionList
+            actionRole="menuitem"
+            items={[
+              {
+                content: 'Preview',
+                onAction: () => {
+                  window.open(`https://${window.shopOrigin}/products/${item.handle}`)
+                  setSelected(null)
+                },
+                disabled: item.status !== 'active',
+              },
+              {
+                content: 'Edit',
+                onAction: () => {
+                  onEdit(item)
+                  setSelected(null)
+                },
+              },
+              {
+                content: 'Delete',
+                onAction: () => {
+                  onDelete(item)
+                  setSelected(null)
+                },
+              },
+            ]}
           />
-        }
-        onClose={() => setSelected(null)}
-      >
-        <ActionList
-          actionRole="menuitem"
-          items={[
-            {
-              content: 'Preview',
-              onAction: () => {
-                setSelected(null)
-              },
-            },
-            {
-              content: 'Edit',
-              onAction: () => {
-                onEdit(item)
-                setSelected(null)
-              },
-            },
-            {
-              content: 'Delete',
-              onAction: () => {
-                onDelete(item)
-                setSelected(null)
-              },
-            },
-          ]}
-        />
-      </Popover>,
+        </Popover>
+      </Stack>,
     ])
   }
 
   return (
     <DataTable
       headings={['No.', 'Product', 'Status', 'Advanced', 'Actions']}
-      columnContentTypes={['text', 'text', 'text', 'text', 'text']}
+      columnContentTypes={['text', 'text', 'text', 'text', 'numeric']}
       rows={rows}
       footerContent={items ? (items?.length > 0 ? undefined : 'Have no data') : 'loading..'}
     />

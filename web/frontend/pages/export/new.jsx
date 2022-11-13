@@ -9,16 +9,16 @@ function IndexPage(props) {
       <AppHeader
         {...props}
         title="Create new export"
-        onBack={() => props.navigate('/export')}
+        onBack={() => props.navigate('export')}
         primaryActions={[
           {
             label: 'Contact us',
-            onClick: () => props.navigate('/support'),
+            onClick: () => props.navigate('support'),
           },
         ]}
       />
 
-      <CreateForm {...props} created={{}} onDiscard={() => props.navigate('/export')} />
+      <CreateForm {...props} created={{}} onDiscard={() => props.navigate('export')} />
     </Stack>
   )
 }

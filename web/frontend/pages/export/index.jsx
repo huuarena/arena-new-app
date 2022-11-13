@@ -75,15 +75,15 @@ function IndexPage(props) {
       <AppHeader
         {...props}
         title="Export data"
-        onBack={() => props.navigate('/')}
+        onBack={() => props.navigate('')}
         primaryActions={[
           {
             label: 'Contact us',
-            onClick: () => props.navigate('/support'),
+            onClick: () => props.navigate('support'),
           },
           {
             label: 'Create new export',
-            onClick: () => props.navigate('/export/new'),
+            onClick: () => props.navigate('export/new'),
             primary: true,
           },
         ]}

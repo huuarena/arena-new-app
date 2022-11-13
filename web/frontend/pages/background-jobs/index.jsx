@@ -50,11 +50,11 @@ function IndexPage(props) {
       <AppHeader
         {...props}
         title="Background Jobs"
-        onBack={() => props.navigate('/')}
+        onBack={() => props.navigate('')}
         primaryActions={[
           {
             label: 'Contact us',
-            onClick: () => props.navigate('/support'),
+            onClick: () => props.navigate('support'),
           },
         ]}
       />

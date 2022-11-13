@@ -2,60 +2,22 @@ import PropTypes from 'prop-types'
 import { Button, Card, Checkbox, DisplayText, Stack, TextField } from '@shopify/polaris'
 import { useEffect, useState } from 'react'
 import AppHeader from '../../components/AppHeader'
-import FormValidate from '../../helpers/formValidate'
+import ValidateForm from '../../helpers/validateForm'
 import FormControl from '../../components/FormControl'
-import OptionForm from './OptionForm'
+import ProductApi from '../../apis/product'
 
 CreateForm.propTypes = {
+  // ...appProps,
   created: PropTypes.object,
   onDiscard: PropTypes.func,
-  onSubmit: PropTypes.func,
+  onSubmited: PropTypes.func,
 }
 
 CreateForm.defaultProps = {
   created: {},
   onDiscard: () => null,
-  onSubmit: () => null,
+  onSubmited: () => null,
 }
-
-const optionFormData = {
-  name: {
-    type: 'text',
-    label: 'Option name',
-    value: '',
-    error: '',
-    required: true,
-    validate: {
-      trim: true,
-      required: [true, 'Required!'],
-      minlength: [2, 'Too short!'],
-      maxlength: [200, 'Too long!'],
-    },
-  },
-  values: {
-    type: 'text',
-    label: 'Option values',
-    value: '',
-    error: '',
-    required: true,
-    validate: {
-      trim: true,
-      required: [true, 'Required!'],
-      minlength: [1, 'Too short!'],
-      maxlength: [100, 'Too long!'],
-    },
-  },
-}
-
-let initOptionFormData = Array.from([
-  // { name: 'Size', values: 's,m,l' },
-  // { name: 'Color', values: 'red,black,yellow' },
-  // { name: 'Material', values: 'gold,sliver' },
-  { name: '', values: '' },
-]).map((item) => ({
-  name: { ...optionFormData.name, value: item.name },
-  values: { ...optionFormData.values, value: item.values },
-}))
 
 const initFormData = {
   title: {
@@ -78,40 +40,65 @@ const initFormData = {
     value: '',
     error: '',
     required: true,
-    validate: {
-      trim: true,
-      required: [true, 'Required!'],
-      minlength: [2, 'Too short!'],
-      maxlength: [2500, 'Too long!'],
-    },
+    validate: {},
     multiline: 6,
   },
-  options: null,
+  status: {
+    type: 'select',
+    label: 'Status',
+    value: 'active',
+    error: '',
+    options: [
+      { label: 'ACTIVE', value: 'active' },
+      { label: 'DRAFT', value: 'draft' },
+    ],
+  },
+  vendor: {
+    type: 'autocomplete',
+    label: 'Vendor',
+    value: '',
+    error: '',
+    options: [],
+  },
+  product_type: {
+    type: 'autocomplete',
+    label: 'Product type',
+    value: '',
+    error: '',
+    options: [],
+  },
 }
 
 function CreateForm(props) {
-  const { actions, created, onDiscard, onSubmit } = props
+  const { actions, created, onDiscard, onSubmited, productVendors, productTypes } = props
 
-  const [formData, setFormData] = useState(initFormData)
+  const [formData, setFormData] = useState(null)
 
-  // useEffect(() => console.log('formData :>> ', formData), [formData])
+  useEffect(() => console.log('formData :>> ', formData), [formData])
 
   useEffect(() => {
     let _formData = JSON.parse(JSON.stringify(initFormData))
 
-    /**
-     * test
-     */
-    _formData.title.value = `Sample product - ${new Date().toString()}`
-    _formData.body_html.value = `Sample product`
-
     if (created.id) {
-      Array.from(['title', 'body_html']).map(
+      Array.from(['title', 'body_html', 'status', 'vendor', 'product_type']).map(
         (key) => (_formData[key] = { ..._formData[key], value: created[key] || '' })
       )
+    } else {
+      /**
+       * Sample data
+       */
+      _formData.title.value = `Sample product - ${new Date().toString()}`
+      _formData.body_html.value = `Sample product`
     }
 
     setFormData(_formData)
+
+    if (!productVendors) {
+      actions.getProductVendors()
+    }
+    if (!productTypes) {
+      actions.getProductTypes()
+    }
   }, [])
 
   const handleChange = (name, value) => {
@@ -120,37 +107,50 @@ function CreateForm(props) {
     setFormData(_formData)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
-      let _formData = { ...formData }
+      const { formValid, validFormData } = ValidateForm.validateForm(formData)
 
-      delete _formData.options
-
-      const { valid, data } = FormValidate.validateForm(_formData)
-
-      _formData = { ...formData, ...data }
-
-      if (valid) {
-        onSubmit(_formData)
-      } else {
-        setFormData({ ...formData, ...data })
-
+      if (!formValid) {
+        setFormData(validFormData)
         throw new Error('Invalid form data')
       }
+
+      actions.showAppLoading()
+
+      let data = {
+        title: validFormData.title.value,
+        body_html: validFormData.body_html.value,
+        vendor: validFormData.vendor.value,
+        product_type: validFormData.product_type.value,
+      }
+
+      let res = null
+
+      if (created.id) {
+        // update
+        res = await ProductApi.update(created.id, { product: data })
+      } else {
+        // create
+        res = await ProductApi.create({ product: data })
+      }
+      if (!res.success) throw res.error
+
+      actions.showNotify({ message: created.id ? 'Saved' : 'Created' })
+
+      onSubmited(res.data.product)
     } catch (error) {
       console.log(error)
       actions.showNotify({ error: true, message: error.message })
+    } finally {
+      actions.hideAppLoading()
     }
   }
 
+  if (!formData) return null
+
   return (
     <Stack vertical alignment="fill">
-      <AppHeader
-        {...props}
-        title={created.id ? 'Update product' : 'Add product'}
-        onBack={onDiscard}
-      />
-
       <Card sectioned>
         <Stack vertical alignment="fill">
           <FormControl {...formData['title']} onChange={(value) => handleChange('title', value)} />
@@ -158,47 +158,32 @@ function CreateForm(props) {
             {...formData['body_html']}
             onChange={(value) => handleChange('body_html', value)}
           />
-        </Stack>
-      </Card>
-
-      <Card>
-        <Card.Section>
-          <Stack vertical>
-            <DisplayText size="small">Options</DisplayText>
-            <Checkbox
-              label="This product has options, like size or color"
-              checked={Boolean(formData['options'])}
-              onChange={() => {
-                let _formData = JSON.parse(JSON.stringify(formData))
-                if (formData['options']) {
-                  _formData['options'] = null
-                } else {
-                  _formData['options'] = initOptionFormData
-                }
-                setFormData(_formData)
-              }}
-            />
-          </Stack>
-        </Card.Section>
-        {formData['options'] &&
-          formData['options'].map((item, index) => (
-            <Card.Section key={index}>
-              <OptionForm
-                formData={item}
-                onChange={(value) => {
-                  let _formData = JSON.parse(JSON.stringify(formData))
-                  _formData['options'][index] = value
-
-                  // check has empty option
-                  if (!_formData['options'].filter((item) => item['name'].value === '').length) {
-                    _formData['options'].push({ ...optionFormData })
-                  }
-
-                  setFormData(_formData)
-                }}
+          <Stack distribution="fillEvenly">
+            <Stack.Item fill>
+              <FormControl
+                {...formData['status']}
+                onChange={(value) => handleChange('status', value)}
               />
-            </Card.Section>
-          ))}
+            </Stack.Item>
+            <Stack.Item fill></Stack.Item>
+          </Stack>
+          <Stack distribution="fillEvenly">
+            <Stack.Item fill>
+              <FormControl
+                {...formData['vendor']}
+                onChange={(value) => handleChange('vendor', value)}
+                options={productVendors?.map((item) => ({ label: item, value: item })) || []}
+              />
+            </Stack.Item>
+            <Stack.Item fill>
+              <FormControl
+                {...formData['product_type']}
+                onChange={(value) => handleChange('product_type', value)}
+                options={productTypes?.map((item) => ({ label: item, value: item })) || []}
+              />
+            </Stack.Item>
+          </Stack>
+        </Stack>
       </Card>
 
       <Stack distribution="trailing">

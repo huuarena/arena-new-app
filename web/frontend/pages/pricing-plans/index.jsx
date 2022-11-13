@@ -66,11 +66,11 @@ function IndexPage(props) {
       <AppHeader
         {...props}
         title="Pricing plans"
-        onBack={() => props.navigate('/')}
+        onBack={() => props.navigate('')}
         primaryActions={[
           {
             label: 'Contact us',
-            onClick: () => props.navigate('/support'),
+            onClick: () => props.navigate('support'),
           },
         ]}
       />
@@ -150,7 +150,7 @@ function IndexPage(props) {
                   {currentBillingPrice}
                   {currentBillingTime}
                 </DisplayText>
-                <Button onClick={() => props.navigate('/support')}>Contact us</Button>
+                <Button onClick={() => props.navigate('support')}>Contact us</Button>
               </Stack>
             </Card.Section>
           </Card>

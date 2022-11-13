@@ -5,14 +5,14 @@ import CreateForm from './CreateForm'
 function SupportPage(props) {
   return (
     <Stack vertical alignment="fill">
-      <AppHeader {...props} title="Support" onBack={() => props.navigate('/')} />
+      <AppHeader {...props} title="Support" onBack={() => props.navigate('')} />
 
       <Layout>
         <Layout.AnnotatedSection
           title="Contact us"
           description="From tech to tilt, we're here to help you! Submit a Ticket! So long as a poro doesn't eat it, we'll get back to you soon."
         >
-          <CreateForm {...props} onSubmit={() => null} />
+          <CreateForm {...props} />
         </Layout.AnnotatedSection>
       </Layout>
     </Stack>

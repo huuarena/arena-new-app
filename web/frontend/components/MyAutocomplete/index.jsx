@@ -6,7 +6,9 @@ function MyAutocomplete(props) {
       options={
         props.options
           ? props.options.filter(
-              (item) => item.label.includes(props.value) || item.value.includes(props.value)
+              (item) =>
+                item.label.toLowerCase().includes(props.value.toLowerCase()) ||
+                item.value.toLowerCase().includes(props.value.toLowerCase())
             )
           : []
       }

@@ -9,11 +9,11 @@ function IndexPage(props) {
         <AppHeader
           {...props}
           title="Clear all store data"
-          onBack={() => props.navigate('/')}
+          onBack={() => props.navigate('')}
           primaryActions={[
             {
               label: 'Contact us',
-              onClick: () => props.navigate('/support'),
+              onClick: () => props.navigate('support'),
             },
           ]}
         />
@@ -25,7 +25,7 @@ function IndexPage(props) {
           </p>
         </Banner>
 
-        <CreateForm {...props} onDiscard={() => props.navigate('/support')} onSubmit={() => null} />
+        <CreateForm {...props} onDiscard={() => props.navigate('support')} onSubmit={() => null} />
       </Stack>
     </Page>
   )

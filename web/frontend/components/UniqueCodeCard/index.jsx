@@ -41,7 +41,7 @@ function UniqueCodeCard(props) {
         </Card.Section>
       ))}
       <Card.Section>
-        <Button fullWidth primary onClick={() => props.navigate('/export/new')}>
+        <Button fullWidth primary onClick={() => props.navigate('export/new')}>
           New export data
         </Button>
       </Card.Section>

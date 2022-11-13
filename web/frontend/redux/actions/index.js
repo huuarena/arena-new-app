@@ -7,6 +7,8 @@ import * as privacy from './privacy'
 import * as faqs from './faqs'
 import * as uniqueCodes from './uniqueCodes'
 import * as duplicators from './duplicators'
+import * as productVendors from './productVendors'
+import * as productTypes from './productTypes'
 
 export default {
   ...appLoading,
@@ -18,4 +20,6 @@ export default {
   ...faqs,
   ...uniqueCodes,
   ...duplicators,
+  ...productVendors,
+  ...productTypes,
 }

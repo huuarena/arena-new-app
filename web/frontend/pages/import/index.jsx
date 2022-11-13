@@ -19,7 +19,7 @@ function IndexPage(props) {
   //     <Card sectioned>
   //       <EmptyState
   //         heading="Sorry, the Import data feature no longer supports development stores"
-  //         action={{ content: 'Contact us', onAction: () => props.navigate('/support') }}
+  //         action={{ content: 'Contact us', onAction: () => props.navigate('support') }}
   //         image={emptyState}
   //       >
   //         <p>Please kindly contact our customer service team.</p>
@@ -63,11 +63,11 @@ function IndexPage(props) {
       <AppHeader
         {...props}
         title="Import data"
-        onBack={() => props.navigate('/')}
+        onBack={() => props.navigate('')}
         primaryActions={[
           {
             label: 'Contact us',
-            onClick: () => props.navigate('/support'),
+            onClick: () => props.navigate('support'),
           },
         ]}
       />

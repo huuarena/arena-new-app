@@ -5,7 +5,7 @@ function PrivacyPage(props) {
     <Privacy
       {...props}
       acceptedAt={props.storeSetting.acceptedAt}
-      onAction={() => props.navigate('/')}
+      onAction={() => props.navigate('')}
     />
   )
 }

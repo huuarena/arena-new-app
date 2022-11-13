@@ -1,6 +1,5 @@
 import { Button, Card, DisplayText, Stack, TextField } from '@shopify/polaris'
 import { useEffect, useState } from 'react'
-import FormValidate from '../../helpers/formValidate'
 import FormControl from '../../components/FormControl'
 
 const initFormData = {

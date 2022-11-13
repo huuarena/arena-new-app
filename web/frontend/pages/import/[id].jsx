@@ -39,11 +39,11 @@ function DetailPage(props) {
       <AppHeader
         {...props}
         title={`Import package: ${created?.name || ''}`}
-        onBack={() => props.navigate('/import')}
+        onBack={() => props.navigate('import')}
         primaryActions={[
           {
             label: 'Contact us',
-            onClick: () => props.navigate('/support'),
+            onClick: () => props.navigate('support'),
           },
         ]}
       />
@@ -55,7 +55,7 @@ function DetailPage(props) {
           {...props}
           code={c}
           created={created}
-          onDiscard={() => props.navigate('/import')}
+          onDiscard={() => props.navigate('import')}
           version={created.versions.find((item) => '' + item.id === '' + v)}
         />
       )}

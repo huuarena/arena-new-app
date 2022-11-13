@@ -1,23 +1,13 @@
-import PropTypes from 'prop-types'
 import { Button, Card, Stack } from '@shopify/polaris'
 import { useEffect, useState } from 'react'
-import FormValidate from '../../helpers/formValidate'
+import ValidateForm from '../../helpers/validateForm'
 import FormControl from '../../components/FormControl'
 import TicketApi from '../../apis/ticket'
 import { InviteMinor } from '@shopify/polaris-icons'
 
-CreateForm.propTypes = {
-  // ..appProps,
-}
-
-CreateForm.defaultProps = {}
-
-const SUBJECTS = [
-  { label: 'Contact / Support', value: 'Contact / Support' },
-  { label: 'Idea / Suggestion', value: 'Idea / Suggestion' },
-  { label: 'Problem / Complaint', value: 'Problem / Complaint' },
-  { label: 'Question', value: 'Question' },
-]
+const SUBJECTS = ['Contact - Support', 'Idea - Suggestion', 'Problem - Complaint', 'Question'].map(
+  (item) => ({ label: item, value: item })
+)
 
 const initFormData = {
   subject: {
@@ -26,7 +16,6 @@ const initFormData = {
     value: SUBJECTS[0].value,
     error: '',
     required: true,
-    validate: {},
     options: SUBJECTS,
   },
   description: {
@@ -59,9 +48,9 @@ const initFormData = {
 }
 
 function CreateForm(props) {
-  const { actions, storeSetting, onSubmit } = props
+  const { actions, storeSetting } = props
 
-  const [formData, setFormData] = useState(initFormData)
+  const [formData, setFormData] = useState(null)
 
   const generateFormData = () => {
     let _formData = JSON.parse(JSON.stringify(initFormData))
@@ -69,7 +58,9 @@ function CreateForm(props) {
     setFormData(_formData)
   }
 
-  useEffect(() => generateFormData(), [])
+  useEffect(() => {
+    generateFormData()
+  }, [])
 
   const handleChange = (name, value) => {
     let _formData = JSON.parse(JSON.stringify(formData))
@@ -79,64 +70,62 @@ function CreateForm(props) {
 
   const handleSubmit = async () => {
     try {
-      let _formData = { ...formData }
+      const { formValid, validFormData } = ValidateForm.validateForm(formData)
 
-      const { valid, data } = FormValidate.validateForm(formData)
-
-      _formData = { ...data }
-
-      if (!valid) {
-        setFormData(_formData)
+      if (!formValid) {
+        setFormData(formValid)
         throw new Error('Invalid form data')
       }
 
-      actions.showAppLoading()
+      actions.showAppLoading({ action: 'submit_ticket' })
 
-      let res = await TicketApi.create({
-        subject: _formData.subject.value,
-        description: _formData.description.value,
-        email: _formData.email.value,
-      })
+      let data = {
+        subject: validFormData.subject.value,
+        description: validFormData.description.value,
+        email: validFormData.email.value,
+      }
+
+      let res = await TicketApi.create(data)
       if (!res.success) throw res.error
 
-      actions.showNotify({
-        message: 'Ticket is created. We will take a look at your problem soon.',
-      })
+      actions.showNotify({ message: 'Ticket sent. We will take a look at your ticket soon.' })
 
       generateFormData()
     } catch (error) {
+      console.log(error)
       actions.showNotify({ error: true, message: error.message })
     } finally {
       actions.hideAppLoading()
     }
   }
 
+  if (!formData) return null
+
   return (
-    <Stack vertical alignment="fill">
-      <Card sectioned>
-        <Stack vertical alignment="fill">
-          <FormControl
-            {...formData['subject']}
-            onChange={(value) => handleChange('subject', value)}
-          />
-          <FormControl
-            {...formData['description']}
-            onChange={(value) => handleChange('description', value)}
-          />
-          <FormControl {...formData['email']} onChange={(value) => handleChange('email', value)} />
-          <Stack distribution="trailing">
-            <Button
-              onClick={handleSubmit}
-              primary={!props.appLoading.loading}
-              disabled={props.appLoading.loading}
-              icon={InviteMinor}
-            >
-              Send
-            </Button>
-          </Stack>
+    <Card sectioned>
+      <Stack vertical alignment="fill">
+        <FormControl
+          {...formData['subject']}
+          onChange={(value) => handleChange('subject', value)}
+        />
+        <FormControl
+          {...formData['description']}
+          onChange={(value) => handleChange('description', value)}
+        />
+        <FormControl {...formData['email']} onChange={(value) => handleChange('email', value)} />
+        <Stack distribution="trailing">
+          <Button
+            onClick={handleSubmit}
+            primary
+            icon={InviteMinor}
+            disabled={props.appLoading.action === 'submit_ticket'}
+            loading={props.appLoading.action === 'submit_ticket'}
+          >
+            Send
+          </Button>
         </Stack>
-      </Card>
-    </Stack>
+      </Stack>
+    </Card>
   )
 }
 

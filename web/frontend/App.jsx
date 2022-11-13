@@ -63,7 +63,7 @@ export default function App(props) {
         secondaryMoreActions={{
           items: [
             // { label: 'Settings', pathname: '/settings' },
-            { label: 'FAQs', pathname: '/faq' },
+            { label: 'FAQS', pathname: '/faqs' },
             { label: 'Support', pathname: '/support' },
             { label: 'Privacy', pathname: '/privacy' },
           ],

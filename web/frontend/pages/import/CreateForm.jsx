@@ -80,7 +80,7 @@ function CreateForm(props) {
 
       actions.showNotify({ message: 'Process is running in background. Waiting for finnish.' })
 
-      props.navigate('/background-jobs')
+      props.navigate('background-jobs')
     } catch (error) {
       actions.showNotify({ message: error.message, error: true })
     } finally {

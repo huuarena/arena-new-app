@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import { Button, Card, DisplayText, Icon, Select, Stack, TextField } from '@shopify/polaris'
 import { useEffect, useState, version } from 'react'
-import FormValidate from '../../helpers/formValidate'
 import FormControl from '../../components/FormControl'
 import ResourceItem from './ResourceItem'
 import DuplicatorPackageApi from '../../apis/duplicator_package'
@@ -235,7 +234,7 @@ function CreateForm(props) {
 
       actions.showNotify({ message: 'Process is running in background. Waiting for finnish.' })
 
-      props.navigate('/background-jobs')
+      props.navigate('background-jobs')
     } catch (error) {
       actions.showNotify({ error: true, message: error.message })
     } finally {

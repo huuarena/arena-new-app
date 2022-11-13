@@ -43,12 +43,12 @@ function IndexPage(props) {
     <Stack vertical alignment="fill">
       <AppHeader
         {...props}
-        title="FAQs"
-        onBack={() => props.navigate('/')}
+        title="FAQS"
+        onBack={() => props.navigate('')}
         primaryActions={[
           {
             label: 'Contact us',
-            onClick: () => props.navigate('/support'),
+            onClick: () => props.navigate('support'),
           },
         ]}
       />

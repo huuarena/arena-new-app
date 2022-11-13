@@ -52,11 +52,11 @@ function IndexPage(props) {
       <AppHeader
         {...props}
         title="Resource Stores Management"
-        onBack={() => props.navigate('/')}
+        onBack={() => props.navigate('')}
         primaryActions={[
           {
             label: 'Contact us',
-            onClick: () => props.navigate('/support'),
+            onClick: () => props.navigate('support'),
           },
         ]}
       />

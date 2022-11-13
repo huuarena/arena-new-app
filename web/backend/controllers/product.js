@@ -3,6 +3,32 @@ import ResponseHandler from '../helpers/responseHandler.js'
 import ProductMiddleware from '../middlewares/product.js'
 
 export default {
+  getProductTypes: async (req, res) => {
+    try {
+      const session = await verifyToken(req, res)
+      const { shop, accessToken } = session
+
+      const data = await ProductMiddleware.getProductTypes({ shop, accessToken })
+
+      return ResponseHandler.success(res, data)
+    } catch (error) {
+      return ResponseHandler.error(res, error)
+    }
+  },
+
+  getProductVendors: async (req, res) => {
+    try {
+      const session = await verifyToken(req, res)
+      const { shop, accessToken } = session
+
+      const data = await ProductMiddleware.getProductVendors({ shop, accessToken })
+
+      return ResponseHandler.success(res, data)
+    } catch (error) {
+      return ResponseHandler.error(res, error)
+    }
+  },
+
   count: async (req, res) => {
     try {
       const session = await verifyToken(req, res)

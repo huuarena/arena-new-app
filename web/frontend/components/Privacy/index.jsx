@@ -20,12 +20,12 @@ function Privacy(props) {
   const { privacy, onAction, acceptedAt } = props
 
   const actionSection = (
-    <Stack distribution="equalSpacing">
+    <Stack distribution="equalSpacing" alignment="baseline">
       <Stack.Item>
         {Boolean(acceptedAt) && (
-          <div>
+          <DisplayText size="small">
             <b>Accepted at: {formatDateTime(acceptedAt, 'LLL')}</b>
-          </div>
+          </DisplayText>
         )}
       </Stack.Item>
       <Stack.Item>

@@ -36,11 +36,11 @@ function DetailPage(props) {
       <AppHeader
         {...props}
         title={`Edit package: ${created?.name || 'loading..'}`}
-        onBack={() => props.navigate('/export')}
+        onBack={() => props.navigate('export')}
         primaryActions={[
           {
             label: 'Contact us',
-            onClick: () => props.navigate('/support'),
+            onClick: () => props.navigate('support'),
           },
         ]}
       />
@@ -51,7 +51,7 @@ function DetailPage(props) {
         <CreateForm
           {...props}
           created={created}
-          onDiscard={() => props.navigate('/export')}
+          onDiscard={() => props.navigate('export')}
           version={created.versions.find((item) => item.id == v)}
         />
       )}
