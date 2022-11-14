@@ -41,7 +41,7 @@ function AppNavigation(props) {
   return (
     <Stack vertical spacing="tight" alignment="fill">
       <Stack.Item>
-        <Stack spacing="tight">
+        <Stack spacing="tight" distribution="trailing">
           <Stack.Item fill>
             {primaryActions?.length > 0 && (
               <Stack spacing="tight">
