@@ -23,19 +23,13 @@ function AppContainer(props) {
       console.log('appProps :>> ', props)
     }
 
-    if (!isReady && props.storeSetting && props.privacy && props.uniqueCodes && props.duplicators) {
+    if (!isReady && props.storeSetting) {
       setIsReady(true)
     }
   }, [props])
 
   useEffect(() => {
     actions.getStoreSetting()
-    actions.getPrivacy()
-    actions.getUniqueCodes()
-    actions.getDuplicators()
-
-    actions.getThemes()
-    actions.getFaqs()
   }, [])
 
   const acceptPrivacy = async () => {

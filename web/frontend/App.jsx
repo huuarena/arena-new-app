@@ -13,42 +13,11 @@ export default function App(props) {
       label: 'Home',
       pathname: '/',
     },
-    // {
-    //   label: 'Products',
-    //   pathname: '/products',
-    // },
     {
-      label: 'Export',
-      pathname: '/export',
-    },
-    {
-      label: 'Import',
-      pathname: '/import',
-    },
-    {
-      label: 'Background Jobs',
-      pathname: '/background-jobs',
+      label: 'Products',
+      pathname: '/products',
     },
   ]
-  if (
-    ['haloha-shop.myshopify.com'].includes(window.shopOrigin) ||
-    props.storeSetting.permissions.includes('NAVIGATION')
-  ) {
-    primaryActions = primaryActions.concat([
-      {
-        label: 'Navigation',
-        pathname: '/navigation',
-      },
-    ])
-  }
-  if (['haloha-shop.myshopify.com'].includes(window.shopOrigin)) {
-    primaryActions = primaryActions.concat([
-      {
-        label: 'Clear Store (DEV)',
-        pathname: '/clear-store',
-      },
-    ])
-  }
 
   return (
     <Stack vertical alignment="fill">
@@ -62,7 +31,7 @@ export default function App(props) {
         ]}
         secondaryMoreActions={{
           items: [
-            // { label: 'Settings', pathname: '/settings' },
+            { label: 'Settings', pathname: '/settings' },
             { label: 'FAQS', pathname: '/faqs' },
             { label: 'Support', pathname: '/support' },
             { label: 'Privacy', pathname: '/privacy' },
