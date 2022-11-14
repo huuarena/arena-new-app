@@ -23,13 +23,15 @@ function AppContainer(props) {
       console.log('appProps :>> ', props)
     }
 
-    if (!isReady && props.storeSetting) {
+    if (!isReady && props.storeSetting && props.privacy) {
       setIsReady(true)
     }
   }, [props])
 
   useEffect(() => {
     actions.getStoreSetting()
+    actions.getPrivacy()
+    actions.getFaqs()
   }, [])
 
   const acceptPrivacy = async () => {

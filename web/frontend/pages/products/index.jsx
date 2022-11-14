@@ -96,23 +96,20 @@ function ProductsPage(props) {
           onEdit={(item) => props.navigate(`products/${item.id}`)}
           onDelete={(item) => setDeleted(item)}
         />
-        {products?.products?.length > 0 && (
-          <Card.Section>
-            <Stack distribution="center">
-              <Stack.Item>
-                <Pagination
-                  hasPrevious={products.pageInfo.hasPrevious}
-                  onPrevious={() =>
-                    setSearchParams({ pageInfo: products.pageInfo.previousPageInfo })
-                  }
-                  hasNext={products.pageInfo.hasNext}
-                  onNext={() => setSearchParams({ pageInfo: products.pageInfo.nextPageInfo })}
-                />
-              </Stack.Item>
-            </Stack>
-          </Card.Section>
-        )}
       </Card>
+
+      {products?.products?.length > 0 && (
+        <Stack distribution="center">
+          <Stack.Item>
+            <Pagination
+              hasPrevious={products.pageInfo.hasPrevious}
+              onPrevious={() => setSearchParams({ pageInfo: products.pageInfo.previousPageInfo })}
+              hasNext={products.pageInfo.hasNext}
+              onNext={() => setSearchParams({ pageInfo: products.pageInfo.nextPageInfo })}
+            />
+          </Stack.Item>
+        </Stack>
+      )}
 
       {deleted && (
         <ConfirmModal

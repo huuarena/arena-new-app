@@ -19,6 +19,8 @@ Privacy.defaultProps = {
 function Privacy(props) {
   const { privacy, onAction, acceptedAt } = props
 
+  let content = privacy?.attributes?.content || `<h1>PRIVACY POLICY</h1>`
+
   const actionSection = (
     <Stack distribution="equalSpacing" alignment="baseline">
       <Stack.Item>
@@ -44,7 +46,7 @@ function Privacy(props) {
         <Stack vertical alignmen="fill" spacing="extraLoose">
           {actionSection}
 
-          <div dangerouslySetInnerHTML={{ __html: privacy?.attributes?.content || '' }} />
+          <div dangerouslySetInnerHTML={{ __html: content }} />
 
           {actionSection}
         </Stack>

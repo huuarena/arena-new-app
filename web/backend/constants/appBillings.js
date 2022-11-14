@@ -53,7 +53,7 @@ const AppBillings = [
     type: 'recurring_application_charge',
     name: 'Recurring Application Charge - PRO',
     plan: 'PRO',
-    price: 59,
+    price: 58.99,
     credits: null,
     features: [
       {
@@ -84,7 +84,7 @@ const AppBillings = [
     type: 'recurring_application_charge',
     name: 'Recurring Application Charge - PLUS',
     plan: 'PLUS',
-    price: 16.99,
+    price: 98.99,
     credits: null,
     features: [],
     extra: [],

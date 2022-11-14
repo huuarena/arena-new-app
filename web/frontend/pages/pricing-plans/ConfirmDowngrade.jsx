@@ -33,8 +33,9 @@ function ConfirmDowngrade(props) {
           onAction: onSubmit,
           destructive: true,
           disabled:
-            shop.value !== window.shopOrigin || props.appLoading.action === 'downgrade_app_plan',
-          loading: props.appLoading.action === 'downgrade_app_plan',
+            shop.value !== window.shopOrigin ||
+            props.appLoading.action === `submit_billing_${2001}`,
+          loading: props.appLoading.action === `submit_billing_${2001}`,
         },
       ]}
     >

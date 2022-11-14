@@ -68,8 +68,10 @@ function PlanCard(props) {
             onClick={onSubmit}
             primary={item.plan !== 'BASIC'}
             disabled={
-              storeSetting.appPlan === item.plan || props.appLoading.action === 'submit_billing'
+              storeSetting.appPlan === item.plan ||
+              props.appLoading.action === `submit_billing_${item.id}`
             }
+            loading={props.appLoading.action === `submit_billing_${item.id}`}
           >
             <span style={{ textTransform: 'uppercase' }}>
               {storeSetting.appPlan === item.plan

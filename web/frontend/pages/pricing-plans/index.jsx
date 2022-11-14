@@ -21,9 +21,7 @@ function IndexPage(props) {
 
   const handleSubmit = async (id) => {
     try {
-      actions.showAppLoading({
-        action: id === 2001 ? 'downgrade_app_plan' : 'submit_billing',
-      })
+      actions.showAppLoading({ action: `submit_billing_${id}` })
 
       let res = await BillingApi.create(id)
       if (!res.success) throw res.error
@@ -115,7 +113,8 @@ function IndexPage(props) {
                   <Button
                     onClick={() => handleSubmit(applicationCharge.id)}
                     primary
-                    disabled={props.appLoading.action === 'submit_billing'}
+                    disabled={props.appLoading.action === `submit_billing_${1001}`}
+                    loading={props.appLoading.action === `submit_billing_${1001}`}
                   >
                     Get more credits
                   </Button>

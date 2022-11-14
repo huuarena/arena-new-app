@@ -19,13 +19,9 @@ import productCreator from './helpers/product-creator.js'
 import redirectToAuth from './helpers/redirect-to-auth.js'
 import { BillingInterval } from './helpers/ensure-billing.js'
 import { AppInstallations } from './app_installations.js'
-import storeSettingRoute from './backend/routes/store_setting.js'
-import productRoute from './backend/routes/product.js'
-import billingRoute from './backend/routes/billing.js'
-import submitionRoute from './backend/routes/submition.js'
-import themeRoute from './backend/routes/theme.js'
 import storefrontRoute from './backend/routes/storefront.js'
 import webhookRoute from './backend/routes/webhook.js'
+import adminRoute from './backend/routes/index.js'
 
 const USE_ONLINE_TOKENS = false
 
@@ -122,45 +118,8 @@ export async function createServer(
   /**
    * ADMIN ROUTES
    */
-  storeSettingRoute(app)
-  productRoute(app)
-  billingRoute(app)
-  submitionRoute(app)
-  themeRoute(app)
+  adminRoute(app)
   // -------------------------------------------
-
-  // app.get('/api/products/count', async (req, res) => {
-  //   try {
-  //     const session = await Shopify.Utils.loadCurrentSession(req, res, app.get('use-online-tokens'))
-  //     const { Product } = await import(
-  //       `@shopify/shopify-api/dist/rest-resources/${Shopify.Context.API_VERSION}/index.js`
-  //     )
-
-  //     const countData = await Product.count({ session })
-  //     res.status(200).send(countData)
-  //   } catch (error) {
-  //     return res.status(400).send(error.message)
-  //   }
-  // })
-
-  // app.get('/api/products/create', async (req, res) => {
-  //   try {
-  //     const session = await Shopify.Utils.loadCurrentSession(req, res, app.get('use-online-tokens'))
-  //     let status = 200
-  //     let error = null
-
-  //     try {
-  //       await productCreator(session)
-  //     } catch (e) {
-  //       console.log(`Failed to process products/create: ${e.message}`)
-  //       status = 500
-  //       error = e.message
-  //     }
-  //     res.status(status).send({ success: status === 200, error })
-  //   } catch (error) {
-  //     return res.status(400).send(error.message)
-  //   }
-  // })
 
   // All endpoints after this point will have access to a request.body
   // attribute, as a result of the express.json() middleware

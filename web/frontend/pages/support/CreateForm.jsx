@@ -73,7 +73,7 @@ function CreateForm(props) {
       const { formValid, validFormData } = ValidateForm.validateForm(formData)
 
       if (!formValid) {
-        setFormData(formValid)
+        setFormData(validFormData)
         throw new Error('Invalid form data')
       }
 

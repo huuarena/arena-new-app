@@ -18,6 +18,13 @@ const {
   POSTGRES_HOST,
   POSTGRES_PORT,
   POSTGRES_DB,
+
+  TICKET_URL,
+  TICKET_AUTH,
+  TICKET_GROUP,
+
+  APP_MANAGEMENT_UID,
+  APP_MANAGEMENT_BASE_URL,
 } = process.env
 
 module.exports = {
@@ -43,6 +50,13 @@ module.exports = {
         POSTGRES_HOST,
         POSTGRES_PORT,
         POSTGRES_DB,
+
+        TICKET_URL,
+        TICKET_AUTH,
+        TICKET_GROUP,
+
+        APP_MANAGEMENT_UID,
+        APP_MANAGEMENT_BASE_URL,
       },
       env_development: {
         NODE_ENV: 'development',
