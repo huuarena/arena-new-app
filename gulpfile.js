@@ -35,26 +35,8 @@ const updateScopes = async () => {
   }
 }
 
-/**
- * Create temp directory if any
- */
-const createTempDir = async () => {
-  try {
-    let filepath = './web/temp'
-
-    if (fs.existsSync(filepath)) {
-      await fs.rmSync(filepath, { recursive: true, force: true })
-    }
-
-    return await fs.mkdirSync(filepath)
-  } catch (error) {
-    throw error
-  }
-}
-
 async function defaultTask(cb) {
   updateScopes()
-  createTempDir()
 
   cb()
 }

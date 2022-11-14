@@ -18,22 +18,6 @@ const {
   POSTGRES_HOST,
   POSTGRES_PORT,
   POSTGRES_DB,
-
-  REDIS_HOST,
-  REDIS_PORT,
-
-  AWS_ACCESS_KEY_ID,
-  AWS_SECRET_ACCESS_KEY_ID,
-  AWS_BUCKET_NAME,
-
-  TICKET_URL,
-  TICKET_AUTH,
-  TICKET_GROUP,
-
-  APP_MANAGEMENT_UID,
-  APP_MANAGEMENT_BASE_URL,
-
-  ENVATO_TOKEN,
 } = process.env
 
 module.exports = {
@@ -59,20 +43,6 @@ module.exports = {
         POSTGRES_HOST,
         POSTGRES_PORT,
         POSTGRES_DB,
-
-        REDIS_HOST,
-        REDIS_PORT,
-
-        AWS_ACCESS_KEY_ID,
-        AWS_SECRET_ACCESS_KEY_ID,
-        AWS_BUCKET_NAME,
-
-        TICKET_URL,
-        TICKET_AUTH,
-        TICKET_GROUP,
-
-        APP_MANAGEMENT_UID,
-        APP_MANAGEMENT_BASE_URL,
       },
       env_development: {
         NODE_ENV: 'development',

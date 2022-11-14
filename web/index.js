@@ -24,13 +24,6 @@ import productRoute from './backend/routes/product.js'
 import billingRoute from './backend/routes/billing.js'
 import submitionRoute from './backend/routes/submition.js'
 import themeRoute from './backend/routes/theme.js'
-import ticketRoute from './backend/routes/ticket.js'
-import appManagementRoute from './backend/routes/app_management.js'
-import backgroundJobRoute from './backend/routes/background_job.js'
-import clearStoreRoute from './backend/routes/clear_store.js'
-import uniqueCodeRoute from './backend/routes/unique_code.js'
-import duplicatorRoute from './backend/routes/duplicator.js'
-import duplicatorPackageRoute from './backend/routes/duplicator_package.js'
 import storefrontRoute from './backend/routes/storefront.js'
 import webhookRoute from './backend/routes/webhook.js'
 
@@ -132,15 +125,8 @@ export async function createServer(
   storeSettingRoute(app)
   productRoute(app)
   billingRoute(app)
-  duplicatorPackageRoute(app)
   submitionRoute(app)
   themeRoute(app)
-  ticketRoute(app)
-  appManagementRoute(app)
-  backgroundJobRoute(app)
-  clearStoreRoute(app)
-  uniqueCodeRoute(app)
-  duplicatorRoute(app)
   // -------------------------------------------
 
   // app.get('/api/products/count', async (req, res) => {
