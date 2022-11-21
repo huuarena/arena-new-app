@@ -11,9 +11,9 @@
     "info": "shopify app info",
     "generate": "shopify app generate",
     "deploy": "shopify app deploy",
-    "ngrok": "ngrok http --subdomain=arena-new-app --region=ap 5000",
+    "ngrok": "ngrok http --subdomain=arena-new-app --region=au 5000",
     "docker": "docker run --rm -p 127.0.0.1:6379:6379/tcp redis",
-    "develop": "gulp && yarn dev --tunnel-url https://arena-new-app.ap.ngrok.io:5000",
+    "develop": "gulp && yarn dev --tunnel-url https://arena-new-app.au.ngrok.io:5000",
     "serve": "cd web/ && yarn serve",
     "server": "cd web/ && yarn server",
     "pm2:start": "pm2 kill && yarn build && pm2 start ecosystem.config.js --env production",
@@ -39,5 +39,9 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1"
   },
-  "author": "mac"
+  "author": "mac",
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
+  }
 }
