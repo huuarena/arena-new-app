@@ -199,12 +199,16 @@ export async function createServer(
 
 createServer().then(({ app }) =>
   app.listen(PORT, () => {
+    console.clear()
     console.log(``)
     console.log(` ++++++++++++++++++++++++++++++++++++`)
     console.log(` +                                  +`)
     console.log(` +   Welcome to ArenaCommerce App   +`)
     console.log(` +                                  +`)
     console.log(` ++++++++++++++++++++++++++++++++++++`)
+    console.log(``)
+    console.log(` Install link:`)
+    console.log(` ${process.env.HOST}/api/auth?shop=${process.env.SHOP}`)
     console.log(``)
     console.log(` Shopify app:`)
     console.log(` https://${process.env.SHOP}/admin/apps/${process.env.SHOPIFY_API_KEY}/`)
