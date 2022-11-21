@@ -34,4 +34,4 @@ yarn.lock
 package-lock.json
 
 temp/*
-upload/*
+uploads/*
