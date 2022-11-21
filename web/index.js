@@ -22,7 +22,7 @@ import { AppInstallations } from './app_installations.js'
 import storefrontRoute from './backend/routes/storefront.js'
 import webhookRoute from './backend/routes/webhook.js'
 import adminRoute from './backend/routes/index.js'
-import uploadsRoute from './backend/routes/uploads.js'
+import uploadRoute from './backend/routes/upload.js'
 
 const USE_ONLINE_TOKENS = false
 
@@ -101,7 +101,7 @@ export async function createServer(
   /**
    * STOREFRONT ROUTES
    */
-  uploadsRoute(app)
+  uploadRoute(app)
   storefrontRoute(app)
   // -------------------------------------------
 

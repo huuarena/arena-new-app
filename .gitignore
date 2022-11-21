@@ -33,4 +33,5 @@ web/database.sqlite
 yarn.lock
 package-lock.json
 
-temp/
+temp/*
+upload/*
