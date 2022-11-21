@@ -188,6 +188,8 @@ export async function createServer(
         res.setHeader('Content-Security-Policy', `frame-ancestors 'none';`)
       }
 
+      res.setHeader('X-Frame-Options', `DENY`)
+
       const htmlFile = join(isProd ? PROD_INDEX_PATH : DEV_INDEX_PATH, 'index.html')
 
       return res.status(200).set('Content-Type', 'text/html').send(readFileSync(htmlFile))
@@ -201,7 +203,6 @@ export async function createServer(
 
 createServer().then(({ app }) =>
   app.listen(PORT, () => {
-    // console.clear()
     console.log(``)
     console.log(` ++++++++++++++++++++++++++++++++++++`)
     console.log(` +                                  +`)

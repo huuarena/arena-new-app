@@ -1,12 +1,5 @@
 import { Shopify } from '@shopify/shopify-api'
 
-const TEST_GRAPHQL_QUERY = `
-{
-  shop {
-    name
-  }
-}`
-
 export default async function redirectToAuth(req, res, app) {
   try {
     if (!req.query.shop) {
@@ -22,7 +15,7 @@ export default async function redirectToAuth(req, res, app) {
     return await serverSideRedirect(req, res, app)
   } catch (error) {
     console.log('redirectToAuth error :>> ', error.message)
-    return res.status(401).send('Unauthorized')
+    return res.status(401).send(error.message)
   }
 }
 
@@ -38,8 +31,9 @@ function clientSideRedirect(req, res) {
       shop,
       redirectUri: `https://${Shopify.Context.HOST_NAME}/api/auth?${redirectUriParams}`,
     }).toString()
+    const redirectUrl = `/exitiframe?${queryParams}`
 
-    return res.redirect(`/exitiframe?${queryParams}`)
+    return res.redirect(redirectUrl)
   } catch (error) {
     console.log('clientSideRedirect error :>> ', error.message)
     return res.status(401).send(error.message)

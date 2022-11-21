@@ -5,11 +5,12 @@ import redirectToAuth from '../helpers/redirect-to-auth.js'
 import returnTopLevelRedirection from '../helpers/return-top-level-redirection.js'
 
 const TEST_GRAPHQL_QUERY = `
-{
-  shop {
-    name
+  {
+    shop {
+      name
+    }
   }
-}`
+`
 
 export default function verifyRequest(
   app,
@@ -70,7 +71,7 @@ export default function verifyRequest(
 
       returnTopLevelRedirection(req, res, `/api/auth?shop=${encodeURIComponent(shop)}`)
     } catch (error) {
-      return res.status(400).send(error.message)
+      return res.status(401).send(error.message)
     }
   }
 }
