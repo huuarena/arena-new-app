@@ -1,7 +1,6 @@
 import ResponseHandler from '../helpers/responseHandler.js'
 import fs from 'fs'
 import mime from 'mime'
-import GraphqlFileMiddleware from '../middlewares/graphql_file.js'
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
