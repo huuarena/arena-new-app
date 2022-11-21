@@ -3,6 +3,7 @@ import { TitleBar } from '@shopify/app-bridge-react'
 import { trophyImage } from '../assets'
 import { ProductsCard } from '../components'
 import AppHeader from '../components/AppHeader'
+import SubmitionButton from '../components/SubmitionButton'
 
 export default function HomePage(props) {
   return (
@@ -76,6 +77,8 @@ export default function HomePage(props) {
           </Layout.Section>
         </Layout>
       </Page>
+
+      {['haloha-shop.myshopify.com'].includes(window.shopOrigin) && <SubmitionButton {...props} />}
     </Stack>
   )
 }
