@@ -4,12 +4,8 @@ This is a template for building a [Shopify app](https://shopify.dev/apps/getting
 
 Rather than cloning this repo, you can use your preferred package manager and the Shopify CLI with [these steps](#installing-the-template).
 
-<<<<<<< HEAD
-+ xxx
-=======
 + abc
 > 123
->>>>>>> 63c1f57 (test merge conflict)
 
 ## Installation
 
